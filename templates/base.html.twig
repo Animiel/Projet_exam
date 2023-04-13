@@ -15,7 +15,15 @@
     </head>
     <body>
         
-        <nav>
+        <nav id="header" class="navbar">
+            <ul>
+                <li><a href="">Acceuil</a></li>
+                <li><a href="{{ path('app_forum') }}">Forum</a></li>
+                <li><a href="">Pour aller plus loin</a></li>
+            </ul>
+        </nav>
+
+        <div id="sidebar">
             <div>
                 <p>
                     <a href="{{ path('app_register') }}">Inscription</a>
@@ -24,15 +32,12 @@
                     <a href="{{ path('app_login') }}">Connexion</a>
                 </p>
             </div>
-            <ul>
-                <li><a href="">Acceuil</a></li>
-                <li><a href="">Forum</a></li>
-                <li><a href="">Pour aller plus loin</a></li>
-            </ul>
-        </nav>
+        </div>
 
-        {% block body %}
-        {% endblock %}
+        <main>
+            {% block body %}
+            {% endblock %}
+        </main>
 
         <footer>
             <nav>
