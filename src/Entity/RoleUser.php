@@ -1,5 +1,10 @@
 <?php
 
+
+// classe vraiment utile ? puisque champ "roles" déjà dans user ?
+
+
+
 namespace App\Entity;
 
 use App\Repository\RoleUserRepository;
