@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Sujet;
 use App\Entity\Categorie;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,13 @@ class ForumController extends AbstractController
     public function afficherSujets(Categorie $categorie) {
         return $this->render('forum/sujets.html.twig', [
             'categorie' => $categorie
+        ]);
+    }
+
+    #[Route('/forum/sujet/{id}', name: 'messages_sujet')]
+    public function afficherMessages(ManagerRegistry $doctrine, Sujet $sujet) {
+        return $this->render('forum/messages.html.twig', [
+            'sujet' => $sujet
         ]);
     }
 }

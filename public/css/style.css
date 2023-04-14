@@ -6,6 +6,7 @@ body {
 
 #header {
     display: flex;
+    line-height: 60px;
 }
 
 .navbar {
@@ -16,6 +17,7 @@ body {
 }
 
 .navbar ul {
+    margin: 0;
     display: flex;
     list-style-type: none;
     gap: 40px;
@@ -85,4 +87,8 @@ h2 {
 .categorie-pic {
     height: 85px;
     width: 90px;
+}
+
+footer {
+    line-height: 20px;
 }
