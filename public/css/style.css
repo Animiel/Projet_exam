@@ -51,12 +51,22 @@ main #bloc {
     text-decoration: none;
 }
 
+.app-name {
+    color: #ee850d;
+}
+
 h1 {
+    padding: 30px 0px;
+    text-align: center;
+}
+
+h2 {
+    padding: 15px 0px;
     text-align: center;
 }
 
 .text-link {
-    color: #CC6E00;
+    color: #ee850d;
 }
 
 #categories {
