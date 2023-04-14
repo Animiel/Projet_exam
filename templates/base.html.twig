@@ -24,12 +24,18 @@
         <main>
             <div id="sidebar">
                 <div>
-                    <p>
-                        <a href="{{ path('app_register') }}">Inscription</a>
-                    </p>
-                    <p>
-                        <a href="{{ path('app_login') }}">Connexion</a>
-                    </p>
+                    {% if app.user %}
+                        <p>
+                            <a href="{{ path('app_logout') }}">Déconnexion</a>
+                        </p>
+                    {% else %}
+                        <p>
+                            <a href="{{ path('app_register') }}">Inscription</a>
+                        </p>
+                        <p>
+                            <a href="{{ path('app_login') }}">Connexion</a>
+                        </p>
+                    {% endif %}
                 </div>
             </div>
     

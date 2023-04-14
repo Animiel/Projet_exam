@@ -36,6 +36,7 @@ main {
 }
 
 main #bloc {
+    width: 85%;
     margin-left: 30px;
 }
 
@@ -43,6 +44,11 @@ main #bloc {
     background-color: #FFAB5E;
     width: 15%;
     height: 100vh;
+}
+
+#sidebar a {
+    color: black;
+    text-decoration: none;
 }
 
 h1 {
