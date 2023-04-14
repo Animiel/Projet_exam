@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Forum | Catégories{% endblock %}
+{% block title %}Forum | Sujets{% endblock %}
 
 {% block body %}
 
-    <h1>Voici le forum !</h1>
+    <h1>{{ categorie }}</h1>
 
-    <p>
+    {# <p>
         Ici vous pourrez discuter de vos animaux préférés, donner des conseils, poser vos questions et partager vos anecdotes ou astuces avec tout le monde.
     </p>
     <p>
@@ -19,14 +19,11 @@
     </p>
     <p>
         Bonne discussion à toutes et à tous !
-    </p>
+    </p> #}
 
-    <div id="categories">
-        {% for categorie in categories %}
-            <a href="{{ path('sujets_categorie', {'id': categorie.id }) }}">
-                <img src="{{ asset('img/' ~ categorie.image) }}" class="categorie-pic"><br>
-                {{ categorie.name }}
-            </a><br>
+    <div>
+        {% for sujet in categorie.sujets %}
+            <a href="">{{ sujet }}</a><br>
         {% endfor %}
     </div>
 

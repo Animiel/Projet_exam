@@ -21,24 +21,26 @@
             </ul>
         </nav>
 
-        <div id="sidebar">
-            <div>
-                <p>
-                    <a href="{{ path('app_register') }}">Inscription</a>
-                </p>
-                <p>
-                    <a href="{{ path('app_login') }}">Connexion</a>
-                </p>
-            </div>
-        </div>
-
         <main>
-            {% block body %}
-            {% endblock %}
+            <div id="sidebar">
+                <div>
+                    <p>
+                        <a href="{{ path('app_register') }}">Inscription</a>
+                    </p>
+                    <p>
+                        <a href="{{ path('app_login') }}">Connexion</a>
+                    </p>
+                </div>
+            </div>
+    
+            <div id="bloc">
+                {% block body %}
+                {% endblock %}
+            </div>
         </main>
 
         <footer>
-            <nav>
+            <nav class="navbar bottom">
                 <ul>
                     <li><a href="">Plan du site</a></li>
                     <li><a href="">Contact</a></li>

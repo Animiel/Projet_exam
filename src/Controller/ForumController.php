@@ -21,4 +21,11 @@ class ForumController extends AbstractController
             'categories' => $categories,
         ]);
     }
+
+    #[Route('/forum/{id}', name: 'sujets_categorie')]
+    public function afficherSujets(Categorie $categorie) {
+        return $this->render('forum/sujets.html.twig', [
+            'categorie' => $categorie
+        ]);
+    }
 }
