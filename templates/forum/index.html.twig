@@ -20,4 +20,14 @@
     <p>
         Bonne discussion à toutes et à tous !
     </p>
+
+    <div id="categories">
+        {% for categorie in categories %}
+            <a href="">
+                <img src="{{ asset('img/' ~ categorie.image) }}" class="categorie-pic"><br>
+                {{ categorie.name }}
+            </a><br>
+        {% endfor %}
+    </div>
+
 {% endblock %}

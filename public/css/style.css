@@ -36,3 +36,21 @@ h1 {
 .text-link {
     color: #CC6E00;
 }
+
+#categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    column-count: 4;
+    text-align: center;
+}
+
+#categories a {
+    text-decoration: none;
+    color: black;
+}
+
+.categorie-pic {
+    height: 85px;
+    width: 90px;
+}

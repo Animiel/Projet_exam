@@ -9,9 +9,7 @@
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
 
-        {# {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %} #}
+       
     </head>
     <body>
         
@@ -49,6 +47,9 @@
                 </ul>
             </nav>
         </footer>
-
+         {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            <script src="{{ asset('js/script.js') }}"></script>
+        {% endblock %}
     </body>
 </html>
