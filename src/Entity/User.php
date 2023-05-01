@@ -55,12 +55,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'sujUser', targetEntity: Sujet::class)]
     private Collection $sujets;
 
+    #[ORM\OneToMany(mappedBy: 'annonceUser', targetEntity: Annonce::class)]
+    private Collection $annonces;
+
     public function __construct()
     {
         //pour une valeur par défaut on peut l'instancier ici ou dans le controller (cf. RegistrationController $now = new \DateTime $user->setDateInscription($now))
         $this->banni = 0;
         $this->messages = new ArrayCollection();
         $this->sujets = new ArrayCollection();
+        $this->annonces = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -255,5 +259,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString() {
         return $this->getPseudo();
+    }
+
+    /**
+     * @return Collection<int, Annonce>
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->annonces;
+    }
+
+    public function addAnnonce(Annonce $annonce): self
+    {
+        if (!$this->annonces->contains($annonce)) {
+            $this->annonces->add($annonce);
+            $annonce->setAnnonceUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonce $annonce): self
+    {
+        if ($this->annonces->removeElement($annonce)) {
+            // set the owning side to null (unless already changed)
+            if ($annonce->getAnnonceUser() === $this) {
+                $annonce->setAnnonceUser(null);
+            }
+        }
+
+        return $this;
     }
 }
