@@ -27,7 +27,29 @@
 
     <h2>Les avis de recherche...</h2>
 
-    {# {% for annonce in annonces %}
-        <div></div>
-    {% endfor %} #}
+    <div id="grid">
+        {% for annonce in annonces %}
+            <div class="wanted">
+                <img src="{{ asset('/img/' ~ annonce.image ~ '') }}" class="wanted-pic">
+
+                <h3>Signes distinctifs</h3>
+
+                <ul>
+                    <li>
+                        {{ annonce.infoUne }}
+                    </li>
+                    {% if annonce.infoDeux %}
+                        <li>
+                            {{ annonce.infoDeux }}
+                        </li>
+                    {% endif %}
+                    {% if annonce.infoTrois %}
+                        <li>
+                            {{ annonce.infoTrois }}
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
