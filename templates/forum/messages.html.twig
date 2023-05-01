@@ -23,7 +23,14 @@
 
     <div>
         {% for message in sujet.messages %}
-            {{ message.contenu }}
+            <div>
+                <p>
+                    {{ message.msgUser }} --- {{ message.publicationDate | date('d/m/Y - H:i') }}
+                </p>
+                <p>
+                    {{ message.contenu }}
+                </p>
+            </div><br>
         {% endfor %}
     </div>
 
