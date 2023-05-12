@@ -49,6 +49,7 @@
                         </li>
                     {% endif %}
                 </ul>
+                <a href="{{ path('notif_annonce', {'aid': annonce.annonceUser.id}, {'uid': app.user.id}) }}">J'ai une info !</a>
             </div>
         {% endfor %}
     </div>
