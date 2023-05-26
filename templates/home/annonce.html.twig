@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle annonce{% endblock %}
+
+{% block body %}
+
+<h1>Nouvelle annonce</h1>
+    
+    {{ form_start(formAnnonce) }}
+        {{ form_row(formAnnonce.infoUne) }}
+        {{ form_row(formAnnonce.infoDeux) }}
+        {{ form_row(formAnnonce.infoTrois) }}
+        {{ form_row(formAnnonce.image) }}
+
+        <button type="submit" class="btn">Valider</button>
+    {{ form_end(formAnnonce) }}
+    
+{% endblock %}

@@ -26,6 +26,8 @@
     </p>
 
     <h2>Les avis de recherche...</h2>
+    
+    <a href="{{ path('create_annonce') }}">Nouvelle annonce</a>
 
     <div id="grid">
         {% for annonce in annonces %}
@@ -49,7 +51,11 @@
                         </li>
                     {% endif %}
                 </ul>
-                <a href="{{ path('notif_annonce', {'aid': annonce.annonceUser.id}, {'uid': app.user.id}) }}">J'ai une info !</a>
+                {% if app.user %}
+                    <a href="{{ path('notif_annonce', {'aid': annonce.annonceUser.id, 'uid': app.user.id}) }}">J'ai une info !</a>
+                {% else %}
+                    <p></p>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

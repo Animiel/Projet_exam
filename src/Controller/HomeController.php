@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Annonce;
+use App\Form\AnnonceType;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Mailer\MailerInterface;       //ajouter dans les paramètres de fonction aussi
 use Symfony\Component\Mime\Email;       // one peut utiliser un templatedemail aussi, si c'est le cas, suppression de cette ligne
 
@@ -20,6 +22,31 @@ class HomeController extends AbstractController
         $annonces = $doctrine->getRepository(Annonce::class)->findAll();
         return $this->render('home/index.html.twig', [
             'annonces' => $annonces,
+        ]);
+    }
+
+    #[Route('/annonce', name: 'create_annonce')]
+    public function createAnnonce(ManagerRegistry $doctrine, Annonce $annonce = null, Request $request)
+    {
+        if (!$annonce) {
+            $annonce = new Annonce();
+        }
+
+        $form = $this->createForm(AnnonceType::class, $annonce);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $annonce = $form->getData();
+            // $annonce = $this->setAnnonceUser($user->getId());
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($annonce);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_home');
+        }
+        
+        return $this->render('home/annonce.html.twig', [
+            'formAnnonce' => $form->createView(),
         ]);
     }
 
