@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Mailer\MailerInterface;       //ajouter dans les paramètres de fonction aussi
 use Symfony\Component\Mime\Email;       // one peut utiliser un templatedemail aussi, si c'est le cas, suppression de cette ligne
 
@@ -36,8 +37,17 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
             $annonce = $form->getData();
-            // $annonce = $this->setAnnonceUser($user->getId());
+            $annonce->setAnnonceUser($user);
+
+            $imgFile = $form->get('image')->getData(); // Récupère le fichier uploadé via le champ dédié
+            if ($imgFile) {
+                $fileName = uniqid().'.'.$imgFile->guessExtension(); // Crée un nom unique pour le fichier
+                $imgFile->move('img/annonces', $fileName); // Déplace le fichier vers le dossier de destination
+                $annonce->setImage($fileName);
+            }
+
             $entityManager = $doctrine->getManager();
             $entityManager->persist($annonce);
             $entityManager->flush();

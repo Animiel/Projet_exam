@@ -27,12 +27,14 @@
 
     <h2>Les avis de recherche...</h2>
     
-    <a href="{{ path('create_annonce') }}">Nouvelle annonce</a>
+    {% if app.user %}
+        <a href="{{ path('create_annonce') }}">Nouvelle annonce</a>
+    {% endif %}
 
     <div id="grid">
         {% for annonce in annonces %}
             <div class="wanted">
-                <img src="{{ asset('/img/' ~ annonce.image ~ '') }}" class="wanted-pic">
+                <img src="{{ asset('/img/annonces/' ~ annonce.image ~ '') }}" class="wanted-pic">
 
                 <h3>Signes distinctifs</h3>
 
