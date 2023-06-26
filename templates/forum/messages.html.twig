@@ -25,14 +25,23 @@
         {% for message in sujet.messages %}
             <div>
                 <p>
-                    {{ message.msgUser }} --- {{ message.publicationDate | date('d/m/Y - H:i') }}
+                    {% if message.msgUser.banni == 1 %}
+                        {{ 'User' }}
+                    {% else %}
+                        {{ message.msgUser }}    
+                    {% endif %}
+                     --- {{ message.publicationDate | date('d/m/Y - H:i') }}
                 </p>
                 <p>
                     {{ message.contenu }}
                 </p>
             </div><br>
             <a href="{{ path('suppr_msg', {'id': message.id }) }}">Supprimer le message</a><br>
-            <a href="{{ path('ban_user', {'id': message.msgUser.id }) }}">Bannir l'utilisateur</a>
+            {% if message.msgUser.banni == 0 %}
+                <a href="{{ path('ban_user', {'id': message.msgUser.id }) }}">Bannir l'utilisateur</a>
+            {% else %}
+                <a href="{{ path('unban_user', {'id': message.msgUser.id }) }}">Unban l'utilisateur</a>
+            {% endif %}
         {% endfor %}
     </div>
 

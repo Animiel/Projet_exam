@@ -26,6 +26,16 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/members', name: 'list_members')]
+    public function members(ManagerRegistry $doctrine)
+    {
+        $users = $doctrine->getRepository(User::class)->findBy([], ['pseudo' => 'ASC']);
+
+        return $this->render('home/members.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
     #[Route('/annonce', name: 'create_annonce')]
     public function createAnnonce(ManagerRegistry $doctrine, Annonce $annonce = null, Request $request)
     {

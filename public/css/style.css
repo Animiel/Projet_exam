@@ -167,6 +167,16 @@ main #bloc {
     color: #ee850d;
 }
 
+.members {
+    list-style: none;
+    columns: 6;
+}
+
+.members a {
+    text-decoration: none;
+    color: black;
+}
+
 h1 {
     padding: 30px 0px;
     text-align: center;
@@ -187,6 +197,7 @@ h2 {
     justify-content: space-evenly;
     column-count: 4;
     text-align: center;
+    flex-flow: column wrap;
 }
 
 #categories a {

@@ -86,4 +86,15 @@ class SecurityController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
+
+    #[Route('/unban/{id}', name: 'unban_user')]
+    public function unban(ManagerRegistry $doctrine, User $user)
+    {
+        $user->setBanni(0);
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home');
+    }
 }

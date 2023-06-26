@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PetSeek | Liste des membres{% endblock %}
+
+{% block body %}
+
+<h1>Liste des utilisateurs</h1>
+
+<p>Pour voir le profil des membres et interagir avec eux, cliquez sur leur pseudo.</p>
+
+<ul class="members">
+    {% for user in users %}
+        <li><a href="">{{ user }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
