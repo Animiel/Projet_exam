@@ -54,7 +54,7 @@
                     {% endif %}
                 </ul>
                 {% if app.user %}
-                    <a href="{{ path('notif_annonce', {'aid': annonce.annonceUser.id, 'uid': app.user.id}) }}">J'ai une info !</a>
+                    <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id}) }}">J'ai une info !</a>
                 {% else %}
                     <p></p>
                 {% endif %}

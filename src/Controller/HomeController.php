@@ -60,23 +60,27 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/notif/{aid}/{uid}', name: 'notif_annonce')]
-    #[ParamConverter("Annonce", options:["mapping" => ["aid" => "annonceUser"]])]
-    #[ParamConverter("User", options:["mapping" => ["uid" => "id"]])]
-    public function notification(User $user, User $annonceur, MailerInterface $mailer)
+    #[Route('/notif/{id}', name: 'notif_annonce')]
+    // #[ParamConverter("Annonce", options:["mapping" => ["aid" => "annonceUser"]])]
+    // #[ParamConverter("User", options:["mapping" => ["uid" => "id"]])]
+    public function notification(User $annonceur, MailerInterface $mailer)
     {
+        $user = $this->getUser();
+        $userEmail = $user->getEmail();
+        $annonceurEmail = $annonceur->getEmail();
         $email = (new Email())
                 ->from('noreply@petseek.com')
-                ->to($annonceur->getEmail())
+                ->to($annonceurEmail)
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
                 ->subject('Quelqu\'un a peut-être une info sur votre animal disparu !')
-                ->text($user->getEmail().' a une info sur votre animal. Pour votre sécurité : Méfiez vous des pièges et prenez les mesures nécessaires avant de rencontrer cette personne !');
+                ->text($userEmail.' a une info sur votre animal. Pour votre sécurité : Méfiez vous des pièges et prenez les mesures nécessaires avant de rencontrer ou contacter cette personne !');
                 // ->html('<p>See Twig integration for better HTML integration!</p>');
     
         $mailer->send($email);
+        // dd($mailer);
 
         return $this->redirectToRoute('app_home');
     }
