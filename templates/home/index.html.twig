@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Acceuil{% endblock %}
+{% block title %}PetSeek | Acceuil{% endblock %}
 
 {% block body %}
 
@@ -54,9 +54,13 @@
                     {% endif %}
                 </ul>
                 {% if app.user %}
-                    <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id}) }}">J'ai une info !</a>
+                    <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
                 {% else %}
                     <p></p>
+                {% endif %}
+                {% if app.user %}
+                    <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a><br>
+                    <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
                 {% endif %}
             </div>
         {% endfor %}

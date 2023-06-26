@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Forum | Catégories{% endblock %}
+{% block title %}PetSeek | Forum | Catégories{% endblock %}
 
 {% block body %}
 
@@ -27,6 +27,7 @@
                 <img src="{{ asset('img/' ~ categorie.image) }}" class="categorie-pic"><br>
                 {{ categorie.name }}
             </a><br>
+            <a href="{{ path('suppr_ctg', {'id': categorie.id }) }}">Supprimer la catégorie</a><br>
         {% endfor %}
     </div>
 

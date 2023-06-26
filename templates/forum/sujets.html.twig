@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Forum | Sujets{% endblock %}
+{% block title %}PetSeek | Forum | Sujets{% endblock %}
 
 {% block body %}
 
@@ -24,6 +24,7 @@
     <div>
         {% for sujet in categorie.sujets %}
             <a href="{{ path('messages_sujet', {'id': sujet.id }) }}">{{ sujet }}</a><br>
+            <a href="{{ path('suppr_sujet', {'id': sujet.id }) }}">Supprimer le sujet</a><br>
         {% endfor %}
     </div>
 

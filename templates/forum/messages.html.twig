@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Forum | {{ sujet }} | Messages{% endblock %}
+{% block title %}PetSeek | Forum | {{ sujet }} | Messages{% endblock %}
 
 {% block body %}
 
@@ -31,6 +31,8 @@
                     {{ message.contenu }}
                 </p>
             </div><br>
+            <a href="{{ path('suppr_msg', {'id': message.id }) }}">Supprimer le message</a><br>
+            <a href="{{ path('ban_user', {'id': message.msgUser.id }) }}">Bannir l'utilisateur</a>
         {% endfor %}
     </div>
 
