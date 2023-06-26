@@ -33,6 +33,11 @@ nav p a {
     text-decoration: none;
 }
 
+.bottom {
+    display: flex;
+    align-items: center;
+}
+
 main {
     display: flex;
 }
@@ -216,4 +221,11 @@ h2 {
 
 footer {
     line-height: 20px;
+}
+
+#contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
 }

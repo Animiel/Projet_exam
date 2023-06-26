@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PetSeek | Contact{% endblock %}
+
+{% block body %}
+
+<div id="contact">
+    <h1>Contact</h1>
+    
+    <p>Pour toute information ou demande, veuillez remplir le formulaire ci-dessous. Nous traiterons votre demande dans les plus brefs délais. Merci pour votre compréhension.</p>
+        
+        {{ form_start(contactForm) }}
+            {{ form_row(contactForm.nom) }}<br>
+            {{ form_row(contactForm.prenom) }}<br>
+            {{ form_row(contactForm.email) }}<br>
+            {{ form_row(contactForm.numero) }}<br>
+            {{ form_row(contactForm.sujet) }}<br>
+            {{ form_row(contactForm.message) }}<br>
+    
+            <button type="submit" class="btn">Valider</button>
+        {{ form_end(contactForm) }}
+</div>
+    
+{% endblock %}
