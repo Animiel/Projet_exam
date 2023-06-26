@@ -21,10 +21,14 @@
         Bonne discussion à toutes et à tous !
     </p>
 
+    {% if app.user %}
+        <a href="{{ path('crea_ctg') }}">Nouvelle catégorie</a>
+    {% endif %}
+
     <div id="categories">
         {% for categorie in categories %}
             <a href="{{ path('sujets_categorie', {'id': categorie.id }) }}">
-                <img src="{{ asset('img/' ~ categorie.image) }}" class="categorie-pic"><br>
+                <img src="{{ asset('img/categories/' ~ categorie.image) }}" class="categorie-pic"><br>
                 {{ categorie.name }}
             </a><br>
             <a href="{{ path('suppr_ctg', {'id': categorie.id }) }}">Supprimer la catégorie</a><br>

@@ -24,17 +24,17 @@ class ContactType extends AbstractType
                 'required' => false,
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Email : ',
+                'label' => 'Email* : ',
             ])
             ->add('numero', TextType::class, [
                 'label' => 'Numéro de téléphone : ',
                 'required' => false,
             ])
             ->add('sujet', TextType::class, [
-                'label' => 'Sujet : ',
+                'label' => 'Sujet* : ',
             ])
             ->add('message', TextareaType::class, [
-                'label' => 'Votre message : ',
+                'label' => 'Votre message* : ',
             ])
         ;
     }

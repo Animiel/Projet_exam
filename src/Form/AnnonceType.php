@@ -14,14 +14,20 @@ class AnnonceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('infoUne', TextType::class)
+            ->add('infoUne', TextType::class, [
+                'label' => 'Première information* : ',
+            ])
             ->add('infoDeux', TextType::class, [
                 "required" => false,
+                'label' => 'Deuxième information : ',
             ])
             ->add('infoTrois', TextType::class, [
                 "required" => false,
+                'label' => 'Troisième information : ',
             ])
-            ->add('image', FileType::class)
+            ->add('image', FileType::class, [
+                'label' => 'Image de votre animal* : ',
+            ])
             // ->add('annonceUser')
         ;
     }

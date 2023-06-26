@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PetSeek | Nouvelle catégorie{% endblock %}
+
+{% block body %}
+
+<h1>Nouvelle catégorie</h1>
+
+<p>Les champs marqués d'une * sont obligatoires.</p>
+    
+    {{ form_start(formCtg) }}
+        {{ form_row(formCtg.name) }}<br>
+        {{ form_row(formCtg.image) }}<br>
+
+        <button type="submit" class="btn">Valider</button>
+    {{ form_end(formCtg) }}
+    
+{% endblock %}
