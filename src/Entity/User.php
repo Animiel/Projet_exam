@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints\Date;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -58,6 +57,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'annonceUser', targetEntity: Annonce::class)]
     private Collection $annonces;
 
+    #[ORM\ManyToMany(targetEntity: Annonce::class, inversedBy: 'usersFavorite')]
+    private Collection $annonceFavorites;
+
+    #[ORM\ManyToMany(targetEntity: Sujet::class, inversedBy: 'usersFavorite')]
+    private Collection $sujetFavorites;
+
     public function __construct()
     {
         //pour une valeur par défaut on peut l'instancier ici ou dans le controller (cf. RegistrationController $now = new \DateTime $user->setDateInscription($now))
@@ -65,6 +70,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->messages = new ArrayCollection();
         $this->sujets = new ArrayCollection();
         $this->annonces = new ArrayCollection();
+        $this->annonceFavorites = new ArrayCollection();
+        $this->sujetFavorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -290,4 +297,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Annonce>
+     */
+    public function getAnnonceFavorites(): Collection
+    {
+        return $this->annonceFavorites;
+    }
+
+    public function addAnnonceFavorite(Annonce $annonceFavorite): self
+    {
+        if (!$this->annonceFavorites->contains($annonceFavorite)) {
+            $this->annonceFavorites->add($annonceFavorite);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonceFavorite(Annonce $annonceFavorite): self
+    {
+        $this->annonceFavorites->removeElement($annonceFavorite);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sujet>
+     */
+    public function getSujetFavorites(): Collection
+    {
+        return $this->sujetFavorites;
+    }
+
+    public function addSujetFavorite(Sujet $sujetFavorite): self
+    {
+        if (!$this->sujetFavorites->contains($sujetFavorite)) {
+            $this->sujetFavorites->add($sujetFavorite);
+        }
+
+        return $this;
+    }
+
+    public function removeSujetFavorite(Sujet $sujetFavorite): self
+    {
+        $this->sujetFavorites->removeElement($sujetFavorite);
+
+        return $this;
+    }
+
 }

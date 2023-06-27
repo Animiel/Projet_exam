@@ -35,6 +35,19 @@
         {% for annonce in annonces %}
             <div class="wanted">
                 <img src="{{ asset('/img/annonces/' ~ annonce.image ~ '') }}" class="wanted-pic">
+                {% if app.user %}
+                        {% if annonce.id in app.user.annonceFavorites %}
+                        <a href="">
+                            <i class="fa-solid fa-heart" style="color: #d747cb;"></i>
+                        </a>
+                        {% else %}
+                            <a href="{{ path('add_afav', {'id': annonce.id }) }}">
+                                <i class="fa-regular fa-heart" style="color: #d747cb;"></i>
+                            </a>
+                        {% endif %}
+                {% else %}
+                    <p>Vous devez être connecté pour ajouter cette annonce à vos favoris.</p>
+                {% endif %}
 
                 <h3>Signes distinctifs</h3>
 

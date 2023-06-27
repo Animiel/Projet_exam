@@ -33,9 +33,13 @@ class Sujet
     #[ORM\JoinColumn(nullable: false)]
     private ?User $sujUser = null;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'sujetFavorites')]
+    private Collection $usersFavorite;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->usersFavorite = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,5 +127,32 @@ class Sujet
 
     public function __toString() {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsersFavorite(): Collection
+    {
+        return $this->usersFavorite;
+    }
+
+    public function addUsersFavorite(User $usersFavorite): self
+    {
+        if (!$this->usersFavorite->contains($usersFavorite)) {
+            $this->usersFavorite->add($usersFavorite);
+            $usersFavorite->addSujetFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersFavorite(User $usersFavorite): self
+    {
+        if ($this->usersFavorite->removeElement($usersFavorite)) {
+            $usersFavorite->removeSujetFavorite($this);
+        }
+
+        return $this;
     }
 }

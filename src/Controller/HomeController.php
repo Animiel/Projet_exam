@@ -3,15 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Sujet;
 use App\Entity\Annonce;
 use App\Form\AnnonceType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Mailer\MailerInterface;       //ajouter dans les paramètres de fonction aussi
 use Symfony\Component\Mime\Email;       // one peut utiliser un templatedemail aussi, si c'est le cas, suppression de cette ligne
 
@@ -93,5 +94,55 @@ class HomeController extends AbstractController
         // dd($mailer);
 
         return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/addAnnonceFav/{id}', name: 'add_afav')]
+    public function addaFav(ManagerRegistry $doctrine, Annonce $annonce)
+    {
+        $user = $this->getUser();
+        
+        if(!in_array($annonce, $user->getAnnonceFavorites())) {
+            $entityManager = $doctrine->getManager();
+            $user->addAnnonceFavorite($annonce);
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/annoncesFav', name: 'annonces_fav')]
+    public function aFav(ManagerRegistry $doctrine)
+    {
+        $annonces = $doctrine->getRepository(Annonce::class)->findFav();
+
+        return $this->render('home/aFav.html.twig', [
+            'annonces' => $annonces,
+        ]);
+    }
+
+    #[Route('/addSujFav/{id}', name: 'add_sujfav')]
+    public function addSujFav(ManagerRegistry $doctrine, Sujet $sujet)
+    {
+        $user = $this->getUser();
+        
+        if(!in_array($sujet, $user->getSujetFavorites())) {
+            $user->addSujetFavorite($sujet);
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_forum');
+    }
+
+    #[Route('/sujetsFav', name: 'sujets_fav')]
+    public function sujetsFav(ManagerRegistry $doctrine)
+    {
+        $sujets = $doctrine->getRepository(Sujet::class)->findFav();
+
+        return $this->render('home/sujetsFav.html.twig', [
+            'sujets' => $sujets,
+        ]);
     }
 }

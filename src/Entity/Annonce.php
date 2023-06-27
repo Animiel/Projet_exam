@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnnonceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
@@ -28,6 +30,14 @@ class Annonce
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $annonceUser = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'annonceFavorites')]
+    private Collection $usersFavorite;
+
+    public function __construct()
+    {
+        $this->usersFavorite = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +100,33 @@ class Annonce
     public function setAnnonceUser(?User $annonceUser): self
     {
         $this->annonceUser = $annonceUser;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsersFavorite(): Collection
+    {
+        return $this->usersFavorite;
+    }
+
+    public function addUsersFavorite(User $usersFavorite): self
+    {
+        if (!$this->usersFavorite->contains($usersFavorite)) {
+            $this->usersFavorite->add($usersFavorite);
+            $usersFavorite->addAnnonceFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersFavorite(User $usersFavorite): self
+    {
+        if ($this->usersFavorite->removeElement($usersFavorite)) {
+            $usersFavorite->removeAnnonceFavorite($this);
+        }
 
         return $this;
     }
