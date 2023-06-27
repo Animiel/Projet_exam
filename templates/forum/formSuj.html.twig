@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PetSeek | Nouveau sujet{% endblock %}
+
+{% block body %}
+
+<h1>Nouveau sujet</h1>
+
+<p>Les champs marqués d'une * sont obligatoires.</p>
+    
+    {{ form_start(formSuj) }}
+        {{ form_row(formSuj.name) }}<br>
+
+        <button type="submit" class="btn">Valider</button>
+    {{ form_end(formSuj) }}
+    
+{% endblock %}

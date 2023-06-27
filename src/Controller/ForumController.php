@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Sujet;
+use App\Entity\Message;
+use App\Form\SujetType;
 use App\Entity\Categorie;
+use App\Form\MessageType;
 use App\Form\CategorieType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ForumController extends AbstractController
 {
@@ -33,9 +37,39 @@ class ForumController extends AbstractController
     }
 
     #[Route('/forum/sujet/{id}', name: 'messages_sujet')]
-    public function afficherMessages(ManagerRegistry $doctrine, Sujet $sujet) {
+    public function afficherMessages(ManagerRegistry $doctrine, Sujet $sujet, Request $request, Message $message = null)
+    {
+        if(!$message) {
+            $message = new Message();
+        }
+
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+        $user = $this->getUser();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message = $form->getData();
+
+            // $imgFile = $form->get('image')->getData();
+            // if ($imgFile) {
+            //     $fileName = uniqid().'.'.$imgFile->guessExtension();
+            //     $imgFile->move('img/categories', $fileName);
+            //     $categorie->setImage($fileName);
+            // }
+            $message->setPublicationDate(new \DateTime());
+            $message->setMsgUser($user);
+            $message->setSujet($sujet);
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($message);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('messages_sujet', ['id' => $sujet->getId()]);
+        }
+        
         return $this->render('forum/messages.html.twig', [
-            'sujet' => $sujet
+            'sujet' => $sujet,
+            'formMsg' => $form->createView(),
         ]);
     }
 
@@ -65,6 +99,34 @@ class ForumController extends AbstractController
         
         return $this->render('forum/formCtg.html.twig', [
             'formCtg' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/creerSuj/{id}', name: 'crea_suj')]
+    #[ParamConverter("categorie", options:["mapping" => ["id" => "id"]])]
+    public function newSuj(ManagerRegistry $doctrine, Sujet $sujet = null, Request $request, Categorie $ctg)
+    {
+        $form = $this->createForm(SujetType::class, $sujet);
+        $form->handleRequest($request);
+        $user = $this->getUser();
+        
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sujet = $form->getData();
+
+            $sujet->setCreationDate(new \DateTime());
+            $sujet->setSujUser($user);
+            $sujet->setCategorie($ctg);
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($sujet);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('sujets_categorie', ['id' => $ctg->getId()]);
+        }
+        
+        return $this->render('forum/formSuj.html.twig', [
+            'formSuj' => $form->createView(),
         ]);
     }
 }

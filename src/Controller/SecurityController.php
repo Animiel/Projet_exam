@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -47,14 +48,16 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
-    #[Route('/supprMsg/{id}', name: 'suppr_msg')]
-    public function supprMsg(ManagerRegistry $doctrine, Message $msg)
+    #[Route('/supprMsg/{idSuj}/{idMsg}', name: 'suppr_msg')]
+    #[ParamConverter("msg", options:["mapping" => ["idMsg" => "id"]])]
+    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
+    public function supprMsg(ManagerRegistry $doctrine, Message $msg, Sujet $sujet)
     {
         $entityManager = $doctrine->getManager();
         $entityManager->remove($msg);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('messages_sujet', ['id' => $sujet->getId()]);
     }
 
     #[Route('/supprAnnonce/{id}', name: 'suppr_annonce')]
@@ -67,14 +70,16 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
-    #[Route('/supprSujet/{id}', name: 'suppr_sujet')]
-    public function supprSujet(ManagerRegistry $doctrine, Sujet $sujet)
+    #[Route('/supprSujet/{idCtg}/{idSuj}', name: 'suppr_sujet')]
+    #[ParamConverter("ctg", options:["mapping" => ["idCtg" => "id"]])]
+    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
+    public function supprSujet(ManagerRegistry $doctrine, Sujet $sujet, Categorie $ctg)
     {
         $entityManager = $doctrine->getManager();
         $entityManager->remove($sujet);
         $entityManager->flush();
         
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('sujets_categorie', ['id' => $ctg->getId()]);
     }
 
     #[Route('/supprCtg/{id}', name: 'suppr_ctg')]
@@ -84,7 +89,7 @@ class SecurityController extends AbstractController
         $entityManager->remove($categorie);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_forum');
     }
 
     #[Route('/unban/{id}', name: 'unban_user')]

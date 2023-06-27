@@ -6,20 +6,11 @@
 
     <h1>{{ sujet }}</h1>
 
-    {# <p>
-        Ici vous pourrez discuter de vos animaux préférés, donner des conseils, poser vos questions et partager vos anecdotes ou astuces avec tout le monde.
-    </p>
-    <p>
-        Pour se faire, rien de plus facile, il suffit de cliquer sur une catégorie (icônes ci-dessous), regarder si votre sujet (ou un sujet similaire) est déjà existant et y poster un message !<br>
-        Si ce n'est pas le cas, il suffit simplement de créer un nouveau sujet !
-    </p>
-    <p>
-        Pour toute question concernant le fonctionnement du forum et les autorisations, vous pouvez à tout moment contacter un administrateur (pseudo avec badge papatte), ou consulter le règlement 
-        <a href="" class="text-link">juste ici</a>.
-    </p>
-    <p>
-        Bonne discussion à toutes et à tous !
-    </p> #}
+    {{ form_start(formMsg) }}
+        {{ form_row(formMsg.contenu) }}<br>
+
+        <button type="submit" class="btn">Poster</button>
+    {{ form_end(formMsg) }}
 
     <div>
         {% for message in sujet.messages %}
@@ -36,7 +27,7 @@
                     {{ message.contenu }}
                 </p>
             </div><br>
-            <a href="{{ path('suppr_msg', {'id': message.id }) }}">Supprimer le message</a><br>
+            <a href="{{ path('suppr_msg', {'idMsg': message.id, 'idSuj': sujet.id }) }}">Supprimer le message</a><br>
             {% if message.msgUser.banni == 0 %}
                 <a href="{{ path('ban_user', {'id': message.msgUser.id }) }}">Bannir l'utilisateur</a>
             {% else %}

@@ -6,25 +6,14 @@
 
     <h1>{{ categorie }}</h1>
 
-    {# <p>
-        Ici vous pourrez discuter de vos animaux préférés, donner des conseils, poser vos questions et partager vos anecdotes ou astuces avec tout le monde.
-    </p>
-    <p>
-        Pour se faire, rien de plus facile, il suffit de cliquer sur une catégorie (icônes ci-dessous), regarder si votre sujet (ou un sujet similaire) est déjà existant et y poster un message !<br>
-        Si ce n'est pas le cas, il suffit simplement de créer un nouveau sujet !
-    </p>
-    <p>
-        Pour toute question concernant le fonctionnement du forum et les autorisations, vous pouvez à tout moment contacter un administrateur (pseudo avec badge papatte), ou consulter le règlement 
-        <a href="" class="text-link">juste ici</a>.
-    </p>
-    <p>
-        Bonne discussion à toutes et à tous !
-    </p> #}
+    {% if app.user %}
+        <a href="{{ path('crea_suj', {'id': categorie.id }) }}">Nouveau sujet</a>
+    {% endif %}
 
     <div>
         {% for sujet in categorie.sujets %}
             <a href="{{ path('messages_sujet', {'id': sujet.id }) }}">{{ sujet }}</a><br>
-            <a href="{{ path('suppr_sujet', {'id': sujet.id }) }}">Supprimer le sujet</a><br>
+            <a href="{{ path('suppr_sujet', {'idSuj': sujet.id, 'idCtg': categorie.id }) }}">Supprimer le sujet</a><br>
         {% endfor %}
     </div>
 
