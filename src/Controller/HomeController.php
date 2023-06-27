@@ -101,7 +101,7 @@ class HomeController extends AbstractController
     {
         $user = $this->getUser();
         
-        if(!in_array($annonce, $user->getAnnonceFavorites())) {
+        if(!$user->getAnnonceFavorites()->exists(function($test) use ($annonce) { return; })) {
             $entityManager = $doctrine->getManager();
             $user->addAnnonceFavorite($annonce);
             $entityManager->persist($user);
