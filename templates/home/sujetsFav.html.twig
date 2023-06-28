@@ -4,4 +4,14 @@
 
 {% block body %}
 
+<h1>Mes sujets favoris</h1>
+
+<ul>
+    {% for sujet in app.user.sujetFavorites %}
+        <li>
+            <a href="{{ path('messages_sujet', {'id': sujet.id }) }}">{{ sujet }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

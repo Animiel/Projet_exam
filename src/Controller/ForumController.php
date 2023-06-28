@@ -129,4 +129,40 @@ class ForumController extends AbstractController
             'formSuj' => $form->createView(),
         ]);
     }
+
+    #[Route('/addSujFav/{id}', name: 'add_sujfav')]
+    public function addSujFav(ManagerRegistry $doctrine, Sujet $sujet)
+    {
+        $user = $this->getUser();
+        
+        if(!$user->getSujetFavorites()->exists(function($test) use ($sujet) { return; })) {
+            $entityManager = $doctrine->getManager();
+            $user->addSujetFavorite($sujet);
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
+        else {
+            $flash = "Ce sujet est déjà dans vos favoris.";
+        }
+
+        return $this->redirectToRoute('app_forum');
+    }
+
+    #[Route('/removeSujFav/{id}', name: 'remove_sujfav')]
+    public function removeSujFav(ManagerRegistry $doctrine, Sujet $sujet)
+    {
+        $user = $this->getUser();
+        
+        $entityManager = $doctrine->getManager();
+        $user->removeSujetFavorite($sujet);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_forum');
+    }
+
+    #[Route('/sujetsFav', name: 'sujets_fav')]
+    public function sujetsFav(ManagerRegistry $doctrine)
+    {
+        return $this->render('home/sujetsFav.html.twig', []);
+    }
 }

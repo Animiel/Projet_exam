@@ -134,50 +134,12 @@ class HomeController extends AbstractController
     #[Route('/annoncesFav', name: 'annonces_fav')]
     public function aFav(ManagerRegistry $doctrine)
     {
-        $annonces = $doctrine->getRepository(Annonce::class)->findFav();
-
-        return $this->render('home/aFav.html.twig', [
-            'annonces' => $annonces,
-        ]);
+        return $this->render('home/aFav.html.twig', []);
     }
 
-    #[Route('/addSujFav/{id}', name: 'add_sujfav')]
-    public function addSujFav(ManagerRegistry $doctrine, Sujet $sujet)
+    #[Route('/myAnnonces', name: 'my_annonces')]
+    public function myAnnonces()
     {
-        $user = $this->getUser();
-        
-        if(!$user->getSujetFavorites()->exists(function($test) use ($sujet) { return; })) {
-            $entityManager = $doctrine->getManager();
-            $user->addSujetFavorite($sujet);
-            $entityManager->persist($user);
-            $entityManager->flush();
-        }
-        else {
-            $flash = "Ce sujet est déjà dans vos favoris.";
-        }
-
-        return $this->redirectToRoute('app_forum');
-    }
-
-    #[Route('/removeSujFav/{id}', name: 'remove_sujfav')]
-    public function removeSujFav(ManagerRegistry $doctrine, Sujet $sujet)
-    {
-        $user = $this->getUser();
-        
-        $entityManager = $doctrine->getManager();
-        $user->removeSujetFavorite($sujet);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_forum');
-    }
-
-    #[Route('/sujetsFav', name: 'sujets_fav')]
-    public function sujetsFav(ManagerRegistry $doctrine)
-    {
-        $sujets = $doctrine->getRepository(Sujet::class)->findFav();
-
-        return $this->render('home/sujetsFav.html.twig', [
-            'sujets' => $sujets,
-        ]);
+        return $this->render('home/myAnnonces.html.twig', []);
     }
 }

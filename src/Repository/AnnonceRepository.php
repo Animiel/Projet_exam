@@ -39,22 +39,6 @@ class AnnonceRepository extends ServiceEntityRepository
         }
     }
 
-    public function findFav()
-    {
-        $em = $this->getEntityManager();
-        $query = $em->createQueryBuilder();
-
-        $qb = $query;
-        $qb->select('e')
-            ->from('App\Entity\Annonce', 'e')
-            ->innerJoin('App\Entity\User.favourites', 'ep')
-            ->where('ep.id = e.id');
-
-            //renvoyer le résultat
-            $query = $qb->getQuery();
-            return $query->getResult();
-    }
-
 //    /**
 //     * @return Annonce[] Returns an array of Annonce objects
 //     */
