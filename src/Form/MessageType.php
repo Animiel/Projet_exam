@@ -6,6 +6,7 @@ use App\Entity\Message;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class MessageType extends AbstractType
@@ -19,6 +20,10 @@ class MessageType extends AbstractType
             // ->add('publicationDate')
             // ->add('msgUser')
             // ->add('sujet')
+            ->add('images', FileType::class, [
+                'label' => 'Images : ',
+                'multiple' => true,
+            ])
         ;
     }
 

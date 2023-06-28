@@ -59,12 +59,18 @@ class ForumController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $message = $form->getData();
 
-            // $imgFile = $form->get('image')->getData();
-            // if ($imgFile) {
-            //     $fileName = uniqid().'.'.$imgFile->guessExtension();
-            //     $imgFile->move('img/categories', $fileName);
-            //     $categorie->setImage($fileName);
-            // }
+            $imgFiles[] = $form->get('images')->getData();
+            if (!empty($imgFiles)) {
+                foreach($imgFiles as $image) {
+                    foreach($image as $img) {
+                        $fileName = uniqid().'.'.$img->guessExtension();
+                        $img->move('img/posts', $fileName);
+                        $image[] = $img;
+                        $imgFiles[] = $image;
+                    }
+                }
+            }
+            $message->setImages($imgFiles);
 
             //on met à jour les champs sans l'interaction de l'utilisateur
             $message->setPublicationDate(new \DateTime());
@@ -124,8 +130,8 @@ class ForumController extends AbstractController
         ]);
     }
 
-    #[Route('/creerSuj/{id}', name: 'crea_suj')]
-    #[ParamConverter("categorie", options:["mapping" => ["id" => "id"]])]
+    #[Route('/creerSuj/{idCtg}', name: 'crea_suj')]
+    #[ParamConverter("ctg", options:["mapping" => ["idCtg" => "id"]])]
     public function newSuj(ManagerRegistry $doctrine, Sujet $sujet = null, Request $request, Categorie $ctg)
     {
         $form = $this->createForm(SujetType::class, $sujet);
@@ -139,6 +145,7 @@ class ForumController extends AbstractController
             $sujet->setCreationDate(new \DateTime());
             $sujet->setSujUser($user);
             $sujet->setCategorie($ctg);
+            $sujet->setClosed(0);
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($sujet);
