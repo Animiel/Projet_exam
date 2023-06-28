@@ -107,6 +107,26 @@ class HomeController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
         }
+        else {
+            $flash = "Cette annonce est déjà dans vos favoris.";
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/removeAnnonceFav/{id}', name: 'remove_afav')]
+    public function removeaFav(ManagerRegistry $doctrine, Annonce $annonce)
+    {
+        $user = $this->getUser();
+        
+        // if($user->getAnnonceFavorites()->exists(function($test) use ($annonce) { return; })) {
+            $entityManager = $doctrine->getManager();
+            $user->removeAnnonceFavorite($annonce);
+            $entityManager->flush();
+        // }
+        // else {
+            // $flash = "Cette annonce n'est pas dans vos favoris.";
+        // }
 
         return $this->redirectToRoute('app_home');
     }
@@ -126,12 +146,27 @@ class HomeController extends AbstractController
     {
         $user = $this->getUser();
         
-        if(!in_array($sujet, $user->getSujetFavorites())) {
-            $user->addSujetFavorite($sujet);
+        if(!$user->getSujetFavorites()->exists(function($test) use ($sujet) { return; })) {
             $entityManager = $doctrine->getManager();
+            $user->addSujetFavorite($sujet);
             $entityManager->persist($user);
             $entityManager->flush();
         }
+        else {
+            $flash = "Ce sujet est déjà dans vos favoris.";
+        }
+
+        return $this->redirectToRoute('app_forum');
+    }
+
+    #[Route('/removeSujFav/{id}', name: 'remove_sujfav')]
+    public function removeSujFav(ManagerRegistry $doctrine, Sujet $sujet)
+    {
+        $user = $this->getUser();
+        
+        $entityManager = $doctrine->getManager();
+        $user->removeSujetFavorite($sujet);
+        $entityManager->flush();
 
         return $this->redirectToRoute('app_forum');
     }

@@ -6,13 +6,27 @@
 
     <h1>{{ categorie }}</h1>
 
-    {% if app.user %}
-        <a href="{{ path('crea_suj', {'id': categorie.id }) }}">Nouveau sujet</a>
-    {% endif %}
+    <p>
+        {% if app.user %}
+            <a href="{{ path('crea_suj', {'id': categorie.id }) }}">Nouveau sujet</a>
+        {% endif %}
+    </p>
 
     <div>
         {% for sujet in categorie.sujets %}
-            <a href="{{ path('messages_sujet', {'id': sujet.id }) }}">{{ sujet }}</a><br>
+            <a href="{{ path('messages_sujet', {'id': sujet.id }) }}">{{ sujet }}</a>
+            {% if app.user %}
+                {% if sujet in app.user.sujetFavorites %}
+                    <a href="{{ path('remove_sujfav', {'id': sujet.id }) }}">
+                        <i class="fa-solid fa-heart" style="color: #d747cb;"></i>
+                    </a>
+                {% else %}
+                    <a href="{{ path('add_sujfav', {'id': sujet.id }) }}">
+                        <i class="fa-regular fa-heart" style="color: #d747cb;"></i>
+                    </a>
+                {% endif %}
+            {% endif %}<br>
+
             <a href="{{ path('suppr_sujet', {'idSuj': sujet.id, 'idCtg': categorie.id }) }}">Supprimer le sujet</a><br>
         {% endfor %}
     </div>
