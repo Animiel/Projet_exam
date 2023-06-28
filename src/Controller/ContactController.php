@@ -17,12 +17,15 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function index(ManagerRegistry $doctrine, Contact $contact = null, Request $request, MailerInterface $mailer): Response
     {
+        //on crée le formulaire de contact grâce à son modèle ContactType
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
+        //si le formulaire est valide et envoyé...
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $form->getData();
 
+            //on envoie l'email au(x) responsable(s) du site en récupérant les informations des champs du formulaire
             $email = (new Email())
                 ->from($form->get('email')->getData())
                 ->to('serviceadmin@petseek.com')
@@ -36,6 +39,7 @@ class ContactController extends AbstractController
     
             $mailer->send($email);
 
+            //on stocke le message dans la base de données pour y accéder si besoin
             $entityManager = $doctrine->getManager();
             $entityManager->persist($contact);
             $entityManager->flush();

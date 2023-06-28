@@ -119,14 +119,9 @@ class HomeController extends AbstractController
     {
         $user = $this->getUser();
         
-        // if($user->getAnnonceFavorites()->exists(function($test) use ($annonce) { return; })) {
-            $entityManager = $doctrine->getManager();
-            $user->removeAnnonceFavorite($annonce);
-            $entityManager->flush();
-        // }
-        // else {
-            // $flash = "Cette annonce n'est pas dans vos favoris.";
-        // }
+        $entityManager = $doctrine->getManager();
+        $user->removeAnnonceFavorite($annonce);
+        $entityManager->flush();
 
         return $this->redirectToRoute('app_home');
     }

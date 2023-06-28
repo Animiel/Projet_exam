@@ -20,17 +20,21 @@ class ForumController extends AbstractController
     #[Route('/forum', name: 'app_forum')]
     public function index(ManagerRegistry $doctrine): Response
     {
+        //on récupère toutes les catégories en les classant par ordre alphabétique croissant (A -> Z)
         $categories = $doctrine->getRepository(Categorie::class)->findBy(
             [],
             ['name' => 'ASC']
         );
+
+        //on envoie la liste sur la vue correspondante
         return $this->render('forum/index.html.twig', [
             'categories' => $categories,
         ]);
     }
 
     #[Route('/forum/{id}', name: 'sujets_categorie')]
-    public function afficherSujets(Categorie $categorie) {
+    public function afficherSujets(Categorie $categorie)
+    {
         return $this->render('forum/sujets.html.twig', [
             'categorie' => $categorie
         ]);
@@ -39,12 +43,14 @@ class ForumController extends AbstractController
     #[Route('/forum/sujet/{id}', name: 'messages_sujet')]
     public function afficherMessages(ManagerRegistry $doctrine, Sujet $sujet, Request $request, Message $message = null)
     {
+        //si le message n'existe pas, on en crée un
         if(!$message) {
             $message = new Message();
         }
 
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
+        //on récupère les infos de l'utilisateur actuellement connecté
         $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,18 +62,24 @@ class ForumController extends AbstractController
             //     $imgFile->move('img/categories', $fileName);
             //     $categorie->setImage($fileName);
             // }
+
+            //on met à jour les champs sans l'interaction de l'utilisateur
             $message->setPublicationDate(new \DateTime());
             $message->setMsgUser($user);
             $message->setSujet($sujet);
 
+            //on met à jour la base de données
             $entityManager = $doctrine->getManager();
+            //on prépare les changements "en file d'attente"
             $entityManager->persist($message);
+            //on les change définitivement dans la base de données
             $entityManager->flush();
 
             return $this->redirectToRoute('messages_sujet', ['id' => $sujet->getId()]);
         }
         
         return $this->render('forum/messages.html.twig', [
+            //on transmet les éléments à la vue
             'sujet' => $sujet,
             'formMsg' => $form->createView(),
         ]);
@@ -82,10 +94,14 @@ class ForumController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categorie = $form->getData();
 
+            //on récupère le fichier
             $imgFile = $form->get('image')->getData();
             if ($imgFile) {
+                //on lui donne un nom unique
                 $fileName = uniqid().'.'.$imgFile->guessExtension();
+                //on le met dans le dossier voulu
                 $imgFile->move('img/categories', $fileName);
+                //et on attribut le nouveau nom du fichier à son champ en base de donnée
                 $categorie->setImage($fileName);
             }
             $categorie->setCreationDate(new \DateTime());
@@ -135,7 +151,9 @@ class ForumController extends AbstractController
     {
         $user = $this->getUser();
         
+        //on vérifie si l'annonce n'est pas dans la collection
         if(!$user->getSujetFavorites()->exists(function($test) use ($sujet) { return; })) {
+            //et on l'ajoute si c'est le cas
             $entityManager = $doctrine->getManager();
             $user->addSujetFavorite($sujet);
             $entityManager->persist($user);

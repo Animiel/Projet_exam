@@ -21,7 +21,7 @@
         Bonne discussion à toutes et à tous !
     </p>
 
-    {% if app.user %}
+    {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('crea_ctg') }}">Nouvelle catégorie</a>
     {% endif %}
 
@@ -31,7 +31,10 @@
                 <img src="{{ asset('img/categories/' ~ categorie.image) }}" class="categorie-pic"><br>
                 {{ categorie.name }}
             </a><br>
-            <a href="{{ path('suppr_ctg', {'id': categorie.id }) }}">Supprimer la catégorie</a><br>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('suppr_ctg', {'id': categorie.id }) }}">Supprimer la catégorie</a><br>
+            {% endif %}
         {% endfor %}
     </div>
 

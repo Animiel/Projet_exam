@@ -31,10 +31,15 @@
         <a href="{{ path('create_annonce') }}">Nouvelle annonce</a>
     {% endif %}
 
+    {# on crée une grille d'avis de recherches #}
     <div id="grid">
         {% for annonce in annonces %}
+
+            {# on affiche un avis de recherche... #}
             <div class="wanted">
+                {# ...avec l'image correspondante #}
                 <img src="{{ asset('/img/annonces/' ~ annonce.image ~ '') }}" class="wanted-pic">
+                {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
                 {% if app.user %}
                     {% if annonce in app.user.annonceFavorites %}
                         <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
@@ -49,6 +54,7 @@
                     <p>Vous devez être connecté pour ajouter cette annonce à vos favoris.</p>
                 {% endif %}
 
+                {# ...on affiche les infos écrites #}
                 <h3>Signes distinctifs</h3>
 
                 <ul>
@@ -66,13 +72,21 @@
                         </li>
                     {% endif %}
                 </ul>
+
+                {# on peut notifier un annonceur lorsqu'on est connecté #}
                 {% if app.user %}
                     <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
                 {% else %}
                     <p></p>
                 {% endif %}
-                {% if app.user %}
+
+                {# lien uniquement pour le créateur de l'annonce ou pour les admins #}
+                {% if is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id %}
                     <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a><br>
+                {% endif %}
+
+                {# fonction réservée aux admins #}
+                {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
                 {% endif %}
             </div>

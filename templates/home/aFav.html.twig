@@ -39,7 +39,7 @@
             {% else %}
                 <p></p>
             {% endif %}
-            {% if app.user %} {# fonction admin #}
+            {% if is_granted('ROLE_ADMIN') %} {# fonction admin #}
                 <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a><br>
                 <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
             {% endif %}

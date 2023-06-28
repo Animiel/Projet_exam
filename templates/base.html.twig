@@ -28,7 +28,9 @@
                     {% if app.user %}
                         <p>
                             <a href="">Profil</a><br>
-                            <a href="{{ path('list_members') }}">Liste des membres</a><br>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('list_members') }}">Liste des membres</a><br>
+                            {% endif %}
                             <a href="{{ path('my_annonces') }}">Mes annonces</a><br>
                             <a href="">Mes favoris</a>
                             <a href="{{ path('annonces_fav') }}">Annonces</a>

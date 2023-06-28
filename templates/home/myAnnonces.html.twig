@@ -42,8 +42,11 @@
                 <p></p>
             {% endif %}
 
-            {% if app.user %} {# fonction admin #}
+            {% if is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id %}
                 <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a><br>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
             {% endif %}
         </div>

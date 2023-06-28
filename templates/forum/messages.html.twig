@@ -27,12 +27,16 @@
                     {{ message.contenu }}
                 </p>
             </div><br>
-            <a href="{{ path('suppr_msg', {'idMsg': message.id, 'idSuj': sujet.id }) }}">Supprimer le message</a><br>
-            {% if message.msgUser.banni == 0 %}
-                <a href="{{ path('ban_user', {'id': message.msgUser.id }) }}">Bannir l'utilisateur</a>
-            {% else %}
-                <a href="{{ path('unban_user', {'id': message.msgUser.id }) }}">Unban l'utilisateur</a>
+            
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('suppr_msg', {'idMsg': message.id, 'idSuj': sujet.id }) }}">Supprimer le message</a><br>
+                {% if message.msgUser.banni == 0 %}
+                    <a href="{{ path('ban_user', {'id': message.msgUser.id }) }}">Bannir l'utilisateur</a>
+                {% else %}
+                    <a href="{{ path('unban_user', {'id': message.msgUser.id }) }}">Unban l'utilisateur</a>
+                {% endif %}
             {% endif %}
+
         {% endfor %}
     </div>
 

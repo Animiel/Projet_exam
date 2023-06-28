@@ -27,7 +27,9 @@
                 {% endif %}
             {% endif %}<br>
 
-            <a href="{{ path('suppr_sujet', {'idSuj': sujet.id, 'idCtg': categorie.id }) }}">Supprimer le sujet</a><br>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('suppr_sujet', {'idSuj': sujet.id, 'idCtg': categorie.id }) }}">Supprimer le sujet</a><br>
+            {% endif %}
         {% endfor %}
     </div>
 
