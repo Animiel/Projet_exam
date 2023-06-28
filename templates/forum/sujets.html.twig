@@ -14,7 +14,7 @@
 
     <div>
         {% for sujet in categorie.sujets %}
-            <a href="{{ path('messages_sujet', {'id': sujet.id }) }}">{{ sujet }}</a>
+            <a href="{{ path('messages_sujet', {'idSuj': sujet.id }) }}">{{ sujet }}</a>
             {% if app.user %}
                 {% if sujet in app.user.sujetFavorites %}
                     <a href="{{ path('remove_sujfav', {'id': sujet.id }) }}">
@@ -25,9 +25,21 @@
                         <i class="fa-regular fa-heart" style="color: #d747cb;"></i>
                     </a>
                 {% endif %}
+
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                    {% if sujet.closed == 1 %}
+                        <a href="{{ path('open_suj', {'idSuj': sujet.id, 'idCtg': categorie.id }) }}">
+                            <i class="fa-solid fa-lock" style="color: #d59320;"></i>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('close_suj', {'idSuj': sujet.id, 'idCtg': categorie.id }) }}">
+                            <i class="fa-solid fa-lock-open" style="color:#d59320;"></i>
+                        </a>
+                    {% endif %}
+                {% endif %}
             {% endif %}<br>
 
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if app.user and is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('suppr_sujet', {'idSuj': sujet.id, 'idCtg': categorie.id }) }}">Supprimer le sujet</a><br>
             {% endif %}
         {% endfor %}

@@ -36,6 +36,9 @@ class Sujet
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'sujetFavorites')]
     private Collection $usersFavorite;
 
+    #[ORM\Column]
+    private ?bool $closed = null;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -152,6 +155,18 @@ class Sujet
         if ($this->usersFavorite->removeElement($usersFavorite)) {
             $usersFavorite->removeSujetFavorite($this);
         }
+
+        return $this;
+    }
+
+    public function isClosed(): ?bool
+    {
+        return $this->closed;
+    }
+
+    public function setClosed(bool $closed): self
+    {
+        $this->closed = $closed;
 
         return $this;
     }

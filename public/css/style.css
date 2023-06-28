@@ -197,12 +197,17 @@ h2 {
     justify-content: space-evenly;
     column-count: 4;
     text-align: center;
-    flex-flow: column wrap;
+    flex-flow: row wrap;
 }
 
 #categories a {
     text-decoration: none;
     color: black;
+}
+
+.categorie {
+    display: flex;
+    flex-flow: column wrap;
 }
 
 .categorie-pic {

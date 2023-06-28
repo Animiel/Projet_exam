@@ -81,7 +81,7 @@
                 {% endif %}
 
                 {# lien uniquement pour le créateur de l'annonce ou pour les admins #}
-                {% if is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id %}
+                {% if app.user and (is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id) %}
                     <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a><br>
                 {% endif %}
 

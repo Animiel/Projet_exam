@@ -21,12 +21,15 @@
         Bonne discussion à toutes et à tous !
     </p>
 
+    <h2>Catégories</h2>
+
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('crea_ctg') }}">Nouvelle catégorie</a>
     {% endif %}
 
     <div id="categories">
         {% for categorie in categories %}
+        <div class="categorie">
             <a href="{{ path('sujets_categorie', {'id': categorie.id }) }}">
                 <img src="{{ asset('img/categories/' ~ categorie.image) }}" class="categorie-pic"><br>
                 {{ categorie.name }}
@@ -35,6 +38,7 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('suppr_ctg', {'id': categorie.id }) }}">Supprimer la catégorie</a><br>
             {% endif %}
+        </div>
         {% endfor %}
     </div>
 

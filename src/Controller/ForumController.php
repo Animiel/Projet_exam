@@ -40,7 +40,10 @@ class ForumController extends AbstractController
         ]);
     }
 
-    #[Route('/forum/sujet/{id}', name: 'messages_sujet')]
+    #[Route('/forum/sujet/{idSuj}', name: 'messages_sujet')]
+    #[Route('/forum/sujet/{idSuj}/edit/{idMsg}', name: 'edit_msg')]
+    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
+    #[ParamConverter("message", options:["mapping" => ["idMsg" => "id"]])]
     public function afficherMessages(ManagerRegistry $doctrine, Sujet $sujet, Request $request, Message $message = null)
     {
         //si le message n'existe pas, on en crée un
@@ -67,6 +70,9 @@ class ForumController extends AbstractController
             $message->setPublicationDate(new \DateTime());
             $message->setMsgUser($user);
             $message->setSujet($sujet);
+            if($message) {
+                $message->setUpdatedDate(new \DateTime());
+            }
 
             //on met à jour la base de données
             $entityManager = $doctrine->getManager();
@@ -75,7 +81,7 @@ class ForumController extends AbstractController
             //on les change définitivement dans la base de données
             $entityManager->flush();
 
-            return $this->redirectToRoute('messages_sujet', ['id' => $sujet->getId()]);
+            return $this->redirectToRoute('messages_sujet', ['idSuj' => $sujet->getId()]);
         }
         
         return $this->render('forum/messages.html.twig', [
@@ -182,5 +188,31 @@ class ForumController extends AbstractController
     public function sujetsFav(ManagerRegistry $doctrine)
     {
         return $this->render('home/sujetsFav.html.twig', []);
+    }
+
+    #[Route('/closeSuj/{idSuj}/{idCtg}', name: 'close_suj')]
+    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
+    #[ParamConverter("ctg", options:["mapping" => ["idCtg" => "id"]])]
+    public function close(ManagerRegistry $doctrine, Sujet $sujet, Categorie $ctg)
+    {
+        $sujet->setClosed(1);
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($sujet);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('sujets_categorie', ['id' => $ctg->getId()]);
+    }
+
+    #[Route('/openSuj/{idSuj}/{idCtg}', name: 'open_suj')]
+    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
+    #[ParamConverter("ctg", options:["mapping" => ["idCtg" => "id"]])]
+    public function open(ManagerRegistry $doctrine, Sujet $sujet, Categorie $ctg)
+    {
+        $sujet->setClosed(0);
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($sujet);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('sujets_categorie', ['id' => $ctg->getId()]);
     }
 }

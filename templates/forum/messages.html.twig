@@ -6,11 +6,13 @@
 
     <h1>{{ sujet }}</h1>
 
-    {{ form_start(formMsg) }}
-        {{ form_row(formMsg.contenu) }}<br>
+    {% if sujet.closed == 0 %}
+        {{ form_start(formMsg) }}
+            {{ form_row(formMsg.contenu) }}<br>
 
-        <button type="submit" class="btn">Poster</button>
-    {{ form_end(formMsg) }}
+            <button type="submit" class="btn">Poster</button>
+        {{ form_end(formMsg) }}
+    {% endif %}
 
     <div>
         {% for message in sujet.messages %}
@@ -21,14 +23,25 @@
                     {% else %}
                         {{ message.msgUser }}    
                     {% endif %}
-                     --- {{ message.publicationDate | date('d/m/Y - H:i') }}
+                    {% if message.updatedDate is not null %}
+                    --- {{ message.updatedDate | date('d/m/Y - H:i') }}
+                    {% else %}
+                        --- {{ message.publicationDate | date('d/m/Y - H:i') }}
+                    {% endif %}
+                     {% if message.updatedDate is not null %}
+                        <small>(modifié)</small>
+                     {% endif %}
                 </p>
                 <p>
                     {{ message.contenu }}
                 </p>
+
+                {% if app.user and app.user.id == message.msgUser.id and (sujet.closed == 0) %}
+                    <a href="{{ path('edit_msg', {'idSuj': sujet.id, 'idMsg': message.id }) }}">Modifier</a>
+                {% endif %}
             </div><br>
             
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if app.user and is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('suppr_msg', {'idMsg': message.id, 'idSuj': sujet.id }) }}">Supprimer le message</a><br>
                 {% if message.msgUser.banni == 0 %}
                     <a href="{{ path('ban_user', {'id': message.msgUser.id }) }}">Bannir l'utilisateur</a>
