@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ForumController extends AbstractController
 {
@@ -50,27 +51,27 @@ class ForumController extends AbstractController
         if(!$message) {
             $message = new Message();
         }
-
+        else {
+            $message->setImages([]);
+        }
+        
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         //on récupère les infos de l'utilisateur actuellement connecté
         $user = $this->getUser();
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $message = $form->getData();
-
-            $imgFiles[] = $form->get('images')->getData();
-            if (!empty($imgFiles)) {
-                foreach($imgFiles as $image) {
-                    foreach($image as $img) {
-                        $fileName = uniqid().'.'.$img->guessExtension();
-                        $img->move('img/posts', $fileName);
-                        $image[] = $img;
-                        $imgFiles[] = $image;
-                    }
+            $uploadedFiles = $form->get('images')->getData();
+            
+                foreach($uploadedFiles as $image) {
+                    $fileName = uniqid().'.'.$image->guessExtension();
+                    array_push($uploadedFiles, $fileName);
+                    $image->move('img/posts', $fileName);
+                    unset($image);
                 }
-            }
-            $message->setImages($imgFiles);
+                $message->setImages($uploadedFiles);
+                // var_dump($uploadedFiles); die;
 
             //on met à jour les champs sans l'interaction de l'utilisateur
             $message->setPublicationDate(new \DateTime());

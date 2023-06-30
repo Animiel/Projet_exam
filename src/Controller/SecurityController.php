@@ -57,7 +57,7 @@ class SecurityController extends AbstractController
         $entityManager->remove($msg);
         $entityManager->flush();
 
-        return $this->redirectToRoute('messages_sujet', ['id' => $sujet->getId()]);
+        return $this->redirectToRoute('messages_sujet', ['idSuj' => $sujet->getId()]);
     }
 
     #[Route('/supprAnnonce/{id}', name: 'suppr_annonce')]
