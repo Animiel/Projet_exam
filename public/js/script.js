@@ -24,3 +24,8 @@ setInterval(function() {
 //         document.body.insertBefore(document.createElement('input'), document.getElementById('bloc'));
 //     }
 //   });
+
+function onClick(element) {
+    document.getElementById('modal-img').src = "/img/posts/" + element.title;
+    document.getElementById('img-modal').style.display = "block";
+}

@@ -6,9 +6,10 @@
 
     <h1>{{ sujet }}</h1>
 
-    {% if sujet.closed == 0 %}
+    {% if (app.user) and (sujet.closed == 0) %}
         {{ form_start(formMsg) }}
             {{ form_row(formMsg.contenu) }}<br>
+            {{ form_row(formMsg.images) }}<br>
 
             <button type="submit" class="btn">Poster</button>
         {{ form_end(formMsg) }}
@@ -37,7 +38,14 @@
                     {% if message.images %}
                         {% for image in message.images %}
                             {% if image is not iterable %}
-                                <img src="{{ asset('img/posts/' ~ image ~ '') }}">
+                                <button title={{ image }} onclick="onClick(this)" class="modal-btn">{{ image }}</button>
+
+                                <div id="img-modal" onclick="this.style.display='none'" class="modal">
+                                    <span class="close-cross">&times;</span>
+                                    <div class="modal-content">
+                                        <img id="modal-img" class="msg-image">
+                                    </div>
+                                </div>
                             {% endif %}
                         {% endfor %}
                     {% endif %}

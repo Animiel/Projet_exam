@@ -155,6 +155,53 @@ h2 {
     border-radius: 30px;
 }
 
+.modal-btn {
+    border: none;
+    background-color: #D0D0D0;
+    text-decoration: underline;
+    color: rgb(0, 38, 255);
+}
+
+.modal-btn:hover {
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    left: 0;
+    top: 0;
+    overflow: auto;
+}
+
+.modal-content {
+    padding: auto;
+    display: block;
+    width: 100%;
+    max-width: 100vw;
+}
+
+.close-cross {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    right: 50px;
+    position: absolute;
+}
+
+.close-cross:hover {
+    cursor: pointer;
+}
+
+.msg-image {
+    max-width: 100%;
+}
+
 footer {
     line-height: 20px;
 }
