@@ -34,6 +34,9 @@ class Message
     #[ORM\Column]
     private array $images = [];
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $original = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +110,18 @@ class Message
     public function setImages(array $images): self
     {
         $this->images = $images;
+
+        return $this;
+    }
+
+    public function getOriginal(): ?string
+    {
+        return $this->original;
+    }
+
+    public function setOriginal(string $original): self
+    {
+        $this->original = $original;
 
         return $this;
     }

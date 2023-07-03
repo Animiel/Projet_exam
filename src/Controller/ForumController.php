@@ -47,18 +47,20 @@ class ForumController extends AbstractController
     #[ParamConverter("message", options:["mapping" => ["idMsg" => "id"]])]
     public function afficherMessages(ManagerRegistry $doctrine, Sujet $sujet, Request $request, Message $message = null)
     {
-        //si le message n'existe pas, on en crée un
-        if(!$message) {
-            $message = new Message();
-        }
-        else {
-            $message->setImages([]);
-        }
-        
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         //on récupère les infos de l'utilisateur actuellement connecté
         $user = $this->getUser();
+        $edit = true;
+
+        //si le message n'existe pas, on en crée un
+        if(!$message) {
+            $message = new Message();
+            $edit = false;
+        }
+        else {
+            $message->setImages([]);
+        }
         
         if ($form->isSubmitted() && $form->isValid()) {
             $message = $form->getData();
@@ -74,12 +76,13 @@ class ForumController extends AbstractController
                 // var_dump($uploadedFiles); die;
 
             //on met à jour les champs sans l'interaction de l'utilisateur
-            $message->setPublicationDate(new \DateTime());
+            $message->setUpdatedDate(new \DateTime());
             $message->setMsgUser($user);
-            $message->setSujet($sujet);
-            if($message) {
-                $message->setUpdatedDate(new \DateTime());
+            if(!$edit){
+                $message->setPublicationDate(new \DateTime());
+                $message->setOriginal($form->get('contenu')->getData());
             }
+            $message->setSujet($sujet);
 
             //on met à jour la base de données
             $entityManager = $doctrine->getManager();

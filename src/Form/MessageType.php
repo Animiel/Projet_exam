@@ -23,6 +23,7 @@ class MessageType extends AbstractType
             ->add('images', FileType::class, [
                 'label' => 'Images : ',
                 'multiple' => true,
+                'required' => false,
             ])
         ;
     }
