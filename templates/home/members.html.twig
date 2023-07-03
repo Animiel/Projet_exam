@@ -10,7 +10,17 @@
 
 <ul class="members">
     {% for user in users %}
-        <li><a href="">{{ user }}</a></li>
+        <li>
+            <a href="">{{ user }}</a><br>
+            {% if is_granted('ROLE_ADMIN') %}
+                <button class="ban-btn">
+                    <a href="{{ path('ban_user', {'id': user.id }) }}">Bannir l'utilisateur</a>
+                </button><br>
+                <button class="unban-btn">
+                    <a href="{{ path('unban_user', {'id': user.id }) }}">Unban</a>
+                </button>
+            {% endif %}
+        </li>
     {% endfor %}
 </ul>
 

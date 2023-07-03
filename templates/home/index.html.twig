@@ -18,7 +18,7 @@
     </p>
     <p>
         Sur cette page vous pourrez trouver les annonces des personnes ayant perdu leur petit compagnon.<br>
-        Pour interagir avec une annonce vous <strong>devez être inscrit(e) et connecté(e)</strong>, et cliquer sur l'action souhaitée :<br>
+        Pour interagir avec une annonce vous <b>devez être inscrit(e) et connecté(e)</b>, et cliquer sur l'action souhaitée :<br>
         <ul>
             <li>Ajouter aux favoris : en fonction de vos chances d'avoir des informations au sujet de l'animal.</li>
             <li>Envoyer un message au propriétaire : si vous avez déjà une information.</li>
@@ -28,7 +28,9 @@
     <h2>Les avis de recherche...</h2>
     
     {% if app.user %}
-        <a href="{{ path('create_annonce') }}">Nouvelle annonce</a>
+        <button class="new-btn">
+            <a href="{{ path('create_annonce') }}">Nouvelle annonce</a>
+        </button>
     {% endif %}
 
     {# on crée une grille d'avis de recherches #}
@@ -75,19 +77,23 @@
 
                 {# on peut notifier un annonceur lorsqu'on est connecté #}
                 {% if app.user %}
-                    <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
-                {% else %}
-                    <p></p>
+                    <button class="info-btn">
+                        <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
+                    </button><br>
                 {% endif %}
 
                 {# lien uniquement pour le créateur de l'annonce ou pour les admins #}
                 {% if app.user and (is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id) %}
-                    <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a><br>
+                    <button class="delete-btn">
+                        <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a>
+                    </button>
                 {% endif %}
 
                 {# fonction réservée aux admins #}
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
+                    <button class="ban-btn">
+                        <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
+                    </button>
                 {% endif %}
             </div>
         {% endfor %}

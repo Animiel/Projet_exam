@@ -43,6 +43,7 @@ main {
 }
 
 main #bloc {
+    /* display: flex; */
     width: 85%;
 }
 
@@ -154,6 +155,43 @@ h2 {
     height: 50%;
     border-radius: 30px;
 }
+
+button a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.new-btn {
+    border: 1px solid #000000;
+    background-color: #FFAB5E;
+    padding: 5px;
+}
+
+.info-btn {
+    border: 1px solid #000000;
+    background-color: #D0D0D0;
+    padding: 5px;
+}
+
+.delete-btn, .ban-btn {
+    border: 1px solid #000000;
+    background-color: #850000;
+    padding: 5px;
+}
+
+.delete-btn a, .ban-btn a, .unban-btn a {
+    color: #ffffff;
+}
+
+.unban-btn {
+    border: 1px solid #000000;
+    background-color: #006700;
+    padding: 5px;
+}
+
+/* .msg-form {
+    position: fixed;
+} */
 
 .modal-btn {
     border: none;

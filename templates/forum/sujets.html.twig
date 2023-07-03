@@ -8,7 +8,9 @@
 
     <p>
         {% if app.user %}
-            <a href="{{ path('crea_suj', {'idCtg': categorie.id }) }}">Nouveau sujet</a>
+            <button class="new-btn">
+                <a href="{{ path('crea_suj', {'idCtg': categorie.id }) }}">Nouveau sujet</a>
+            </button>
         {% endif %}
     </p>
 
@@ -40,7 +42,9 @@
             {% endif %}<br>
 
             {% if app.user and is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('suppr_sujet', {'idSuj': sujet.id, 'idCtg': categorie.id }) }}">Supprimer le sujet</a><br><br>
+                <button class="delete-btn">
+                    <a href="{{ path('suppr_sujet', {'idSuj': sujet.id, 'idCtg': categorie.id }) }}">Supprimer le sujet</a>
+                </button><br><br>
             {% endif %}
         {% endfor %}
     </div>

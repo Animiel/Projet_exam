@@ -24,7 +24,9 @@
     <h2>Catégories</h2>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('crea_ctg') }}">Nouvelle catégorie</a>
+        <button class="new-btn">
+            <a href="{{ path('crea_ctg') }}">Nouvelle catégorie</a>
+        </button>
     {% endif %}
 
     <div id="categories">
@@ -36,7 +38,9 @@
             </a><br>
 
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('suppr_ctg', {'id': categorie.id }) }}">Supprimer la catégorie</a><br>
+                <button class="delete-btn">
+                    <a href="{{ path('suppr_ctg', {'id': categorie.id }) }}">Supprimer la catégorie</a>
+                </button>
             {% endif %}
         </div>
         {% endfor %}

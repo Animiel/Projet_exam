@@ -37,17 +37,21 @@
             </ul>
 
             {% if app.user %}
-                <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
-            {% else %}
-                <p></p>
+                <button class="info-btn">
+                    <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
+                </button><br>
             {% endif %}
 
-            {% if is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id %}
-                <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a><br>
+            {% if app.user and (is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id) %}
+                <button class="delete-btn">
+                    <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a>
+                </button>
             {% endif %}
 
             {% if is_granted('ROLE_ADMIN') %}
+            <button class="ban-btn">
                 <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
+            </button>
             {% endif %}
         </div>
     {% endfor %}

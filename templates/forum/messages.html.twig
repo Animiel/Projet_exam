@@ -6,14 +6,16 @@
 
     <h1>{{ sujet }}</h1>
 
-    {% if (app.user) and (sujet.closed == 0) %}
-        {{ form_start(formMsg) }}
-            {{ form_row(formMsg.contenu) }}<br>
-            {{ form_row(formMsg.images) }}<br>
-
-            <button type="submit" class="btn">Poster</button>
-        {{ form_end(formMsg) }}
-    {% endif %}
+    <div class="msg-form">
+        {% if (app.user) and (sujet.closed == 0) %}
+            {{ form_start(formMsg) }}
+                {{ form_row(formMsg.contenu) }}<br>
+                {{ form_row(formMsg.images) }}<br>
+    
+                <button type="submit" class="btn">Poster</button>
+            {{ form_end(formMsg) }}
+        {% endif %}
+    </div>
 
     <div>
         {% for message in sujet.messages %}
@@ -52,16 +54,24 @@
                 </p>
 
                 {% if app.user and app.user.id == message.msgUser.id and (sujet.closed == 0) %}
-                    <a href="{{ path('edit_msg', {'idSuj': sujet.id, 'idMsg': message.id }) }}">Modifier</a>
+                    <button class="new-btn">
+                        <a href="{{ path('edit_msg', {'idSuj': sujet.id, 'idMsg': message.id }) }}">Modifier</a>
+                    </button>
                 {% endif %}
             </div><br>
             
             {% if app.user and is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('suppr_msg', {'idMsg': message.id, 'idSuj': sujet.id }) }}">Supprimer le message</a><br>
+                <button class="delete-btn">
+                    <a href="{{ path('suppr_msg', {'idMsg': message.id, 'idSuj': sujet.id }) }}">Supprimer le message</a>
+                </button>
                 {% if message.msgUser.banni == 0 %}
-                    <a href="{{ path('ban_user', {'id': message.msgUser.id }) }}">Bannir l'utilisateur</a>
+                    <button class="ban-btn">
+                        <a href="{{ path('ban_user', {'id': message.msgUser.id }) }}">Bannir l'utilisateur</a>
+                    </button>
                 {% else %}
-                    <a href="{{ path('unban_user', {'id': message.msgUser.id }) }}">Unban l'utilisateur</a>
+                    <button class="unban-btn">
+                        <a href="{{ path('unban_user', {'id': message.msgUser.id }) }}">Unban l'utilisateur</a>
+                    </button>
                 {% endif %}
             {% endif %}
 
