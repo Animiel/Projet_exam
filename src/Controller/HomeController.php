@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Sujet;
 use App\Entity\Annonce;
+use App\Form\SearchType;
 use App\Form\AnnonceType;
+use App\Model\SearchData;
+use App\Repository\AnnonceRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,11 +22,34 @@ use Symfony\Component\Mime\Email;       // one peut utiliser un templatedemail a
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine, Request $request, AnnonceRepository $aRepo): Response
     {
+        $searchData = new SearchData();
+        
+        $form = $this->createForm(SearchType::class, $searchData);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            // $searchData->page = $request->query->getInt('page', 1);
+            if($searchData->q == '' || $searchData->q == null) {
+                return $this->redirectToRoute('app_home');
+            }
+            else {
+                $annoncesSearch = $aRepo->findBySearch($searchData);
+            }
+
+
+            return $this->render('home/index.html.twig', [
+                'searchForm' => $form->createView(),
+                'annonces' => $annoncesSearch,
+            ]);
+        }
+
+
         $annonces = $doctrine->getRepository(Annonce::class)->findAll();
         return $this->render('home/index.html.twig', [
             'annonces' => $annonces,
+            'searchForm' => $form->createView(),
         ]);
     }
 

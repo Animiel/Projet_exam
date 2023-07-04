@@ -34,6 +34,12 @@ class Annonce
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'annonceFavorites')]
     private Collection $usersFavorite;
 
+    #[ORM\Column(length: 50)]
+    private ?string $pet_name = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $localisation = null;
+
     public function __construct()
     {
         $this->usersFavorite = new ArrayCollection();
@@ -127,6 +133,30 @@ class Annonce
         if ($this->usersFavorite->removeElement($usersFavorite)) {
             $usersFavorite->removeAnnonceFavorite($this);
         }
+
+        return $this;
+    }
+
+    public function getPetName(): ?string
+    {
+        return $this->pet_name;
+    }
+
+    public function setPetName(string $pet_name): self
+    {
+        $this->pet_name = $pet_name;
+
+        return $this;
+    }
+
+    public function getLocalisation(): ?string
+    {
+        return $this->localisation;
+    }
+
+    public function setLocalisation(string $localisation): self
+    {
+        $this->localisation = $localisation;
 
         return $this;
     }

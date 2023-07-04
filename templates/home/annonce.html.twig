@@ -9,6 +9,8 @@
 <p>Les champs marqués d'une * sont obligatoires.</p>
     
     {{ form_start(formAnnonce) }}
+        {{ form_row(formAnnonce.pet_name) }}
+        {{ form_row(formAnnonce.localisation) }}
         {{ form_row(formAnnonce.infoUne) }}
         {{ form_row(formAnnonce.infoDeux) }}
         {{ form_row(formAnnonce.infoTrois) }}

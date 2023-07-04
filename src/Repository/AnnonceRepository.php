@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Annonce;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Model\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Annonce>
@@ -37,6 +38,21 @@ class AnnonceRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    //get annonces recherchées par mot clé
+    public function findBySearch(SearchData $searchData)
+    {
+        if(!empty($searchData->q)) {
+            $annonces = $this->createQueryBuilder('a')
+                ->where('a.pet_name LIKE :q')
+                ->setParameter('q', "%{$searchData->q}%")
+                ->addOrderBy('a.pet_name', 'ASC');
+        }
+
+        $annonces = $annonces->getQuery()->getResult();
+
+        return $annonces;
     }
 
 //    /**

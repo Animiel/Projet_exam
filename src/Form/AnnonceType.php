@@ -28,6 +28,12 @@ class AnnonceType extends AbstractType
             ->add('image', FileType::class, [
                 'label' => 'Image de votre animal* : ',
             ])
+            ->add('pet_name', TextType::class, [
+                'label' => 'Nom de votre animal* : ',
+            ])
+            ->add('localisation', TextType::class, [
+                'label' => 'Zone de recherche / localisation* : ',
+            ])
             // ->add('annonceUser')
         ;
     }

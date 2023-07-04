@@ -33,8 +33,16 @@
         </button>
     {% endif %}
 
+    {{ form_start(searchForm) }}
+        {{ form_widget(searchForm.q) }}
+
+        <button type="submit">Valider</button>
+    {{ form_end(searchForm) }}
+
     {# on crée une grille d'avis de recherches #}
     <div id="grid">
+        {% if annonces is defined %}
+            
         {% for annonce in annonces %}
 
             {# on affiche un avis de recherche... #}
@@ -43,21 +51,24 @@
                 <img src="{{ asset('/img/annonces/' ~ annonce.image ~ '') }}" class="wanted-pic">
                 {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
                 {% if app.user %}
-                    {% if annonce in app.user.annonceFavorites %}
-                        <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
-                            <i class="fa-solid fa-heart" style="color: #d747cb;"></i>
-                        </a>
-                    {% else %}
-                        <a href="{{ path('add_afav', {'id': annonce.id }) }}">
-                            <i class="fa-regular fa-heart" style="color: #d747cb;"></i>
-                        </a>
-                    {% endif %}
+                {% if annonce in app.user.annonceFavorites %}
+                <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
+                    <i class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
+                </a>
                 {% else %}
-                    <p>Vous devez être connecté pour ajouter cette annonce à vos favoris.</p>
+                <a href="{{ path('add_afav', {'id': annonce.id }) }}">
+                    <i class="fa-regular fa-heart heart-annonce" style="color: #d747cb;"></i>
+                </a>
+                {% endif %}
+                {% else %}
+                <p>Vous devez être connecté pour ajouter cette annonce à vos favoris.</p>
                 {% endif %}
 
                 {# ...on affiche les infos écrites #}
                 <h3>Signes distinctifs</h3>
+
+                <p><b>Localisation :</b> {{ annonce.localisation }}</p>
+                <p><b>Nom :</b> {{ annonce.petname }}</p>
 
                 <ul>
                     <li>
@@ -97,5 +108,6 @@
                 {% endif %}
             </div>
         {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
