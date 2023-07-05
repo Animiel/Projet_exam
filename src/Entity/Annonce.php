@@ -36,9 +36,6 @@ class Annonce
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $publicationDate = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $duration = null;
-
     #[ORM\Column(length: 50)]
     private ?string $petName = null;
 
@@ -150,18 +147,6 @@ class Annonce
     public function setPublicationDate(\DateTimeInterface $publicationDate): self
     {
         $this->publicationDate = $publicationDate;
-
-        return $this;
-    }
-
-    public function getDuration(): ?string
-    {
-        return $this->duration;
-    }
-
-    public function setDuration(?string $duration): self
-    {
-        $this->duration = $duration;
 
         return $this;
     }

@@ -43,13 +43,29 @@
     {# on crée une grille d'avis de recherches #}
     <div id="grid">
         {% if annonces is defined %}
-            
         {% for annonce in annonces %}
 
-            {# on affiche un avis de recherche... #}
             <div class="wanted">
-                {# ...avec l'image correspondante #}
-                <img src="{{ asset('/img/annonces/' ~ annonce.image ~ '') }}" class="wanted-pic">
+                <div class="first-view">
+                    {% for image in annonce.images %}
+                        {% if image is not iterable %}
+                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic">
+                        {% endif %}
+                    {% endfor %}
+                    <h3>{{ annonce.motifAnnonce }}</h3>
+                    <p><b>Localisation :</b> {{ annonce.localisation }}</p>
+                </div>
+
+                <div class="second-view">
+                    <ul>
+                        <li>Nom : {{ annonce.petName }}</li>
+                        <li>Sexe : {{ annonce.petGenre }}</li>
+                        <li>Âge : {{ annonce.petAge }}</li>
+                    </ul>
+                    <p>Affinités avec d'autres animaux/humains : {{ annonce.petBefriends }}</p>
+                    <p>Caractère de l'animal : {{ annonce.petCaractere }}</p>
+                    <p>Informations sur la santé : {{ annonce.petHealth }}</p>
+                </div>
                 {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
                 {% if app.user %}
                 {% if annonce in app.user.annonceFavorites %}

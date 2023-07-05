@@ -9,8 +9,15 @@
 <p>Les champs marqués d'une * sont obligatoires.</p>
     
     {{ form_start(formAnnonce) }}
-        {{ form_row(formAnnonce.pet_name) }}
+        {{ form_row(formAnnonce.motifAnnonce) }}
         {{ form_row(formAnnonce.localisation) }}
+        {{ form_row(formAnnonce.pet_name) }}
+        {{ form_row(formAnnonce.pet_genre) }}
+        {{ form_row(formAnnonce.pet_age) }}
+        {{ form_row(formAnnonce.pet_health) }}
+        {{ form_row(formAnnonce.pet_caractere) }}
+        {{ form_row(formAnnonce.pet_befriends) }}
+        {{ form_row(formAnnonce.images) }}
 
         <button type="submit" class="btn">Valider</button>
     {{ form_end(formAnnonce) }}

@@ -76,14 +76,18 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             $annonce = $form->getData();
-            $annonce->setAnnonceUser($user);
-
-            $imgFile = $form->get('image')->getData(); // Récupère le fichier uploadé via le champ dédié
-            if ($imgFile) {
-                $fileName = uniqid().'.'.$imgFile->guessExtension(); // Crée un nom unique pour le fichier
-                $imgFile->move('img/annonces', $fileName); // Déplace le fichier vers le dossier de destination
-                $annonce->setImage($fileName);
+            $uploadedFiles = $form->get('images')->getData();
+            
+            foreach($uploadedFiles as $image) {
+                $fileName = uniqid().'.'.$image->guessExtension();
+                array_push($uploadedFiles, $fileName);
+                $image->move('img/annonces', $fileName);
+                unset($image);
             }
+            
+            $annonce->setPublicationDate(new \Datetime());
+            $annonce->setImages($uploadedFiles);
+            $annonce->setAnnonceUser($user);
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($annonce);
