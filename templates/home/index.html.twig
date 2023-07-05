@@ -35,6 +35,7 @@
 
     {{ form_start(searchForm) }}
         {{ form_widget(searchForm.q) }}
+        {{ form_widget(searchForm.local) }}
 
         <button type="submit">Valider</button>
     {{ form_end(searchForm) }}
@@ -60,31 +61,7 @@
                     <i class="fa-regular fa-heart heart-annonce" style="color: #d747cb;"></i>
                 </a>
                 {% endif %}
-                {% else %}
-                <p>Vous devez être connecté pour ajouter cette annonce à vos favoris.</p>
                 {% endif %}
-
-                {# ...on affiche les infos écrites #}
-                <h3>Signes distinctifs</h3>
-
-                <p><b>Localisation :</b> {{ annonce.localisation }}</p>
-                <p><b>Nom :</b> {{ annonce.petname }}</p>
-
-                <ul>
-                    <li>
-                        {{ annonce.infoUne }}
-                    </li>
-                    {% if annonce.infoDeux %}
-                        <li>
-                            {{ annonce.infoDeux }}
-                        </li>
-                    {% endif %}
-                    {% if annonce.infoTrois %}
-                        <li>
-                            {{ annonce.infoTrois }}
-                        </li>
-                    {% endif %}
-                </ul>
 
                 {# on peut notifier un annonceur lorsqu'on est connecté #}
                 {% if app.user %}

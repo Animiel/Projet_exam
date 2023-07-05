@@ -9,6 +9,9 @@ class SearchData
 
     /** @var string @var null */
     public $q = "";
+
+    /** @var string @var null */
+    public $local = "";
 }
 
 ?>

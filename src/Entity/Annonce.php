@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AnnonceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
@@ -15,18 +16,6 @@ class Annonce
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $infoUne = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $infoDeux = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $infoTrois = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
-
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $annonceUser = null;
@@ -34,11 +23,39 @@ class Annonce
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'annonceFavorites')]
     private Collection $usersFavorite;
 
-    #[ORM\Column(length: 50)]
-    private ?string $pet_name = null;
-
     #[ORM\Column(length: 100)]
     private ?string $localisation = null;
+
+    #[ORM\ManyToOne(inversedBy: 'annoncesMotif')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Motif $motifAnnonce = null;
+
+    #[ORM\Column]
+    private array $images = [];
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $publicationDate = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $duration = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $petName = null;
+
+    #[ORM\Column(length: 10)]
+    private ?string $petGenre = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $petBefriends = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $petHealth = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $petCaractere = null;
+
+    #[ORM\Column(length: 3)]
+    private ?string $petAge = null;
 
     public function __construct()
     {
@@ -48,54 +65,6 @@ class Annonce
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getInfoUne(): ?string
-    {
-        return $this->infoUne;
-    }
-
-    public function setInfoUne(string $infoUne): self
-    {
-        $this->infoUne = $infoUne;
-
-        return $this;
-    }
-
-    public function getInfoDeux(): ?string
-    {
-        return $this->infoDeux;
-    }
-
-    public function setInfoDeux(?string $infoDeux): self
-    {
-        $this->infoDeux = $infoDeux;
-
-        return $this;
-    }
-
-    public function getInfoTrois(): ?string
-    {
-        return $this->infoTrois;
-    }
-
-    public function setInfoTrois(?string $infoTrois): self
-    {
-        $this->infoTrois = $infoTrois;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
     }
 
     public function getAnnonceUser(): ?User
@@ -137,18 +106,6 @@ class Annonce
         return $this;
     }
 
-    public function getPetName(): ?string
-    {
-        return $this->pet_name;
-    }
-
-    public function setPetName(string $pet_name): self
-    {
-        $this->pet_name = $pet_name;
-
-        return $this;
-    }
-
     public function getLocalisation(): ?string
     {
         return $this->localisation;
@@ -157,6 +114,126 @@ class Annonce
     public function setLocalisation(string $localisation): self
     {
         $this->localisation = $localisation;
+
+        return $this;
+    }
+
+    public function getMotifAnnonce(): ?Motif
+    {
+        return $this->motifAnnonce;
+    }
+
+    public function setMotifAnnonce(?Motif $motifAnnonce): self
+    {
+        $this->motifAnnonce = $motifAnnonce;
+
+        return $this;
+    }
+
+    public function getImages(): array
+    {
+        return $this->images;
+    }
+
+    public function setImages(array $images): self
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
+    public function getPublicationDate(): ?\DateTimeInterface
+    {
+        return $this->publicationDate;
+    }
+
+    public function setPublicationDate(\DateTimeInterface $publicationDate): self
+    {
+        $this->publicationDate = $publicationDate;
+
+        return $this;
+    }
+
+    public function getDuration(): ?string
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?string $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getPetName(): ?string
+    {
+        return $this->petName;
+    }
+
+    public function setPetName(string $petName): self
+    {
+        $this->petName = $petName;
+
+        return $this;
+    }
+
+    public function getPetGenre(): ?string
+    {
+        return $this->petGenre;
+    }
+
+    public function setPetGenre(string $petGenre): self
+    {
+        $this->petGenre = $petGenre;
+
+        return $this;
+    }
+
+    public function getPetBefriends(): ?string
+    {
+        return $this->petBefriends;
+    }
+
+    public function setPetBefriends(string $petBefriends): self
+    {
+        $this->petBefriends = $petBefriends;
+
+        return $this;
+    }
+
+    public function getPetHealth(): ?string
+    {
+        return $this->petHealth;
+    }
+
+    public function setPetHealth(?string $petHealth): self
+    {
+        $this->petHealth = $petHealth;
+
+        return $this;
+    }
+
+    public function getPetCaractere(): ?string
+    {
+        return $this->petCaractere;
+    }
+
+    public function setPetCaractere(?string $petCaractere): self
+    {
+        $this->petCaractere = $petCaractere;
+
+        return $this;
+    }
+
+    public function getPetAge(): ?string
+    {
+        return $this->petAge;
+    }
+
+    public function setPetAge(string $petAge): self
+    {
+        $this->petAge = $petAge;
 
         return $this;
     }

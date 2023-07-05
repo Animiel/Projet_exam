@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Annonce;
 use App\Model\SearchData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -15,7 +17,13 @@ class SearchType extends AbstractType
         $builder
         ->add('q', TextType::class, [
             'attr' => [
-                'placeholder' => 'Rechercher un nom d\'animal',
+                'placeholder' => 'Rechercher par nom d\'animal...',
+            ],
+            'required' => false,
+        ])
+        ->add('local', TextType::class, [
+            'attr' => [
+                'placeholder' => 'Rechercher par localisation...'
             ],
             'required' => false,
         ])
