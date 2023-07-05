@@ -157,6 +157,10 @@ h2 {
     border-radius: 30px;
 }
 
+.second-view {
+    display: none;
+}
+
 .heart-annonce {
     position: absolute;
     top: 10px;

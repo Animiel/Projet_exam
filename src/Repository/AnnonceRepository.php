@@ -43,11 +43,18 @@ class AnnonceRepository extends ServiceEntityRepository
     //get annonces recherchées par mot clé
     public function findBySearch(SearchData $searchData)
     {
-        if(!empty($searchData->q)) {
+        if(!empty($searchData->q) || !empty($searchData->local) || !empty($searchData->motif)) {
             $annonces = $this->createQueryBuilder('a')
-                ->where('a.pet_name LIKE :q')
-                ->setParameter('q', "%{$searchData->q}%")
-                ->addOrderBy('a.pet_name', 'ASC');
+                ->innerJoin('App\Entity\Motif', 'm', 'WITH', 'm.name = a.motifAnnonce.name')
+                ->where('a.petName LIKE :q')
+                ->andWhere('a.localisation LIKE :local')
+                ->andWhere('a.motifAnnonce.name LIKE :motif')
+                ->setParameters([
+                    'q' => "%{$searchData->q}%",
+                    'local' => "%{$searchData->local}%",
+                    'motif' => "%{$searchData->motif}%",
+                    ])
+                ->addOrderBy('a.petName', 'ASC');
         }
 
         $annonces = $annonces->getQuery()->getResult();

@@ -31,7 +31,7 @@ class HomeController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             // $searchData->page = $request->query->getInt('page', 1);
-            if($searchData->q == '' || $searchData->q == null) {
+            if(($searchData->q == '' || $searchData->q == null) && ($searchData->local == '' || $searchData->local == null) && ($searchData->motif == '' || $searchData->motif == null)) {
                 return $this->redirectToRoute('app_home');
             }
             else {
