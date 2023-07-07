@@ -33,8 +33,9 @@
         </button>
     {% endif %}
 
-    {{ form_start(searchForm) }}
+    {{ form_start(searchForm, { 'attr': {'class': 'search-form'} }) }}
         {{ form_widget(searchForm.q) }}
+        {{ form_widget(searchForm.genre) }}
         {{ form_widget(searchForm.local) }}
         {{ form_widget(searchForm.motif) }}
 

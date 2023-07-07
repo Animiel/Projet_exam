@@ -31,7 +31,17 @@ class SearchType extends AbstractType
         ])
         ->add('motif', EntityType::class, [
             'class' => Motif::class,
-            'choice_label' => 'name',
+            'expanded' => true,
+            'multiple' => true,
+            'required' => false,
+        ])
+        ->add('genre', ChoiceType::class, [
+            'choices' => [
+                'Male' => 'Male',
+                'Female' => 'Female',
+            ],
+            'expanded' => true,
+            'multiple' => false,
             'required' => false,
         ])
         ;

@@ -136,10 +136,18 @@ h2 {
     width: 90px;
 }
 
+.search-form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: baseline;
+}
+
 #grid {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
+    margin-top: 20px;
 }
 
 .wanted {
@@ -149,6 +157,7 @@ h2 {
     border-radius: 30px;
     overflow: hidden;
     position: relative;
+    margin-bottom: 50px;
 }
 
 .wanted-pic {
@@ -174,6 +183,7 @@ button a {
 }
 
 .new-btn {
+    display: inline;
     border: 1px solid #000000;
     background-color: #FFAB5E;
     padding: 5px;

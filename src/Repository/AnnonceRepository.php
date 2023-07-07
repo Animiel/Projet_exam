@@ -43,18 +43,26 @@ class AnnonceRepository extends ServiceEntityRepository
     //get annonces recherchées par mot clé
     public function findBySearch(SearchData $searchData)
     {
-        if(!empty($searchData->q) || !empty($searchData->local) || !empty($searchData->motif)) {
-            $annonces = $this->createQueryBuilder('a')
-                ->innerJoin('App\Entity\Motif', 'm', 'WITH', 'm.name = a.motifAnnonce.name')
-                ->where('a.petName LIKE :q')
-                ->andWhere('a.localisation LIKE :local')
-                ->andWhere('a.motifAnnonce.name LIKE :motif')
-                ->setParameters([
-                    'q' => "%{$searchData->q}%",
-                    'local' => "%{$searchData->local}%",
-                    'motif' => "%{$searchData->motif}%",
-                    ])
-                ->addOrderBy('a.petName', 'ASC');
+        $annonces = $this->createQueryBuilder('a')
+            ->addOrderBy('a.publicationDate', 'DESC');
+
+        if(!empty($searchData->q) || !empty($searchData->local) || (!empty($searchData->genre)))  {
+            $annonces = $annonces
+            ->where('a.petName LIKE :q')
+            ->andWhere('a.localisation LIKE :local')
+            ->andWhere('a.petGenre = :genre')
+            ->setParameters([
+                'q' => "%{$searchData->q}%",
+                'local' => "%{$searchData->local}%",
+                'genre' => $searchData->genre,
+            ]);
+        }
+        if(!empty($searchData->motif)) {
+            $annonces = $annonces
+            ->join('a.motifAnnonce', 'm')
+            ->andWhere('m.id IN (:motif)')
+            ->setParameter('motif', $searchData->motif);
+                
         }
 
         $annonces = $annonces->getQuery()->getResult();

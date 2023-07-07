@@ -15,8 +15,11 @@ class SearchData
      * @var null */
     public $local = "";
 
-    /** @var object */
-    public $motif = null;
+    /** @var array */
+    public $motif = [];
+
+    /** @var string */
+    public $genre = "";
 }
 
 ?>
