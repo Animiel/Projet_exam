@@ -72,12 +72,14 @@
                 {% if app.user %}
                 {% if annonce in app.user.annonceFavorites %}
                 <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
-                    <i class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
+                    <i id="solid-on" class="fa-solid fa-heart heart-annonce" style="color: #d747cb;" onmouseover="swapIconVoid(this)"></i>
                 </a>
+                <i id="regular-off" class="fa-regular fa-heart heart-annonce" style="color: #d747cb;">test</i>
                 {% else %}
                 <a href="{{ path('add_afav', {'id': annonce.id }) }}">
-                    <i class="fa-regular fa-heart heart-annonce" style="color: #d747cb;"></i>
+                    <i id="regular-on" class="fa-regular fa-heart heart-annonce" style="color: #d747cb;" onmouseover="swapIconFull(this)"></i>
                 </a>
+                <i id="solid-off" class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
                 {% endif %}
                 {% endif %}
 

@@ -19,13 +19,39 @@ setInterval(function() {
     t_slider[etape].classList.add('active');
 }, 5000);
 
-// window.addEventListener("load", (event) => {
-//     for(let j = 0 ; j < nbr_slides ; j++) {
-//         document.body.insertBefore(document.createElement('input'), document.getElementById('bloc'));
-//     }
-//   });
+
+
+
 
 function onClick(element) {
     document.getElementById('modal-img').src = "/img/posts/" + element.title;
     document.getElementById('img-modal').style.display = "block";
+}
+
+
+
+
+
+const coeurPlein = document.getElementById('solid-off');
+const coeurVide = document.getElementById('regular-off');
+
+window.addEventListener('load', (event) => {
+    coeurPlein.style.left = '-20px';
+    coeurVide.style.left = '-20px';
+  }); 
+
+function swapIconFull(element) {
+    document.getElementById("regular-on").animate([
+        { transform: 'translateX(-40px)' }],
+        { duration: 800});
+    coeurPlein.animate([
+        { transform: 'translateX(30px)' }],
+        { duration: 800});
+}
+
+function swapIconVoid(element) {
+    document.getElementById("solid-on").animate([
+        { transform: 'translateX(-40px)' }],
+        { duration: 1000,
+        iterations: 1 });
 }
