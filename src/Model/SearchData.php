@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
 class SearchData
 {
     /** @var int */
@@ -9,6 +12,12 @@ class SearchData
 
     /** @var string 
      * @var null */
+    #[Assert\Length(min: 3)]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Your name cannot contain a number',
+    )]
     public $q = "";
 
     /** @var string 
