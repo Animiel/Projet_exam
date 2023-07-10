@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
@@ -17,6 +18,12 @@ class Categorie
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\Length(min: 2)]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]*$/',
+        match: true,
+        message: 'Veuillez entrer des mots valides.',
+    )]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

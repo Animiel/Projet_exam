@@ -84,6 +84,12 @@ main #bloc {
     opacity: 1;
 }
 
+.new-form {
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+}
+
 .app-name {
     color: #ee850d;
 }

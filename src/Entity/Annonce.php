@@ -26,7 +26,6 @@ class Annonce
     private Collection $usersFavorite;
 
     #[ORM\Column(length: 100)]
-    #[Assert\Length(min: 2)]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z]*$/',
         match: true,
@@ -46,46 +45,21 @@ class Annonce
 
     #[ORM\Column(length: 50)]
     #[Assert\Length(min: 2)]
-    #[Assert\Regex(
-        pattern: '/^[a-zA-Z]*$/',
-        match: true,
-        message: 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.',
-    )]
     private ?string $petName = null;
 
     #[ORM\Column(length: 10)]
     private ?string $petGenre = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Assert\Regex(
-        pattern: '/^\w+/',
-        match: true,
-        message: 'Veuillez entrer des mots valides.',
-    )]
     private ?string $petBefriends = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Assert\Regex(
-        pattern: '/^\w+/',
-        match: true,
-        message: 'Veuillez entrer des mots valides.',
-    )]
     private ?string $petHealth = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Assert\Regex(
-        pattern: '/^\w+/',
-        match: true,
-        message: 'Veuillez entrer des mots valides.',
-    )]
     private ?string $petCaractere = null;
 
     #[ORM\Column(length: 3)]
-    #[Assert\Regex(
-        pattern: '/^[0-9]+$/',
-        match: true,
-        message: 'Pas de lettres ou caractères spéciaux acceptés.',
-    )]
     private ?string $petAge = null;
 
     public function __construct()

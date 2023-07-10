@@ -6,20 +6,22 @@
 
 <h1>Nouvelle annonce</h1>
 
-<p>Les champs marqués d'une * sont obligatoires.</p>
-    
+<div class="new-form">
+    <p><b>Les champs marqués d'une * sont obligatoires.</b></p><br>
+
     {{ form_start(formAnnonce) }}
-        {{ form_row(formAnnonce.motifAnnonce) }}
-        {{ form_row(formAnnonce.localisation) }}
-        {{ form_row(formAnnonce.pet_name) }}
-        {{ form_row(formAnnonce.pet_genre) }}
-        {{ form_row(formAnnonce.pet_age) }}
-        {{ form_row(formAnnonce.pet_health) }}
-        {{ form_row(formAnnonce.pet_caractere) }}
-        {{ form_row(formAnnonce.pet_befriends) }}
-        {{ form_row(formAnnonce.images) }}
+        {{ form_row(formAnnonce.motifAnnonce) }}<br>
+        {{ form_row(formAnnonce.localisation) }}<br>
+        {{ form_row(formAnnonce.pet_name) }}<br>
+        {{ form_row(formAnnonce.pet_genre) }}<br>
+        {{ form_row(formAnnonce.pet_age) }}<br>
+        {{ form_row(formAnnonce.pet_health) }}<br>
+        {{ form_row(formAnnonce.pet_caractere) }}<br>
+        {{ form_row(formAnnonce.pet_befriends) }}<br>
+        {{ form_row(formAnnonce.images) }}<br>
 
         <button type="submit" class="btn">Valider</button>
     {{ form_end(formAnnonce) }}
+</div>
     
 {% endblock %}
