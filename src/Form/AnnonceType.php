@@ -43,7 +43,7 @@ class AnnonceType extends AbstractType
             ])
             ->add('pet_befriends', TextareaType::class, [
                 'label' => 'Affinités de votre animal* : ',
-                'required' => true,
+                'required' => false,
             ])
             ->add('pet_health', TextareaType::class, [
                 'label' => 'Informations concernant la santé : ',

@@ -26,7 +26,7 @@ class Annonce
     private Collection $usersFavorite;
 
     #[ORM\Column(length: 100)]
-    #[Assert\Length(min: 3)]
+    #[Assert\Length(min: 2)]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z]*$/',
         match: true,
@@ -56,7 +56,7 @@ class Annonce
     #[ORM\Column(length: 10)]
     private ?string $petGenre = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\Regex(
         pattern: '/^\w+/',
         match: true,

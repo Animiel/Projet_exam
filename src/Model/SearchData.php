@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping as ORM;
 
 class SearchData
 {
@@ -12,16 +11,22 @@ class SearchData
 
     /** @var string 
      * @var null */
-    #[Assert\Length(min: 3)]
+    #[Assert\Length(min: 2)]
     #[Assert\Regex(
-        pattern: '/\d/',
-        match: false,
-        message: 'Your name cannot contain a number',
+        pattern: '/^[a-zA-Z]*$/',
+        match: true,
+        message: 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.',
     )]
     public $q = "";
 
     /** @var string 
      * @var null */
+    #[Assert\Length(min: 2)]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]*$/',
+        match: true,
+        message: 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.',
+    )]
     public $local = "";
 
     /** @var array */
