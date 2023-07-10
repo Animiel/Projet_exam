@@ -46,23 +46,26 @@ class AnnonceRepository extends ServiceEntityRepository
         $annonces = $this->createQueryBuilder('a')
             ->addOrderBy('a.publicationDate', 'DESC');
 
-        if(!empty($searchData->q) || !empty($searchData->local) || (!empty($searchData->genre)))  {
+        if(!empty($searchData->q))  {
             $annonces = $annonces
             ->where('a.petName LIKE :q')
+            ->setParameter('q', "%{$searchData->q}%");
+        }
+        if(!empty($searchData->local)) {
+            $annonces = $annonces
             ->andWhere('a.localisation LIKE :local')
-            ->andWhere('a.petGenre = :genre')
-            ->setParameters([
-                'q' => "%{$searchData->q}%",
-                'local' => "%{$searchData->local}%",
-                'genre' => $searchData->genre,
-            ]);
+            ->setParameter('local', $searchData->local);
+        }
+        if(!empty($searchData->genre)) {
+            $annonces = $annonces
+            ->andWhere('a.petGenre LIKE :genre')
+            ->setParameter('genre', $searchData->genre);
         }
         if(!empty($searchData->motif)) {
             $annonces = $annonces
             ->join('a.motifAnnonce', 'm')
             ->andWhere('m.id IN (:motif)')
             ->setParameter('motif', $searchData->motif);
-                
         }
 
         $annonces = $annonces->getQuery()->getResult();
