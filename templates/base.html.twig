@@ -15,11 +15,9 @@
     <body>
         
         <nav id="header" class="navbar">
-            <ul>
-                <li><a href="{{ path('app_home') }}">Acceuil</a></li>
-                <li><a href="{{ path('app_forum') }}">Forum</a></li>
-                <li><a href="">Pour aller plus loin</a></li>
-            </ul>
+            <a href="{{ path('app_home') }}">Acceuil</a>
+            <a href="{{ path('app_forum') }}">Forum</a>
+            <a href="">Pour aller plus loin</a>
         </nav>
 
         <main>
@@ -64,12 +62,10 @@
 
         <footer>
             <nav class="navbar bottom">
-                <ul>
-                    <li><a href="">Plan du site</a></li>
-                    <li><a href="{{ path('app_contact') }}">Contact</a></li>
-                    <li><a href="">Réseaux sociaux</a></li>
-                    <li><a href="">Mentions légales</a></li>
-                </ul>
+                <a href="">Plan du site</a>
+                <a href="{{ path('app_contact') }}">Contact</a>
+                <a href="">Réseaux sociaux</a>
+                <a href="">Mentions légales</a>
             </nav>
         </footer>
          {% block javascripts %}
