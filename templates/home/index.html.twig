@@ -49,13 +49,15 @@
 
             <div class="wanted">
                 <div class="first-view">
+                    <i class="fa-solid fa-caret-left" style="color: #FFAB5E;"></i>
                     {% for image in annonce.images %}
                         {% if image is not iterable %}
-                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic">
+                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic active">
                         {% endif %}
                     {% endfor %}
-                    <h3>{{ annonce.motifAnnonce }}</h3>
-                    <p><b>Localisation :</b> {{ annonce.localisation }}</p>
+                    <i class="fa-solid fa-caret-right" style="color: #FFAB5E;"></i>
+                    <h3 class="motif-annonce">{{ annonce.motifAnnonce }}</h3>
+                    <p class="local-annonce"><b>Localisation :</b> {{ annonce.localisation }}</p>
                 </div>
 
                 <div class="second-view">

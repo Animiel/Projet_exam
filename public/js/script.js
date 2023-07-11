@@ -55,3 +55,17 @@ function swapIconVoid(element) {
         { duration: 1000,
         iterations: 1 });
 }
+
+
+
+
+
+let a_slider = document.getElementsByClassName('wanted-pic');
+let actImg = 0;
+let nbr_img = a_slider.length;
+
+function removeActive() {
+    for(let i = 0 ; i < nbr_img ; i++) {
+        a_slider[i].classList.remove('active');
+    }
+}
