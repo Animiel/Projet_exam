@@ -49,13 +49,13 @@
 
             <div class="wanted">
                 <div class="first-view">
-                    <i id="leftArrow" class="fa-solid fa-caret-left" style="color: #FFAB5E;" onClick="previous()"></i>
+                    <i class="fa-solid fa-caret-left" style="color: #FFAB5E;" onClick="previous()"></i>
                     {% for image in annonce.images %}
                         {% if image is not iterable %}
                             <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic activeImg">
                         {% endif %}
                     {% endfor %}
-                    <i id="rigthArrow" class="fa-solid fa-caret-right" style="color: #FFAB5E;" onClick="next()"></i>
+                    <i class="fa-solid fa-caret-right" style="color: #FFAB5E;" onClick="next()"></i>
                     <h3 class="motif-annonce">{{ annonce.motifAnnonce }}</h3>
                     <p class="local-annonce"><b>Localisation :</b> {{ annonce.localisation }}</p>
                 </div>
@@ -74,12 +74,11 @@
                 {% if app.user %}
                 {% if annonce in app.user.annonceFavorites %}
                 <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
-                    <i id="solid-on" class="fa-solid fa-heart heart-annonce" style="color: #d747cb;" onmouseover="swapIconVoid(this)"></i>
+                    <i class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
                 </a>
-                <i id="regular-off" class="fa-regular fa-heart heart-annonce" style="color: #d747cb;">test</i>
                 {% else %}
                 <a href="{{ path('add_afav', {'id': annonce.id }) }}">
-                    <i id="regular-on" class="fa-regular fa-heart heart-annonce" style="color: #d747cb;" onmouseover="swapIconFull(this)"></i>
+                    <i id="regular-on" class="fa-regular fa-heart heart-annonce" style="color: #d747cb;" ></i>
                 </a>
                 <i id="solid-off" class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
                 {% endif %}

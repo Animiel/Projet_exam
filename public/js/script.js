@@ -32,29 +32,26 @@ function onClick(element) {
 
 
 
+let cards = document.getElementsByClassName('wanted');
 const coeurPlein = document.getElementById('solid-off');
-const coeurVide = document.getElementById('regular-off');
+const coeurVide = document.getElementById('regular-on');
 
 window.addEventListener('load', (event) => {
     coeurPlein.style.left = '-20px';
-    coeurVide.style.left = '-20px';
+    coeurVide.style.left = '10px';
   }); 
 
-function swapIconFull(element) {
-    document.getElementById("regular-on").animate([
+coeurVide.addEventListener('mouseover', function() {
+    coeurVide.animate([
         { transform: 'translateX(-40px)' }],
-        { duration: 800});
+        { duration: 600});
     coeurPlein.animate([
         { transform: 'translateX(30px)' }],
-        { duration: 800});
-}
-
-function swapIconVoid(element) {
-    document.getElementById("solid-on").animate([
-        { transform: 'translateX(-40px)' }],
-        { duration: 1000,
-        iterations: 1 });
-}
+        { duration: 600});
+    coeurPlein.addEventListener('mouseover', function() {
+        setTimeout(5000);
+    })
+})
 
 
 
@@ -63,8 +60,8 @@ function swapIconVoid(element) {
 let a_slides = document.getElementsByClassName('wanted-pic');
 let actImg = 0;
 let nbr_img = a_slides.length;
-let leftArrow = document.getElementById('leftArrow');
-let rightArrow = document.getElementById('rightArrow');
+let leftArrow = document.getElementsByClassName('fa-caret-left');
+let rightArrow = document.getElementsByClassName('fa-caret-right');
 
 function removeActiveImg() {
     for(let i = 0 ; i < nbr_img ; i++) {
@@ -89,3 +86,7 @@ function next() {
     removeActiveImg();
     a_slides[actImg].classList.add('activeImg');
 }
+console.log(cards);
+console.log(leftArrow);
+console.log(a_slides);
+console.log(cards.a_slides);

@@ -165,6 +165,7 @@ h2 {
 
 .fa-caret-right:hover, .fa-caret-left:hover {
     cursor: pointer;
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .fa-caret-left {
