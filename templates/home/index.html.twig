@@ -49,13 +49,13 @@
 
             <div class="wanted">
                 <div class="first-view">
-                    <i class="fa-solid fa-caret-left" style="color: #FFAB5E;"></i>
+                    <i id="leftArrow" class="fa-solid fa-caret-left" style="color: #FFAB5E;" onClick="previous()"></i>
                     {% for image in annonce.images %}
                         {% if image is not iterable %}
-                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic active">
+                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic activeImg">
                         {% endif %}
                     {% endfor %}
-                    <i class="fa-solid fa-caret-right" style="color: #FFAB5E;"></i>
+                    <i id="rigthArrow" class="fa-solid fa-caret-right" style="color: #FFAB5E;" onClick="next()"></i>
                     <h3 class="motif-annonce">{{ annonce.motifAnnonce }}</h3>
                     <p class="local-annonce"><b>Localisation :</b> {{ annonce.localisation }}</p>
                 </div>

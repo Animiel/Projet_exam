@@ -163,6 +163,10 @@ h2 {
     font-size: 1.6rem;
 }
 
+.fa-caret-right:hover, .fa-caret-left:hover {
+    cursor: pointer;
+}
+
 .fa-caret-left {
     left: 0;
     top: 45%;
@@ -183,8 +187,12 @@ h2 {
     top: 0;
 }
 
-.wanted img.active {
-    display: block;
+.wanted img.activeImg {
+    opacity: 1;
+}
+
+.wanted img {
+    opacity: 0;
 }
 
 .motif-annonce {
@@ -192,6 +200,16 @@ h2 {
     text-align: center;
     width: 100%;
     bottom: 35px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+}
+
+.local-annonce {
+    position: absolute;
+    text-align: center;
+    left: 10%;
+    width: 80%;
+    bottom: 20px;
     background: rgba(0, 0, 0, 0.6);
     color: #ffffff;
 }

@@ -60,12 +60,32 @@ function swapIconVoid(element) {
 
 
 
-let a_slider = document.getElementsByClassName('wanted-pic');
+let a_slides = document.getElementsByClassName('wanted-pic');
 let actImg = 0;
-let nbr_img = a_slider.length;
+let nbr_img = a_slides.length;
+let leftArrow = document.getElementById('leftArrow');
+let rightArrow = document.getElementById('rightArrow');
 
-function removeActive() {
+function removeActiveImg() {
     for(let i = 0 ; i < nbr_img ; i++) {
-        a_slider[i].classList.remove('active');
+        a_slides[i].classList.remove('activeImg');
     }
+}
+
+function previous() {
+    actImg--;
+    if(actImg < 0) {
+        actImg = nbr_img;
+    }
+    removeActiveImg();
+    a_slides[actImg].classList.add('activeImg');
+}
+
+function next() {
+    actImg++;
+    if(actImg >= nbr_img) {
+        actImg = 0;
+    }
+    removeActiveImg();
+    a_slides[actImg].classList.add('activeImg');
 }
