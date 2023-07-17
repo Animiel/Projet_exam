@@ -215,8 +215,18 @@ h2 {
     color: #ffffff;
 }
 
-.second-view {
-    display: none;
+.moreInfos {
+    margin-right: 20px;
+    margin-bottom: 2px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.moreInfos:hover {
+    cursor: pointer;
 }
 
 .heart-annonce {
