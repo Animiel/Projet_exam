@@ -125,7 +125,7 @@ function removeActiveImg() {
 
 
 
-for (let numAnnonce = 1; numAnnonce < cards.length; numAnnonce++) {
+for (let numAnnonce = 1; numAnnonce <= cards.length; numAnnonce++) {
     let btnDogInfo = document.getElementById(`info-${numAnnonce}`);
     let btnBackInfo = document.getElementById(`back-${numAnnonce}`);
     btnDogInfo.addEventListener('click', element => {
