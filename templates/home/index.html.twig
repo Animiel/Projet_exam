@@ -50,12 +50,15 @@
             <div class="wanted">
                 <div id="first-view-{{ loop.index }}">
                     {% for image in annonce.images %}
-                    {% if image is not iterable %}
-                    <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic activeImg">
-                    {% endif %}
+                        {% if image is not iterable %}
+                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic">
+                        {% endif %}
                     {% endfor %}
-                    <i class="fa-solid fa-caret-left" style="color: #FFAB5E;"></i>
-                    <i class="fa-solid fa-caret-right" style="color: #FFAB5E;"></i>
+                    {# {{ dump(annonce.images) }} #}
+                    {# {% if annonce.images | length > 2 %} #}
+                        <i id="left-{{ loop.index }}" class="fa-solid fa-caret-left" style="color: #FFAB5E;"></i>
+                        <i id="right-{{ loop.index }}" class="fa-solid fa-caret-right" style="color: #FFAB5E;"></i>
+                    {# {% endif %} #}
                     <h3 class="motif-annonce">{{ annonce.motifAnnonce }}</h3>
                     <p class="local-annonce"><b>Localisation :</b> {{ annonce.localisation }}</p>
                     <button id="info-{{ loop.index }}" class="moreInfos">Plus d'infos...</button>
@@ -74,16 +77,16 @@
                 </div>
                 {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
                 {% if app.user %}
-                {% if annonce in app.user.annonceFavorites %}
-                <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
-                    <i class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
-                </a>
-                {% else %}
-                <a href="{{ path('add_afav', {'id': annonce.id }) }}">
-                    <i id="regular-on" class="fa-regular fa-heart heart-annonce" style="color: #d747cb;" ></i>
-                </a>
-                <i id="solid-off" class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
-                {% endif %}
+                    {% if annonce in app.user.annonceFavorites %}
+                    <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
+                        <i class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
+                    </a>
+                    {% else %}
+                    <a href="{{ path('add_afav', {'id': annonce.id }) }}">
+                        <i id="regular-on" class="fa-regular fa-heart heart-annonce" style="color: #d747cb;" ></i>
+                    </a>
+                    <i id="solid-off" class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
+                    {% endif %}
                 {% endif %}
 
                 {# on peut notifier un annonceur lorsqu'on est connecté #}

@@ -57,69 +57,45 @@ coeurVide.addEventListener('mouseover', function() {
 
 
 let cards = document.getElementsByClassName('wanted');
-let a_slides = [];
-let a_slider = [];
-let actImg = 0;
-let nbr_img = a_slides.length;
-let leftArrow = document.getElementsByClassName('fa-caret-left');
-let rightArrow = document.getElementsByClassName('fa-caret-right');
 
-function removeActiveImg() {
-    for(let i = 0 ; i < nbr_img ; i++) {
-        a_slides[i].classList.remove('activeImg');
+for (let j = 1; j <= cards.length; j++) {
+    let annSlider = document.getElementById(`first-view-${j}`);
+    let prevImg = document.getElementById(`left-${j}`);
+    let nextImg = document.getElementById(`right-${j}`);
+    let annImgs = [];
+    let activeImage = 0;
+
+    for (let childNum = 0; childNum < annSlider.children.length; childNum++) {
+        if (annSlider.children[childNum].localName == 'img') {
+            annImgs.push(annSlider.children[childNum]);
+        }
     }
+    window.addEventListener('load', element => {
+        for (let Test = 0; Test < cards.length; Test++) {
+            annImgs[0].classList.add('activeImg');
+        }
+    })
+    prevImg.addEventListener('click', element => {
+        if (activeImage <= 0) {
+            activeImage = annImgs.length;
+        }
+        activeImage--;
+        for (let i = 0; i < annImgs.length; i++) {
+            annImgs[i].classList.remove('activeImg');
+        }
+        annImgs[activeImage].classList.add('activeImg');
+    })
+    nextImg.addEventListener('click', element => {
+        activeImage++;
+        if (activeImage >= annImgs.length) {
+            activeImage = 0;
+        }
+        for (let ind = 0; ind < annImgs.length; ind++) {
+            annImgs[ind].classList.remove('activeImg');
+        }
+        annImgs[activeImage].classList.add('activeImg');
+    })
 }
-
-// function previous() {
-//     if(actImg <= 0) {
-//         actImg = nbr_img;
-//     }
-//     actImg--;
-//     removeActiveImg();
-//     slider_children[actImg].classList.add('activeImg');
-// }
-
-// function next() {
-//     actImg++;
-//     if(actImg >= nbr_img) {
-//         actImg = 0;
-//     }
-//     removeActiveImg();
-//     slider_children[actImg].classList.add('activeImg');
-// }
-
-// for (let j = 1; j <= cards.length; j++) {
-//     a_slider.push(document.getElementsByClassName(`first-view-${j}`));  //a_slider == [[]] => a_slider[j] = []
-// }
-// for (let k = 0; k < a_slider.length; k++) {
-//     let slider_children = a_slider[k][0].children;
-//     // console.log(slider_children);
-//     for (let l = 0; l < slider_children.length; l++) {
-//         if (slider_children[l].localName == "img") {
-//             a_slides.push(slider_children[l])
-//         }
-//         if (slider_children[l].className == 'fa-caret-left') {
-//             slider_children[l].addEventListener('click', element => {
-//                 if(actImg <= 0) {
-//                     actImg = nbr_img;
-//                 }
-//                 actImg--;
-//                 removeActiveImg();
-//                 slider_children[actImg].classList.add('activeImg');
-//             });
-//         }
-//         if (slider_children[l].className == 'fa-caret-right') {
-//             slider_children[l].addEventListener('click', element => {
-//                 actImg++;
-//                 if(actImg >= nbr_img) {
-//                     actImg = 0;
-//                 }
-//                 removeActiveImg();
-//                 slider_children[actImg].classList.add('activeImg');
-//             });
-//         }
-//     }
-// }
 
 
 
