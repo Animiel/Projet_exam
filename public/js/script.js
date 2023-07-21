@@ -33,14 +33,10 @@ function onClick(element) {
 
 const coeurPlein = document.getElementById('solid-off');
 const coeurVide = document.getElementById('regular-on');
-let cardInfos = document.getElementsByClassName('dogInfos');
 
-window.addEventListener('load', (event) => {
+window.addEventListener('load', element => {
     coeurPlein.style.left = '-20px';
     coeurVide.style.left = '10px';
-    for (let dogIndex = 0; dogIndex < cardInfos.length; dogIndex++) {
-        cardInfos[dogIndex].style.display = 'none';
-    }
 }); 
 
 coeurVide.addEventListener('mouseover', function() {
@@ -73,6 +69,10 @@ for (let j = 1; j <= cards.length; j++) {
     window.addEventListener('load', element => {
         for (let Test = 0; Test < cards.length; Test++) {
             annImgs[0].classList.add('activeImg');
+        }
+        for (let dogIndex = 0; dogIndex < cards.length; dogIndex++) {
+            let dogInfos = document.getElementsByClassName('dogInfos');
+            dogInfos[dogIndex].style.display = 'none';
         }
     })
     prevImg.addEventListener('click', element => {
