@@ -8,6 +8,9 @@
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+            {# <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin=""/> #}
         {% endblock %}
 
        
@@ -17,7 +20,7 @@
         <nav id="header" class="navbar">
             <a href="{{ path('app_home') }}">Acceuil</a>
             <a href="{{ path('app_forum') }}">Forum</a>
-            <a href="">Pour aller plus loin</a>
+            <a href="{{ path('app_plus_loin') }}">Pour aller plus loin</a>
         </nav>
 
         <main>
@@ -71,6 +74,10 @@
          {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             <script src="{{ asset('js/script.js') }}"></script>
+            {# <!-- Make sure you put this AFTER Leaflet's CSS -->
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script> #}
         {% endblock %}
     </body>
 </html>

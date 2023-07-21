@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PetSeek | Pour aller plus loin...{% endblock %}
+
+{% block body %}
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+</head>
+
+
+<div id="map"></div>
+
+
+
+
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script>
+    var map = L.map('map').setView([41.535118, 10.789347], 2);
+    var popup = L.popup();
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 2,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    L.Control.geocoder().addTo(map);
+
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+    }
+
+    map.on('click', onMapClick);
+    var marker = L.marker([48.603652, 7.787187]).addTo(map);
+    var marker = L.marker([48.595369, 7.717687]).addTo(map);
+    var marker = L.marker([48.590688, 7.741526]).addTo(map);
+    var marker = L.marker([48.586109, 7.739812]).addTo(map);
+    var marker = L.marker([48.575511, 7.759373]).addTo(map);
+    var marker = L.marker([48.582490, 7.692080]).addTo(map);
+    var marker = L.marker([48.589134, 7.683355]).addTo(map);
+    var marker = L.marker([48.567376, 7.763591]).addTo(map);
+    var marker = L.marker([48.561344, 7.763830]).addTo(map);
+    var marker = L.marker([48.554265, 7.744936]).addTo(map);
+    var marker = L.marker([48.565090, 7.706747]).addTo(map);
+    var marker = L.marker([48.561005, 7.694109]).addTo(map);
+    var marker = L.marker([48.553485, 7.680850]).addTo(map);
+    var marker = L.marker([48.543522, 7.710576]).addTo(map);
+    var marker = L.marker([48.535252, 7.698445]).addTo(map);
+    var marker = L.marker([48.532023, 7.717445]).addTo(map);
+</script>
+
+{% endblock %}
