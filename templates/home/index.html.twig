@@ -61,7 +61,7 @@
                     {# {% endif %} #}
                     <h3 class="motif-annonce">{{ annonce.motifAnnonce }}</h3>
                     <p class="local-annonce"><b>Localisation :</b> {{ annonce.localisation }}</p>
-                    <button id="info-{{ loop.index }}" class="moreInfos">Plus d'infos...</button>
+                    <button id="info-{{ loop.index }}" class="moreInfos seeDogInfos">Plus d'infos...</button>
                 </div>
 
                 <div id="second-view-{{ loop.index }}" class="dogInfos">
@@ -73,7 +73,28 @@
                     <p>Affinités avec d'autres animaux/humains : {{ annonce.petBefriends }}</p>
                     <p>Caractère de l'animal : {{ annonce.petCaractere }}</p>
                     <p>Informations sur la santé : {{ annonce.petHealth }}</p>
-                    <button id="back-{{ loop.index }}" class="moreInfos">Retour au devant...</button>
+                    <button id="back-{{ loop.index }}" class="moreInfos backToImages">Retour au devant...</button>
+    
+                    {# on peut notifier un annonceur lorsqu'on est connecté #}
+                    {% if app.user %}
+                        <button class="info-btn">
+                            <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
+                        </button><br>
+                    {% endif %}
+    
+                    {# lien uniquement pour le créateur de l'annonce ou pour les admins #}
+                    {% if app.user and (is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id) %}
+                        <button class="delete-btn">
+                            <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a>
+                        </button>
+                    {% endif %}
+    
+                    {# fonction réservée aux admins #}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <button class="ban-btn">
+                            <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
+                        </button>
+                    {% endif %}
                 </div>
                 {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
                 {% if app.user %}
@@ -87,27 +108,6 @@
                     </a>
                     <i id="solid-off" class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i>
                     {% endif %}
-                {% endif %}
-
-                {# on peut notifier un annonceur lorsqu'on est connecté #}
-                {% if app.user %}
-                    <button class="info-btn">
-                        <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
-                    </button><br>
-                {% endif %}
-
-                {# lien uniquement pour le créateur de l'annonce ou pour les admins #}
-                {% if app.user and (is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id) %}
-                    <button class="delete-btn">
-                        <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a>
-                    </button>
-                {% endif %}
-
-                {# fonction réservée aux admins #}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <button class="ban-btn">
-                        <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
-                    </button>
                 {% endif %}
             </div>
         {% endfor %}

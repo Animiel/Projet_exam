@@ -153,9 +153,19 @@ h2 {
     width: 300px;
     background-color: #FFAB5E;
     border-radius: 30px;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: relative;
     margin-bottom: 50px;
+}
+
+.wanted::-webkit-scrollbar {
+    width: 10px;
+}
+
+.wanted::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #000000;
 }
 
 .fa-caret-right, .fa-caret-left {
@@ -215,7 +225,15 @@ h2 {
     color: #ffffff;
 }
 
-.moreInfos {
+.dogInfos {
+    padding: 0px 10px;
+}
+
+.moreInfos:hover {
+    cursor: pointer;
+}
+
+.seeDogInfos {
     margin-right: 20px;
     margin-bottom: 2px;
     position: absolute;
@@ -225,8 +243,13 @@ h2 {
     background-color: rgba(0, 0, 0, 0);
 }
 
-.moreInfos:hover {
-    cursor: pointer;
+.backToImages {
+    margin-right: 20px;
+    margin-bottom: 2px;
+    position: absolute;
+    right: 0px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .heart-annonce {
@@ -246,18 +269,24 @@ button a {
     border: 1px solid #000000;
     background-color: #FFAB5E;
     padding: 5px;
+    border-radius: 10px;
 }
 
 .info-btn {
     border: 1px solid #000000;
     background-color: #D0D0D0;
     padding: 5px;
+    transform: translateY(-5px);
+    border-radius: 10px;
 }
 
 .delete-btn, .ban-btn {
     border: 1px solid #000000;
     background-color: #850000;
     padding: 5px;
+    transform: translateX(5%);
+    margin-right: 5px;
+    border-radius: 10px;
 }
 
 .delete-btn a, .ban-btn a, .unban-btn a {
@@ -268,6 +297,7 @@ button a {
     border: 1px solid #000000;
     background-color: #006700;
     padding: 5px;
+    border-radius: 10px;
 }
 
 /* .msg-form {
