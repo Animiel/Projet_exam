@@ -31,22 +31,22 @@ function onClick(element) {
 
 
 
-const coeurPlein = document.getElementById('solid-off');
-const coeurVide = document.getElementById('regular-on');
+// const coeurPlein = document.getElementById('solid-off');
+// const coeurVide = document.getElementById('regular-on');
 
-window.addEventListener('load', element => {
-    coeurPlein.style.left = '-20px';
-    coeurVide.style.left = '10px';
-}); 
+// window.addEventListener('load', element => {
+//     coeurPlein.style.left = '-20px';
+//     coeurVide.style.left = '10px';
+// }); 
 
-coeurVide.addEventListener('mouseover', function() {
-    coeurVide.animate([
-    { transform: 'translateX(-40px)' }],
-    { duration: 600});
-    coeurPlein.animate([
-    { transform: 'translateX(30px)' }],
-    { duration: 600});
-})
+// coeurVide.addEventListener('mouseover', function() {
+//     coeurVide.animate([
+//     { transform: 'translateX(-40px)' }],
+//     { duration: 600});
+//     coeurPlein.animate([
+//     { transform: 'translateX(30px)' }],
+//     { duration: 600});
+// })
 
 
 

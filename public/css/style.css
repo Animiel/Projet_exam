@@ -153,10 +153,14 @@ h2 {
     width: 300px;
     background-color: #FFAB5E;
     border-radius: 30px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     position: relative;
     margin-bottom: 50px;
+}
+
+.wanted:hover {
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .wanted::-webkit-scrollbar {
@@ -227,6 +231,11 @@ h2 {
 
 .dogInfos {
     padding: 0px 10px;
+    text-align: justify;
+}
+
+.dogID {
+    text-align: center;
 }
 
 .moreInfos:hover {
@@ -257,6 +266,14 @@ h2 {
     top: 10px;
     left: 10px;
     font-size: 1.3rem;
+}
+
+.fa-heart {
+    color: #d747cb;
+}
+
+.fa-heart:hover {
+    background: #d747cb;
 }
 
 button a {
