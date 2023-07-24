@@ -128,23 +128,24 @@ window.addEventListener('load', element => {
     imagesGallery[2].classList.add('currentGalImg');
 })
 setInterval(function() {
-    imagesGallery[currentImg].classList.add('currentGalImg');
-    imagesGallery[currentImg + 1].classList.add('currentGalImg');
-    imagesGallery[currentImg + 2].classList.add('currentGalImg');
     currentImg++;
-    if (imagesGallery[currentImg + 3] > imagesGallery[imagesGallery.length]) {
+    if (imagesGallery[currentImg + 2] >= imagesGallery[imagesGallery.length]) {
         imagesGallery[currentImg + 2] = imagesGallery[0];
-        imagesGallery[currentImg + 2].classList.add('currentGalImg');
+        imagesGallery[0].classList.add('currentGalImg');
         imagesGallery[currentImg + 1] = imagesGallery[imagesGallery.length];
+        imagesGallery[imagesGallery.length].classList.add('currentGalImg');
     }
-    if (imagesGallery[currentImg + 2] > imagesGallery[imagesGallery.length]) {
+    if (imagesGallery[currentImg + 1] >= imagesGallery[imagesGallery.length]) {
         imagesGallery[currentImg + 2] = imagesGallery[1];
+        imagesGallery[1].classList.add('currentGalImg');
         imagesGallery[currentImg + 1] = imagesGallery[0];
+        imagesGallery[0].classList.add('currentGalImg');
     }
-    if (currentImg >= imagesGallery.length) {
-        currentImg = 0;
-        // imagesGallery[currentImg + 1] = imagesGallery[0];
-        // imagesGallery[currentImg + 2] = imagesGallery[1];
+    if (imagesGallery[currentImg] == imagesGallery[imagesGallery.length]) {
+        imagesGallery[currentImg + 2] = imagesGallery[2];
+        imagesGallery[2].classList.add('currentGalImg');
+        imagesGallery[currentImg + 1] = imagesGallery[1];
+        imagesGallery[1].classList.add('currentGalImg');
     }
     imagesGallery[currentImg - 1].classList.remove('currentGalImg');
     imagesGallery[currentImg] = imagesGallery[currentImg + 1];
