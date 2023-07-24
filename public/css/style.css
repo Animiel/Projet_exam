@@ -146,11 +146,13 @@ h2 {
     flex-flow: row wrap;
     justify-content: space-evenly;
     margin-top: 20px;
+    width: 100%;
+    height: 100vh;
 }
 
-.wanted {
-    height: 225px;
-    width: 300px;
+/* .wanted {
+    height: 25%;
+    width: 35%;
     background-color: #FFAB5E;
     border-radius: 30px;
     overflow: hidden;
@@ -170,7 +172,7 @@ h2 {
 .wanted::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #000000;
-}
+} */
 
 .fa-caret-right, .fa-caret-left {
     position: absolute;
@@ -194,19 +196,29 @@ h2 {
     margin-right: 10px;
 }
 
-.wanted-pic {
-    width: 300px;
-    height: 200px;
+.carte {
+    height: 25%;
+    width: 35%;
     border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.wanted-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 27.5px;
     position: absolute;
     top: 0;
 }
 
-.wanted img.activeImg {
+.carte img.activeImg {
     opacity: 1;
 }
 
-.wanted img {
+.carte img {
     opacity: 0;
 }
 
@@ -384,7 +396,28 @@ footer {
     flex-flow: column wrap;
 }
 
-@media screen and (max-width: 720px) {
+@media(max-width: 2100px) {
+    .carte {
+        width: 25%;
+        height: 25%;
+    }
+}
+
+@media(max-width: 1500px) {
+    .carte {
+        width: 30%;
+        height: 25%;
+    }
+}
+
+@media(max-width: 1250px) {
+    .carte {
+        width: 35%;
+        height: 25%;
+    }
+}
+
+@media(max-width: 980px) {
     main {
         flex-flow: column wrap;
     }
@@ -401,5 +434,44 @@ footer {
     }
     main #bloc {
         width: 100%;
+    }
+
+    #grid {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .carte {
+        height: 30%;
+        width: 80%;
+    }
+
+    .fa-caret-right, .fa-caret-left {
+        position: absolute;
+        font-size: 3.5rem;
+    }
+
+    .motif-annonce {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        bottom: 35px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #ffffff;
+        font-size: 50px;
+    }
+
+    .local-annonce {
+        position: absolute;
+        text-align: center;
+        left: 10%;
+        width: 80%;
+        bottom: 20px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #ffffff;
+        font-size: 30px;
     }
 }

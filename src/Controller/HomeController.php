@@ -25,15 +25,14 @@ class HomeController extends AbstractController
     public function index(ManagerRegistry $doctrine, Request $request, AnnonceRepository $aRepo): Response
     {
         $searchData = new SearchData();
-        
+
         $form = $this->createForm(SearchType::class, $searchData);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            if(($searchData->q == '' || $searchData->q == null) && ($searchData->local == '' || $searchData->local == null) && ($searchData->motif == '' || $searchData->motif == null) && ($searchData->genre == 'None')) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (($searchData->q == '' || $searchData->q == null) && ($searchData->local == '' || $searchData->local == null) && ($searchData->motif == '' || $searchData->motif == null) && ($searchData->genre == 'None')) {
                 return $this->redirectToRoute('app_home');
-            }
-            else {
+            } else {
                 $annoncesSearch = $aRepo->findBySearch($searchData);
             }
 
@@ -45,9 +44,11 @@ class HomeController extends AbstractController
         }
 
 
-        $annonces = $doctrine->getRepository(Annonce::class)->findAll();
+        $annonces = $doctrine->getRepository(Annonce::class)->findBy([], ["publicationDate" => "DESC"]);
+        $images = glob('/public/img/annonces' . '*.{jpg,jpeg,png,gif}', GLOB_BRACE);
         return $this->render('home/index.html.twig', [
             'annonces' => $annonces,
+            'images' => $images,
             'searchForm' => $form->createView(),
         ]);
     }
@@ -76,14 +77,14 @@ class HomeController extends AbstractController
             $user = $this->getUser();
             $annonce = $form->getData();
             $uploadedFiles = $form->get('images')->getData();
-            
-            foreach($uploadedFiles as $image) {
-                $fileName = uniqid().'.'.$image->guessExtension();
+
+            foreach ($uploadedFiles as $image) {
+                $fileName = uniqid() . '.' . $image->guessExtension();
                 array_push($uploadedFiles, $fileName);
                 $image->move('img/annonces', $fileName);
                 unset($image);
             }
-            
+
             $annonce->setPublicationDate(new \Datetime());
             $annonce->setImages($uploadedFiles);
             $annonce->setAnnonceUser($user);
@@ -94,7 +95,7 @@ class HomeController extends AbstractController
 
             return $this->redirectToRoute('app_home');
         }
-        
+
         return $this->render('home/annonce.html.twig', [
             'formAnnonce' => $form->createView(),
         ]);
@@ -109,16 +110,16 @@ class HomeController extends AbstractController
         $userEmail = $user->getEmail();
         $annonceurEmail = $annonceur->getEmail();
         $email = (new Email())
-                ->from('noreply@petseek.com')
-                ->to($annonceurEmail)
-                //->cc('cc@example.com')
-                //->bcc('bcc@example.com')
-                //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
-                ->subject('Quelqu\'un a peut-être une info sur votre animal disparu !')
-                ->text($userEmail.' a une info sur votre animal. Pour votre sécurité : Méfiez vous des pièges et prenez les mesures nécessaires avant de rencontrer ou contacter cette personne !');
-                // ->html('<p>See Twig integration for better HTML integration!</p>');
-    
+            ->from('noreply@petseek.com')
+            ->to($annonceurEmail)
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Quelqu\'un a peut-être une info sur votre animal disparu !')
+            ->text($userEmail . ' a une info sur votre animal. Pour votre sécurité : Méfiez vous des pièges et prenez les mesures nécessaires avant de rencontrer ou contacter cette personne !');
+        // ->html('<p>See Twig integration for better HTML integration!</p>');
+
         $mailer->send($email);
         // dd($mailer);
 
@@ -129,14 +130,15 @@ class HomeController extends AbstractController
     public function addaFav(ManagerRegistry $doctrine, Annonce $annonce)
     {
         $user = $this->getUser();
-        
-        if(!$user->getAnnonceFavorites()->exists(function($test) use ($annonce) { return; })) {
+
+        if (!$user->getAnnonceFavorites()->exists(function ($test) use ($annonce) {
+            return;
+        })) {
             $entityManager = $doctrine->getManager();
             $user->addAnnonceFavorite($annonce);
             $entityManager->persist($user);
             $entityManager->flush();
-        }
-        else {
+        } else {
             $flash = "Cette annonce est déjà dans vos favoris.";
         }
 
@@ -147,7 +149,7 @@ class HomeController extends AbstractController
     public function removeaFav(ManagerRegistry $doctrine, Annonce $annonce)
     {
         $user = $this->getUser();
-        
+
         $entityManager = $doctrine->getManager();
         $user->removeAnnonceFavorite($annonce);
         $entityManager->flush();

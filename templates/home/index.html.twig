@@ -47,8 +47,8 @@
         {% if annonces is defined %}
         {% for annonce in annonces %}
 
-            <div class="wanted">
-                <div id="first-view-{{ loop.index }}">
+            {# <div class="wanted"> #}
+                <div id="first-view-{{ loop.index }}" class="carte">
                     {% for image in annonce.images %}
                         {% if image is not iterable %}
                             <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic">
@@ -59,6 +59,18 @@
                     <h3 class="motif-annonce">{{ annonce.motifAnnonce }}</h3>
                     <p class="local-annonce"><b>Localisation :</b> {{ annonce.localisation }}</p>
                     <button id="info-{{ loop.index }}" class="moreInfos seeDogInfos">Plus d'infos...</button>
+                    {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
+                    {% if app.user %}
+                        {% if annonce in app.user.annonceFavorites %}
+                        <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
+                            <i class="fa-solid fa-heart heart-annonce"></i>
+                        </a>
+                        {% else %}
+                        <a href="{{ path('add_afav', {'id': annonce.id }) }}">
+                            <i id="regular-on" class="fa-regular fa-heart heart-annonce"></i>
+                        </a>
+                        {% endif %}
+                    {% endif %}
                 </div>
 
                 <div id="second-view-{{ loop.index }}" class="dogInfos">
@@ -89,20 +101,7 @@
                         </button>
                     {% endif %}
                 </div>
-                {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
-                {% if app.user %}
-                    {% if annonce in app.user.annonceFavorites %}
-                    <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
-                        <i class="fa-solid fa-heart heart-annonce"></i>
-                    </a>
-                    {% else %}
-                    <a href="{{ path('add_afav', {'id': annonce.id }) }}">
-                        <i id="regular-on" class="fa-regular fa-heart heart-annonce"></i>
-                    </a>
-                    {# <i id="solid-off" class="fa-solid fa-heart heart-annonce" style="color: #d747cb;"></i> #}
-                    {% endif %}
-                {% endif %}
-            </div>
+            {# </div> #}
         {% endfor %}
         {% endif %}
     </div>

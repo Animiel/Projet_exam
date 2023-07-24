@@ -52,7 +52,7 @@ function onClick(element) {
 
 
 
-let cards = document.getElementsByClassName('wanted');
+let cards = document.getElementsByClassName('carte');
 
 for (let j = 1; j <= cards.length; j++) {
     let annSlider = document.getElementById(`first-view-${j}`);
