@@ -288,6 +288,24 @@ h2 {
     background: #d747cb;
 }
 
+#gallery-grid {
+    width: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#gallery-grid img {
+    position: absolute;
+    opacity: 0;
+}
+
+#gallery-grid .currentGalImg {
+    opacity: 1;
+}
+
 button a {
     text-decoration: none;
     color: #000000;

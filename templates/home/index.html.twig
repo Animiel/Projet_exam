@@ -105,4 +105,10 @@
         {% endfor %}
         {% endif %}
     </div>
+
+    <div id="gallery-grid">
+        {% for image in images %}
+            <img src="{{ asset('img/annonces/' ~ image ~ '') }}" class="gallery-img">
+        {% endfor %}
+    </div>
 {% endblock %}

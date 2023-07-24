@@ -8,6 +8,7 @@ use App\Entity\Annonce;
 use App\Form\SearchType;
 use App\Form\AnnonceType;
 use App\Model\SearchData;
+use Symfony\Component\Finder\Finder;
 use App\Repository\AnnonceRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +46,13 @@ class HomeController extends AbstractController
 
 
         $annonces = $doctrine->getRepository(Annonce::class)->findBy([], ["publicationDate" => "DESC"]);
-        $images = glob('/public/img/annonces' . '*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+        $finder = new Finder();
+        $images = [];
+        $finder->files()->in('img/annonces')->name(['*.jpg', '*.png', '*.jpeg']);
+        foreach ($finder as $file) {
+            $fileNameWithExtension = $file->getRelativePathname();
+            $images[] = $fileNameWithExtension;
+        }
         return $this->render('home/index.html.twig', [
             'annonces' => $annonces,
             'images' => $images,

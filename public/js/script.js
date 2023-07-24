@@ -113,3 +113,44 @@ for (let numAnnonce = 1; numAnnonce <= cards.length; numAnnonce++) {
         document.getElementById(`first-view-${numAnnonce}`).style.display = 'block';
     });
 }
+
+
+
+
+
+let gallery = document.getElementById('gallery-grid');
+let imagesGallery = document.getElementsByClassName('gallery-img');
+let currentImg = 0;
+
+window.addEventListener('load', element => {
+    imagesGallery[0].classList.add('currentGalImg');
+    imagesGallery[1].classList.add('currentGalImg');
+    imagesGallery[2].classList.add('currentGalImg');
+})
+setInterval(function() {
+    imagesGallery[currentImg].classList.add('currentGalImg');
+    imagesGallery[currentImg + 1].classList.add('currentGalImg');
+    imagesGallery[currentImg + 2].classList.add('currentGalImg');
+    currentImg++;
+    if (imagesGallery[currentImg + 3] > imagesGallery[imagesGallery.length]) {
+        imagesGallery[currentImg + 2] = imagesGallery[0];
+        imagesGallery[currentImg + 2].classList.add('currentGalImg');
+        imagesGallery[currentImg + 1] = imagesGallery[imagesGallery.length];
+    }
+    if (imagesGallery[currentImg + 2] > imagesGallery[imagesGallery.length]) {
+        imagesGallery[currentImg + 2] = imagesGallery[1];
+        imagesGallery[currentImg + 1] = imagesGallery[0];
+    }
+    if (currentImg >= imagesGallery.length) {
+        currentImg = 0;
+        // imagesGallery[currentImg + 1] = imagesGallery[0];
+        // imagesGallery[currentImg + 2] = imagesGallery[1];
+    }
+    imagesGallery[currentImg - 1].classList.remove('currentGalImg');
+    imagesGallery[currentImg] = imagesGallery[currentImg + 1];
+    imagesGallery[currentImg].classList.add('currentGalImg');
+    imagesGallery[currentImg + 1] = imagesGallery[currentImg + 2];
+    imagesGallery[currentImg + 1].classList.add('currentGalImg');
+    imagesGallery[currentImg + 2] = imagesGallery[currentImg + 3];
+    imagesGallery[currentImg + 2].classList.add('currentGalImg');
+}, 4000);
