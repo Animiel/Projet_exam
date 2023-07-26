@@ -62,6 +62,9 @@ class Annonce
     #[ORM\Column(length: 3)]
     private ?string $petAge = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $compLocal = null;
+
     public function __construct()
     {
         $this->usersFavorite = new ArrayCollection();
@@ -227,6 +230,18 @@ class Annonce
     public function setPetAge(string $petAge): self
     {
         $this->petAge = $petAge;
+
+        return $this;
+    }
+
+    public function getCompLocal(): ?string
+    {
+        return $this->compLocal;
+    }
+
+    public function setCompLocal(?string $compLocal): self
+    {
+        $this->compLocal = $compLocal;
 
         return $this;
     }

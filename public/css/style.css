@@ -243,7 +243,8 @@ h2 {
 
 .dogInfos {
     padding: 0px 10px;
-    text-align: justify;
+    text-align: center;
+    color: #ffffff;
 }
 
 .dogID {

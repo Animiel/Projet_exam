@@ -31,6 +31,7 @@ function onClick(element) {
 
 
 
+
 // const coeurPlein = document.getElementById('solid-off');
 // const coeurVide = document.getElementById('regular-on');
 
@@ -101,23 +102,6 @@ for (let j = 1; j <= cards.length; j++) {
 
 
 
-for (let numAnnonce = 1; numAnnonce <= cards.length; numAnnonce++) {
-    let btnDogInfo = document.getElementById(`info-${numAnnonce}`);
-    let btnBackInfo = document.getElementById(`back-${numAnnonce}`);
-    btnDogInfo.addEventListener('click', element => {
-        document.getElementById(`second-view-${numAnnonce}`).style.display = 'block';
-        document.getElementById(`first-view-${numAnnonce}`).style.display = 'none';
-    });
-    btnBackInfo.addEventListener('click', element => {
-        document.getElementById(`second-view-${numAnnonce}`).style.display = 'none';
-        document.getElementById(`first-view-${numAnnonce}`).style.display = 'block';
-    });
-}
-
-
-
-
-
 let gallery = document.getElementById('gallery-grid');
 let imagesGallery = document.getElementsByClassName('gallery-img');
 let currentImg = 0;
@@ -155,3 +139,13 @@ setInterval(function() {
     imagesGallery[currentImg + 2] = imagesGallery[currentImg + 3];
     imagesGallery[currentImg + 2].classList.add('currentGalImg');
 }, 4000);
+
+
+
+
+
+function showInfo(element) {
+    let divIndex = element.title;
+    document.getElementById(`info-modal-${divIndex}`).style.display = "block";
+    document.getElementById(`second-view-${divIndex}`).style.display = "block";
+}
