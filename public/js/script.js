@@ -76,26 +76,30 @@ for (let j = 1; j <= cards.length; j++) {
             dogInfos[dogIndex].style.display = 'none';
         }
     })
-    prevImg.addEventListener('click', element => {
-        if (activeImage <= 0) {
-            activeImage = annImgs.length;
-        }
-        activeImage--;
-        for (let i = 0; i < annImgs.length; i++) {
-            annImgs[i].classList.remove('activeImg');
-        }
-        annImgs[activeImage].classList.add('activeImg');
-    })
-    nextImg.addEventListener('click', element => {
-        activeImage++;
-        if (activeImage >= annImgs.length) {
-            activeImage = 0;
-        }
-        for (let ind = 0; ind < annImgs.length; ind++) {
-            annImgs[ind].classList.remove('activeImg');
-        }
-        annImgs[activeImage].classList.add('activeImg');
-    })
+    if (prevImg !== null) {
+        prevImg.addEventListener('click', element => {
+            if (activeImage <= 0) {
+                activeImage = annImgs.length;
+            }
+            activeImage--;
+            for (let i = 0; i < annImgs.length; i++) {
+                annImgs[i].classList.remove('activeImg');
+            }
+            annImgs[activeImage].classList.add('activeImg');
+        })
+    }
+    if (nextImg !== null) {
+        nextImg.addEventListener('click', element => {
+            activeImage++;
+            if (activeImage >= annImgs.length) {
+                activeImage = 0;
+            }
+            for (let ind = 0; ind < annImgs.length; ind++) {
+                annImgs[ind].classList.remove('activeImg');
+            }
+            annImgs[activeImage].classList.add('activeImg');
+        })
+    }
 }
 
 
