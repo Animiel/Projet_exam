@@ -61,8 +61,7 @@ class RegistrationFormType extends AbstractType
             ->add('naissance', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'Votre date de naissance* : ',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
