@@ -28,12 +28,22 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        $this->addFlash(
+            'success',
+            'Vous êtes bien connecté.'
+        );
+
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
+        $this->addFlash(
+            'success',
+            'Vous vous êtes déconnecté.'
+        );
+
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
@@ -45,17 +55,27 @@ class SecurityController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
+        $this->addFlash(
+            'success',
+            'Utilisateur banni avec succès.'
+        );
+
         return $this->redirectToRoute('app_home');
     }
 
     #[Route('/supprMsg/{idSuj}/{idMsg}', name: 'suppr_msg')]
-    #[ParamConverter("msg", options:["mapping" => ["idMsg" => "id"]])]
-    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
+    #[ParamConverter("msg", options: ["mapping" => ["idMsg" => "id"]])]
+    #[ParamConverter("sujet", options: ["mapping" => ["idSuj" => "id"]])]
     public function supprMsg(ManagerRegistry $doctrine, Message $msg, Sujet $sujet)
     {
         $entityManager = $doctrine->getManager();
         $entityManager->remove($msg);
         $entityManager->flush();
+
+        $this->addFlash(
+            'success',
+            'Message supprimé avec succès.'
+        );
 
         return $this->redirectToRoute('messages_sujet', ['idSuj' => $sujet->getId()]);
     }
@@ -67,18 +87,28 @@ class SecurityController extends AbstractController
         $entityManager->remove($annonce);
         $entityManager->flush();
 
+        $this->addFlash(
+            'success',
+            'Annonce supprimée avec succès.'
+        );
+
         return $this->redirectToRoute('app_home');
     }
 
     #[Route('/supprSujet/{idCtg}/{idSuj}', name: 'suppr_sujet')]
-    #[ParamConverter("ctg", options:["mapping" => ["idCtg" => "id"]])]
-    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
+    #[ParamConverter("ctg", options: ["mapping" => ["idCtg" => "id"]])]
+    #[ParamConverter("sujet", options: ["mapping" => ["idSuj" => "id"]])]
     public function supprSujet(ManagerRegistry $doctrine, Sujet $sujet, Categorie $ctg)
     {
         $entityManager = $doctrine->getManager();
         $entityManager->remove($sujet);
         $entityManager->flush();
-        
+
+        $this->addFlash(
+            'success',
+            'Sujet supprimé avec succès.'
+        );
+
         return $this->redirectToRoute('sujets_categorie', ['id' => $ctg->getId()]);
     }
 
@@ -88,6 +118,11 @@ class SecurityController extends AbstractController
         $entityManager = $doctrine->getManager();
         $entityManager->remove($categorie);
         $entityManager->flush();
+
+        $this->addFlash(
+            'success',
+            'Catégorie supprimée avec succès.'
+        );
 
         return $this->redirectToRoute('app_forum');
     }
@@ -99,6 +134,11 @@ class SecurityController extends AbstractController
         $entityManager = $doctrine->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
+
+        $this->addFlash(
+            'success',
+            'Utilisateur débanni avec succès.'
+        );
 
         return $this->redirectToRoute('app_home');
     }

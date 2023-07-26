@@ -4,6 +4,12 @@
 
 {% block body %}
 
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+</head>
+
     <h1>Bienvenue sur <strong class="app-name">Pet'Seek</strong> !</h1>
 
     <p>
@@ -51,7 +57,7 @@
                 <div id="first-view-{{ loop.index }}" class="carte">
                     {% for image in annonce.images %}
                         {% if image is not iterable %}
-                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic">
+                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic" alt="">
                         {% endif %}
                     {% endfor %}
                     {% if annonce.images | length > 2 %}    
@@ -83,6 +89,7 @@
                             <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
                             <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
                             <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
+                            <div id="map-{{ loop.index }}" class="annoMap"></div>
             
                             {# on peut notifier un annonceur lorsqu'on est connecté #}
                             {% if app.user %}
@@ -113,9 +120,33 @@
         {% endif %}
     </div>
 
-    <div id="gallery-grid">
+    {# <div id="gallery-grid">
         {% for image in images %}
             <img src="{{ asset('img/annonces/' ~ image ~ '') }}" class="gallery-img">
         {% endfor %}
-    </div>
+    </div> #}
+
+
+
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+crossorigin=""></script>
+<script>
+    let cartes = document.getElementsByClassName('carte');
+    let maps = [];
+    for(let i = 1 ; i <= cartes.length ; i++) {
+        maps.push(L.map(`map-${i}`));
+        L.map(`map-${i}`).setView([41.535118, 10.789347], 2);
+
+        var popup = L.popup();
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            minZoom: 2,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+    }
+</script>
 {% endblock %}

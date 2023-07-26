@@ -251,6 +251,11 @@ h2 {
     text-align: center;
 }
 
+.annoMap {
+    width: 100vw;
+    height: 45vw;
+}
+
 .moreInfos:hover {
     cursor: pointer;
 }
@@ -400,6 +405,8 @@ button a {
 }
 
 #map {
+    display: flex;
+    align-self: center;
     width: 100%;
     height: 450px;
 }

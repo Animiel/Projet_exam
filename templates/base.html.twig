@@ -16,6 +16,13 @@
        
     </head>
     <body>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         
         <nav id="header" class="navbar">
             <a href="{{ path('app_home') }}">Acceuil</a>

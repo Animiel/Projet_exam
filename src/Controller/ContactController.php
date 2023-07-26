@@ -34,15 +34,20 @@ class ContactController extends AbstractController
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
                 ->subject($form->get('sujet')->getData())
-                ->text($form->get('message')->getData().'<br>'.$form->get('nom')->getData().' '.$form->get('prenom')->getData());
-                // ->html('<p>See Twig integration for better HTML integration!</p>');
-    
+                ->text($form->get('message')->getData() . '<br>' . $form->get('nom')->getData() . ' ' . $form->get('prenom')->getData());
+            // ->html('<p>See Twig integration for better HTML integration!</p>');
+
             $mailer->send($email);
 
             //on stocke le message dans la base de données pour y accéder si besoin
             $entityManager = $doctrine->getManager();
             $entityManager->persist($contact);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Message envoyé, quelqu\'un vous recontactera dans les plus brefs délais.'
+            );
 
             return $this->redirectToRoute('app_contact');
         }

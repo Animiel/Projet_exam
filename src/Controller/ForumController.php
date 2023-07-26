@@ -43,8 +43,8 @@ class ForumController extends AbstractController
 
     #[Route('/forum/sujet/{idSuj}', name: 'messages_sujet')]
     #[Route('/forum/sujet/{idSuj}/edit/{idMsg}', name: 'edit_msg')]
-    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
-    #[ParamConverter("message", options:["mapping" => ["idMsg" => "id"]])]
+    #[ParamConverter("sujet", options: ["mapping" => ["idSuj" => "id"]])]
+    #[ParamConverter("message", options: ["mapping" => ["idMsg" => "id"]])]
     public function afficherMessages(ManagerRegistry $doctrine, Sujet $sujet, Request $request, Message $message = null)
     {
         $form = $this->createForm(MessageType::class, $message);
@@ -54,31 +54,30 @@ class ForumController extends AbstractController
         $edit = true;
 
         //si le message n'existe pas, on en crée un
-        if(!$message) {
+        if (!$message) {
             $message = new Message();
             $edit = false;
-        }
-        else {
+        } else {
             $message->setImages([]);
         }
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $message = $form->getData();
             $uploadedFiles = $form->get('images')->getData();
-            
-                foreach($uploadedFiles as $image) {
-                    $fileName = uniqid().'.'.$image->guessExtension();
-                    array_push($uploadedFiles, $fileName);
-                    $image->move('img/posts', $fileName);
-                    unset($image);
-                }
-                $message->setImages($uploadedFiles);
-                // var_dump($uploadedFiles); die;
+
+            foreach ($uploadedFiles as $image) {
+                $fileName = uniqid() . '.' . $image->guessExtension();
+                array_push($uploadedFiles, $fileName);
+                $image->move('img/posts', $fileName);
+                unset($image);
+            }
+            $message->setImages($uploadedFiles);
+            // var_dump($uploadedFiles); die;
 
             //on met à jour les champs sans l'interaction de l'utilisateur
             $message->setUpdatedDate(new \DateTime());
             $message->setMsgUser($user);
-            if(!$edit){
+            if (!$edit) {
                 $message->setPublicationDate(new \DateTime());
                 $message->setOriginal($form->get('contenu')->getData());
             }
@@ -91,9 +90,14 @@ class ForumController extends AbstractController
             //on les change définitivement dans la base de données
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Message posté.'
+            );
+
             return $this->redirectToRoute('messages_sujet', ['idSuj' => $sujet->getId()]);
         }
-        
+
         return $this->render('forum/messages.html.twig', [
             //on transmet les éléments à la vue
             'sujet' => $sujet,
@@ -114,7 +118,7 @@ class ForumController extends AbstractController
             $imgFile = $form->get('image')->getData();
             if ($imgFile) {
                 //on lui donne un nom unique
-                $fileName = uniqid().'.'.$imgFile->guessExtension();
+                $fileName = uniqid() . '.' . $imgFile->guessExtension();
                 //on le met dans le dossier voulu
                 $imgFile->move('img/categories', $fileName);
                 //et on attribut le nouveau nom du fichier à son champ en base de donnée
@@ -126,22 +130,27 @@ class ForumController extends AbstractController
             $entityManager->persist($categorie);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Nouvelle catégorie créée.'
+            );
+
             return $this->redirectToRoute('app_forum');
         }
-        
+
         return $this->render('forum/formCtg.html.twig', [
             'formCtg' => $form->createView(),
         ]);
     }
 
     #[Route('/creerSuj/{idCtg}', name: 'crea_suj')]
-    #[ParamConverter("ctg", options:["mapping" => ["idCtg" => "id"]])]
+    #[ParamConverter("ctg", options: ["mapping" => ["idCtg" => "id"]])]
     public function newSuj(ManagerRegistry $doctrine, Sujet $sujet = null, Request $request, Categorie $ctg)
     {
         $form = $this->createForm(SujetType::class, $sujet);
         $form->handleRequest($request);
         $user = $this->getUser();
-        
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sujet = $form->getData();
@@ -155,9 +164,14 @@ class ForumController extends AbstractController
             $entityManager->persist($sujet);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Nouveau sujet créé.'
+            );
+
             return $this->redirectToRoute('sujets_categorie', ['id' => $ctg->getId()]);
         }
-        
+
         return $this->render('forum/formSuj.html.twig', [
             'formSuj' => $form->createView(),
         ]);
@@ -167,17 +181,26 @@ class ForumController extends AbstractController
     public function addSujFav(ManagerRegistry $doctrine, Sujet $sujet)
     {
         $user = $this->getUser();
-        
+
         //on vérifie si l'annonce n'est pas dans la collection
-        if(!$user->getSujetFavorites()->exists(function($test) use ($sujet) { return; })) {
+        if (!$user->getSujetFavorites()->exists(function ($test) use ($sujet) {
+            return;
+        })) {
             //et on l'ajoute si c'est le cas
             $entityManager = $doctrine->getManager();
             $user->addSujetFavorite($sujet);
             $entityManager->persist($user);
             $entityManager->flush();
-        }
-        else {
-            $flash = "Ce sujet est déjà dans vos favoris.";
+
+            $this->addFlash(
+                'success',
+                'Sujet ajouté à vos favoris.'
+            );
+        } else {
+            $this->addFlash(
+                'warning',
+                'Ce sujet est déjà dans vos favoris.'
+            );
         }
 
         return $this->redirectToRoute('app_forum');
@@ -187,10 +210,15 @@ class ForumController extends AbstractController
     public function removeSujFav(ManagerRegistry $doctrine, Sujet $sujet)
     {
         $user = $this->getUser();
-        
+
         $entityManager = $doctrine->getManager();
         $user->removeSujetFavorite($sujet);
         $entityManager->flush();
+
+        $this->addFlash(
+            'success',
+            'Sujet retiré de vos favoris.'
+        );
 
         return $this->redirectToRoute('app_forum');
     }
@@ -202,8 +230,8 @@ class ForumController extends AbstractController
     }
 
     #[Route('/closeSuj/{idSuj}/{idCtg}', name: 'close_suj')]
-    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
-    #[ParamConverter("ctg", options:["mapping" => ["idCtg" => "id"]])]
+    #[ParamConverter("sujet", options: ["mapping" => ["idSuj" => "id"]])]
+    #[ParamConverter("ctg", options: ["mapping" => ["idCtg" => "id"]])]
     public function close(ManagerRegistry $doctrine, Sujet $sujet, Categorie $ctg)
     {
         $sujet->setClosed(1);
@@ -215,8 +243,8 @@ class ForumController extends AbstractController
     }
 
     #[Route('/openSuj/{idSuj}/{idCtg}', name: 'open_suj')]
-    #[ParamConverter("sujet", options:["mapping" => ["idSuj" => "id"]])]
-    #[ParamConverter("ctg", options:["mapping" => ["idCtg" => "id"]])]
+    #[ParamConverter("sujet", options: ["mapping" => ["idSuj" => "id"]])]
+    #[ParamConverter("ctg", options: ["mapping" => ["idCtg" => "id"]])]
     public function open(ManagerRegistry $doctrine, Sujet $sujet, Categorie $ctg)
     {
         $sujet->setClosed(0);

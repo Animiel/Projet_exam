@@ -37,6 +37,10 @@ class HomeController extends AbstractController
                 $annoncesSearch = $aRepo->findBySearch($searchData);
             }
 
+            $this->addFlash(
+                'notice',
+                '' . count($annoncesSearch) . ' résultats trouvés.'
+            );
 
             return $this->render('home/index.html.twig', [
                 'searchForm' => $form->createView(),
@@ -100,6 +104,11 @@ class HomeController extends AbstractController
             $entityManager->persist($annonce);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Nouvelle annonce créée avec succès.'
+            );
+
             return $this->redirectToRoute('app_home');
         }
 
@@ -145,8 +154,16 @@ class HomeController extends AbstractController
             $user->addAnnonceFavorite($annonce);
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Annonce ajoutée aux favoris.'
+            );
         } else {
-            $flash = "Cette annonce est déjà dans vos favoris.";
+            $this->addFlash(
+                'warning',
+                'Cette annonce est déjà dans vos favoris.'
+            );
         }
 
         return $this->redirectToRoute('app_home');
@@ -160,6 +177,11 @@ class HomeController extends AbstractController
         $entityManager = $doctrine->getManager();
         $user->removeAnnonceFavorite($annonce);
         $entityManager->flush();
+
+        $this->addFlash(
+            'success',
+            'Annonce supprimée de vos favoris.'
+        );
 
         return $this->redirectToRoute('app_home');
     }
