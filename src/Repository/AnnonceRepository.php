@@ -6,6 +6,7 @@ use App\Entity\Annonce;
 use App\Model\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @extends ServiceEntityRepository<Annonce>
@@ -41,10 +42,17 @@ class AnnonceRepository extends ServiceEntityRepository
     }
 
     //get annonces recherchées par mot clé
-    public function findBySearch(SearchData $searchData)
+    public function findBySearch(SearchData $searchData, int $page, int $limit = 20)
     {
-        $annonces = $this->createQueryBuilder('a')
-            ->addOrderBy('a.publicationDate', 'DESC');
+        $limit = abs($limit);
+        $result = [];
+
+        $annonces = $this->getEntityManager()->createQueryBuilder()
+            ->select('a')
+            ->from('App\Entity\Annonce', 'a')
+            ->setMaxResults($limit)
+            ->setFirstResult(($page * $limit) - $limit)
+            ->orderBy('a.publicationDate', 'DESC');
 
         if(!empty($searchData->q))  {
             $annonces = $annonces
@@ -68,9 +76,57 @@ class AnnonceRepository extends ServiceEntityRepository
             ->setParameter('motif', $searchData->motif);
         }
 
-        $annonces = $annonces->getQuery()->getResult();
+        $paginator = new Paginator($annonces);
+        $data = $paginator->getQuery()->getResult();
 
-        return $annonces;
+        if(empty($data)) {
+            return $result;
+        }
+
+        $nbr_pages = ceil($paginator->count() / $limit);
+
+        $result['data'] = $data;
+        $result['pages'] = $nbr_pages;
+        $result['page'] = $page;
+        $result['limit'] = $limit;
+
+        return $result;
+    }
+
+    //page = page actuelle, si limit non définie alors 6 résultats renvoyés par page.
+    public function annoncesPaginated(int $page, int $limit = 20): array
+    {
+        //pour que limit soit toujours positive on prend la valeur absolue.
+        $limit = abs($limit);
+        $result = [];
+
+        $query = $this->getEntityManager()->createQueryBuilder()
+            ->select('a')
+            ->from('App\Entity\Annonce', 'a')
+            ->setMaxResults($limit)
+            //le premier résultat de la page correspond à la page actuelle * la limite - la limite, puisqu'on affiche autant d'objets sur une page jusqu'a atteindre la limite donc en commençant la page suivante on lui retire le nombre d'annonces déjà affichées.
+            ->setFirstResult(($page * $limit) - $limit)
+            ->orderBy('a.publicationDate', 'DESC');
+
+            $paginator = new Paginator($query);
+            $data = $paginator->getQuery()->getResult();
+
+            //on vérifie qu'on a des données
+            if(empty($data)) {
+                return $result;
+            }
+
+            //on calcule le nombre de pages
+            //ceil = ceiling = arrondi supérieur
+            $nbr_pages = ceil($paginator->count() / $limit);
+
+            //on remplit le tableau
+            $result['data'] = $data;
+            $result['pages'] = $nbr_pages;
+            $result['page'] = $page;
+            $result['limit'] = $limit;
+
+        return $result;
     }
 
 //    /**

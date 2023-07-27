@@ -51,7 +51,7 @@
     {# on crée une grille d'avis de recherches #}
     <div id="grid">
         {% if annonces is defined %}
-        {% for annonce in annonces %}
+        {% for annonce in annonces.data %}
 
             {# <div class="wanted"> #}
                 <div id="first-view-{{ loop.index }}" class="carte">
@@ -114,11 +114,15 @@
                         </div>
                     </div>
                 </div>
-
-            {# </div> #}
+                {# </div> #}
         {% endfor %}
         {% endif %}
     </div>
+    {# on définit des variables pour la pagination #}
+    {% set path = 'app_home' %}
+    {% set pages = annonces.pages %}
+    {% set currentPage = annonces.page %}
+    {% include "partiel/pagination.html.twig" %}
 
     {# <div id="gallery-grid">
         {% for image in images %}

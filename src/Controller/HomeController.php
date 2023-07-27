@@ -25,6 +25,9 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(ManagerRegistry $doctrine, Request $request, AnnonceRepository $aRepo): Response
     {
+        //on cherche le numéro de page dans l'url, par défaut on se trouvera sur la page 1
+        $page = $request->query->getInt('page', 1);
+
         $searchData = new SearchData();
 
         $form = $this->createForm(SearchType::class, $searchData);
@@ -34,7 +37,7 @@ class HomeController extends AbstractController
             if (($searchData->q == '' || $searchData->q == null) && ($searchData->local == '' || $searchData->local == null) && ($searchData->motif == '' || $searchData->motif == null) && ($searchData->genre == 'None')) {
                 return $this->redirectToRoute('app_home');
             } else {
-                $annoncesSearch = $aRepo->findBySearch($searchData);
+                $annoncesSearch = $aRepo->findBySearch($searchData, $page);
             }
 
             $this->addFlash(
@@ -48,8 +51,8 @@ class HomeController extends AbstractController
             ]);
         }
 
-
-        $annonces = $doctrine->getRepository(Annonce::class)->findBy([], ["publicationDate" => "DESC"]);
+        //on cherche les annonces par page
+        $annonces = $doctrine->getRepository(Annonce::class)->annoncesPaginated($page);
         $finder = new Finder();
         $images = [];
         $finder->files()->in('img/annonces')->name(['*.jpg', '*.png', '*.jpeg']);
