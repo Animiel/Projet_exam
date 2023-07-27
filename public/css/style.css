@@ -447,11 +447,18 @@ footer {
     main {
         flex-flow: column wrap;
     }
+    a {
+        font-size: 1.8rem;
+    }
+    .navbar {
+        font-size: 2rem;
+    }
     #sidebar {
         flex-flow: row wrap;
         width: 100vw;
         height: 15%;
         justify-content: space-between;
+        font-size: 2rem;
     }
     .slider {
         margin: 10px 10px 10px 0px;
@@ -460,6 +467,21 @@ footer {
     }
     main #bloc {
         width: 100%;
+    }
+    form {
+        font-size: 1.8rem;
+    }
+    input[type=text] {
+        width: 25%;
+        padding: 10px 10px;
+    }
+    input[type=checkbox] {
+        width: 20px;
+        height: 20px;
+    }
+    input[type=radio] {
+        width: 20px;
+        height: 20px;
     }
 
     #grid {
@@ -478,6 +500,9 @@ footer {
     .fa-caret-right, .fa-caret-left {
         position: absolute;
         font-size: 3.5rem;
+    }
+    .fa-heart {
+        font-size: 3rem;
     }
 
     .motif-annonce {

@@ -54,7 +54,7 @@
         {% for annonce in annonces.data %}
 
             {# <div class="wanted"> #}
-                <div id="first-view-{{ loop.index }}" class="carte">
+                <div id="first-view-{{ loop.index }}" class="carte"> 
                     {% for image in annonce.images %}
                         {% if image is not iterable %}
                             <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic" alt="">
