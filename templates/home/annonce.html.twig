@@ -21,7 +21,11 @@
         {{ form_row(formAnnonce.pet_befriends) }}<br>
         {{ form_row(formAnnonce.images) }}<br>
 
-        <button type="submit" class="btn">Valider</button>
+        <div id="image-cropbox" class="image-cropcontainer"></div>
+        <button class="butn btn-outline-info" id="crop-btn" style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
+
+
+        <button type="submit" id="confirm-btn" class="btn">Valider</button>
     {{ form_end(formAnnonce) }}
 </div>
     
