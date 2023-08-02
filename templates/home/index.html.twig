@@ -52,7 +52,6 @@
     <div id="grid">
         {% if annonces is defined %}
         {% for annonce in annonces.data %}
-
             {# <div class="wanted"> #}
                 <div id="first-view-{{ loop.index }}" class="carte"> 
                     {% for image in annonce.images %}
@@ -81,8 +80,8 @@
                     {% endif %}
                 </div>
 
-                <div id="info-modal-{{ loop.index }}" onclick="this.style.display='none'" class="modal">
-                    <span class="close-cross">&times;</span>
+                <div id="info-modal-{{ loop.index }}" class="modal">
+                    <span id="close-cross-{{ loop.index }}" class="close-cross">&times;</span>
                     <div class="modal-content">
                         <div id="second-view-{{ loop.index }}" class="dogInfos">
                                 <h3 class="dogID">{{ annonce.petName }} - {{ annonce.petGenre }} - {{ annonce.petAge }} ans</h3>
@@ -137,29 +136,23 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
 integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
     let modalView = document.getElementsByClassName('dogInfos');
     for(let i = 1 ; i <= modalView.length ; i++) {
+        let test = `{{ annonces.data[0].localisation }}`
+        console.log(test)
         var map = L.map(`map-${i}`, {
-        center: [41.535118, 10.789347],
-        zoom: 2
-    });
-    var popup = L.popup();
+            center: [41.535118, 10.789347],
+            zoom: 2
+        });
+        var popup = L.popup();
     
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        minZoom: 2,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-    }
-    
-    L.Control.geocoder().addTo(map);
-
-    function onMapClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent("You clicked the map at " + e.latlng.toString())
-            .openOn(map);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            minZoom: 2,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
     }
 </script> 
 {% endblock %}
