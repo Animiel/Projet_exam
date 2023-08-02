@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 </head>
 
     <h1>Bienvenue sur <strong class="app-name">Pet'Seek</strong> !</h1>
@@ -88,7 +89,9 @@
                             <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
                             <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
                             <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
-                            <div id="map-{{ loop.index }}" class="annoMap"></div>
+                            <div class="testMap">
+                                <div id="map-{{ loop.index }}" class="annoMap"></div>
+                            </div>
             
                             {# on peut notifier un annonceur lorsqu'on est connecté #}
                             {% if app.user %}
@@ -138,6 +141,9 @@ integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 crossorigin=""></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
+    window.addEventListener('click', element => {
+        document.getElementsByClassName('leaflet-tile').style.transform3d = ''
+    })
     let modalView = document.getElementsByClassName('dogInfos');
     for(let i = 1 ; i <= modalView.length ; i++) {
         let test = `{{ annonces.data[0].localisation }}`
@@ -146,6 +152,7 @@ crossorigin=""></script>
             center: [41.535118, 10.789347],
             zoom: 2
         });
+        map.invalidateSize(true)
         var popup = L.popup();
     
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -153,6 +160,8 @@ crossorigin=""></script>
             minZoom: 2,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
+
+        L.Control.geocoder().addTo(map)
     }
 </script> 
 {% endblock %}
