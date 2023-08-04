@@ -54,7 +54,9 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
-                    // new Regex('/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,\.\?\/~_\+\-=\|\\]]).{8,}$/', 'Veillez à utiliser au moins un chiffre, une lettre minuscule ET majuscule, un caractère spécial.'),
+                    new Regex('/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!\.%$\/^&()\[\]{}:;,\?~_\+\-=\\\|§µ£]).{8,}$/', 'Veillez à utiliser au moins un chiffre, une lettre minuscule ET majuscule, un caractère spécial.'),
+                    // new Regex('/^[0-9]+$/', 'Pas de lettres ou caractères spéciaux acceptés.'),
+
                 ],
             ])
             ->add('pseudo', TextType::class, [
