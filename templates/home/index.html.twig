@@ -10,9 +10,11 @@
     crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 </head>
-
+<div class="parallax">
     <h1>Bienvenue sur <strong class="app-name">Pet'Seek</strong> !</h1>
+</div>
 
+<div class="para-text">
     <p>
         Ce site est conçu pour les personnes ayant perdu leurs animaux domestiques et/ou voulant converser sur nos amis les bêtes.<br>
         Pour avoir un plan détaillé du site 
@@ -31,9 +33,13 @@
             <li>Envoyer un message au propriétaire : si vous avez déjà une information.</li>
         </ul>
     </p>
+</div>
 
+<div class="parallax">
     <h2>Les avis de recherche...</h2>
+</div>
     
+<div class="para-text">
     {% if app.user %}
         <button class="new-btn">
             <a href="{{ path('create_annonce') }}">Nouvelle annonce</a>
@@ -131,37 +137,39 @@
             <img src="{{ asset('img/annonces/' ~ image ~ '') }}" class="gallery-img">
         {% endfor %}
     </div> #}
+</div>
 
 
 
 
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-crossorigin=""></script>
-<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-<script>
-    window.addEventListener('click', element => {
-        document.getElementsByClassName('leaflet-tile').style.transform3d = ''
-    })
-    let modalView = document.getElementsByClassName('dogInfos');
-    for(let i = 1 ; i <= modalView.length ; i++) {
-        let test = `{{ annonces.data[0].localisation }}`
-        console.log(test)
-        var map = L.map(`map-${i}`, {
-            center: [41.535118, 10.789347],
-            zoom: 2
-        });
-        map.invalidateSize(true)
-        var popup = L.popup();
-    
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            minZoom: 2,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script>
+        window.addEventListener('click', element => {
+            document.getElementsByClassName('leaflet-tile').style.transform3d = ''
+        })
+        let modalView = document.getElementsByClassName('dogInfos');
+        for(let i = 1 ; i <= modalView.length ; i++) {
+            let test = `{{ annonces.data[0].localisation }}`
+            console.log(test)
+            var map = L.map(`map-${i}`, {
+                center: [41.535118, 10.789347],
+                zoom: 2
+            });
+            map.invalidateSize(true)
+            var popup = L.popup();
+        
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                minZoom: 2,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
 
-        L.Control.geocoder().addTo(map)
-    }
-</script> 
+            L.Control.geocoder().addTo(map)
+        }
+    </script> 
+</div>
 {% endblock %}
