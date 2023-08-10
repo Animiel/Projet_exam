@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta description="Besoin d'un conseil ou d'un service pour votre animal ? Ou tout simplement papoter avec d'autres propriétaires ? Pet seek vous fournit des annonces et un forum pour vos besoins.">
+        <title>{% block title %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -14,13 +15,15 @@
        
     </head>
     <body>
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="flash-{{ label }}">
-                    {{ message }}
-                </div>
+        <section>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+        </section>
         
         <nav id="header" class="navbar nav-top">
             <a href="{{ path('app_home') }}">Acceuil</a>
@@ -29,7 +32,7 @@
         </nav>
 
         <main>
-            <div id="sidebar">
+            <section id="sidebar">
                 <div>
                     {% if app.user %}
                         <p>
@@ -60,12 +63,12 @@
                     <p class="t_slider">Si vous êtes amené à rencontrer un autre utilisateur, pour quelque raison que ce soit, nous vous recommandons de <b>ne pas y aller seul(e)</b>, d’en <b>informer des proches</b> et d’<b>anticiper</b> un maximum !</p>
                     <p class="t_slider">Ne partagez jamais vos <b>informations personnelles</b>. Soyez prudents.</p>
                 </div>
-            </div>
+            </section>
     
-            <div id="bloc">
+            <section id="bloc">
                 {% block body %}
                 {% endblock %}
-            </div>
+            </section>
         </main>
 
         <footer>

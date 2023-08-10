@@ -10,6 +10,7 @@
     crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 </head>
+
 <div class="parallax">
     <h1>Bienvenue sur <strong class="app-name">Pet'Seek</strong> !</h1>
 </div>
@@ -60,7 +61,7 @@
         {% if annonces is defined %}
         {% for annonce in annonces.data %}
             {# <div class="wanted"> #}
-                <div id="first-view-{{ loop.index }}" class="carte"> 
+                <figure id="first-view-{{ loop.index }}" class="carte"> 
                     {% for image in annonce.images %}
                         {% if image is not iterable %}
                             <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic" alt="">
@@ -70,8 +71,10 @@
                         <i id="left-{{ loop.index }}" class="fa-solid fa-caret-left" style="color: #FFAB5E;"></i>
                         <i id="right-{{ loop.index }}" class="fa-solid fa-caret-right" style="color: #FFAB5E;"></i>
                     {% endif %}
-                    <h3 class="motif-annonce">{{ annonce.motifAnnonce }}</h3>
-                    <p class="local-annonce"><b>Ville :</b> {{ annonce.localisation }}</p>
+                    <figcaption class="motif-annonce">
+                        {{ annonce.motifAnnonce }}<br>
+                        <b>Ville :</b> {{ annonce.localisation }}
+                    </figcaption>
                     <button id="info-{{ loop.index }}" title="{{ loop.index }}" onClick="showInfo(this)" class="moreInfos seeDogInfos">Plus d'infos...</button>
                     {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
                     {% if app.user %}
@@ -85,7 +88,7 @@
                         </a>
                         {% endif %}
                     {% endif %}
-                </div>
+                </figure>
 
                 <div id="info-modal-{{ loop.index }}" class="modal">
                     <span id="close-cross-{{ loop.index }}" class="close-cross">&times;</span>
@@ -95,9 +98,7 @@
                             <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
                             <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
                             <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
-                            <div class="testMap">
-                                <div id="map-{{ loop.index }}" class="annoMap"></div>
-                            </div>
+                            {# <div id="map-{{ loop.index }}" class="annoMap"></div> #}
             
                             {# on peut notifier un annonceur lorsqu'on est connecté #}
                             {% if app.user %}
@@ -148,11 +149,15 @@
     crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script>
-        window.addEventListener('click', element => {
-            document.getElementsByClassName('leaflet-tile').style.transform3d = ''
-        })
         let modalView = document.getElementsByClassName('dogInfos');
+        let modalBtns = document.getElementsByClassName('seeDogInfos');
         for(let i = 1 ; i <= modalView.length ; i++) {
+            mapCreate = document.createElement('div')
+            mapCreate.id = `map-${i}`
+            mapCreate.class = `annoMap`
+            modalBtns[i].addEventListener('click', element => {
+                var mapCreate = document.modalView.insertBefore(mapCreate, document.getElementsByClassName('info-btn')[0]);
+            })
             let test = `{{ annonces.data[0].localisation }}`
             console.log(test)
             var map = L.map(`map-${i}`, {

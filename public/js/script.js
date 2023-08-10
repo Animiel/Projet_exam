@@ -152,9 +152,15 @@ function showInfo(element) {
     let divIndex = element.title;
     document.getElementById(`info-modal-${divIndex}`).style.display = "block";
     document.getElementById(`second-view-${divIndex}`).style.display = "block";
+    for(let i = 0 ; i <= document.getElementsByClassName('carte').length ; i++) {
+        document.getElementsByClassName(`carte`)[i].style.display = "none";
+    }
     document.getElementById(`close-cross-${divIndex}`).addEventListener('click', element => {
         document.getElementById(`second-view-${divIndex}`).style.display = "none";
         document.getElementById(`info-modal-${divIndex}`).style.display = "none";
+        for(let j = 0 ; j <= document.getElementsByClassName('carte').length ; j++) {
+            document.getElementsByClassName(`carte`)[j].style.display = "block";
+        }
     })
 }
 
