@@ -150,18 +150,29 @@ for (let j = 1; j <= cards.length; j++) {
 
 function showInfo(element) {
     let divIndex = element.title;
-    document.getElementById(`info-modal-${divIndex}`).style.display = "block";
-    document.getElementById(`second-view-${divIndex}`).style.display = "block";
-    for(let i = 0 ; i <= document.getElementsByClassName('carte').length ; i++) {
+    let infoModal = document.getElementById(`info-modal-${divIndex}`);
+    let secondView = document.getElementById(`second-view-${divIndex}`);
+    infoModal.style.display = "block";
+    secondView.style.display = "block";
+    for(let i = 0 ; i < document.getElementsByClassName('carte').length ; i++) {
         document.getElementsByClassName(`carte`)[i].style.display = "none";
     }
-    document.getElementById(`close-cross-${divIndex}`).addEventListener('click', element => {
-        document.getElementById(`second-view-${divIndex}`).style.display = "none";
-        document.getElementById(`info-modal-${divIndex}`).style.display = "none";
-        for(let j = 0 ; j <= document.getElementsByClassName('carte').length ; j++) {
+}
+
+function closeModal() {
+    for (let j = 0; j <= document.getElementsByClassName('carte').length; j++) {
+        let lastJ = document.getElementsByClassName('carte').length - 1;
+        if(document.getElementById(`info-modal-${j}`) !== null && document.getElementById(`second-view-${j}`) !== null) {
+            document.getElementById(`info-modal-${j}`).style.display = "none";
+            document.getElementById(`second-view-${j}`).style.display = "none";
+        }
+        if(j == document.getElementsByClassName('carte').length) {
+            document.getElementsByClassName(`carte`)[lastJ].style.display = "block";
+        }
+        else {
             document.getElementsByClassName(`carte`)[j].style.display = "block";
         }
-    })
+    }
 }
 
 

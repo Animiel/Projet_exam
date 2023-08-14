@@ -75,7 +75,7 @@
                         {{ annonce.motifAnnonce }}<br>
                         <b>Ville :</b> {{ annonce.localisation }}
                     </figcaption>
-                    <button id="info-{{ loop.index }}" title="{{ loop.index }}" onClick="showInfo(this)" class="moreInfos seeDogInfos">Plus d'infos...</button>
+                    <button id="info-{{ loop.index }}" title="{{ loop.index }}" onclick="showInfo(this)" class="moreInfos seeDogInfos">Plus d'infos...</button>
                     {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
                     {% if app.user %}
                         {% if annonce in app.user.annonceFavorites %}
@@ -91,7 +91,7 @@
                 </figure>
 
                 <div id="info-modal-{{ loop.index }}" class="modal">
-                    <span id="close-cross-{{ loop.index }}" class="close-cross">&times;</span>
+                    <span id="close-cross-{{ loop.index }}" class="close-cross" onclick="closeModal()">&times;</span>
                     <div class="modal-content">
                         <div id="second-view-{{ loop.index }}" class="dogInfos">
                                 <h3 class="dogID">{{ annonce.petName }} - {{ annonce.petGenre }} - {{ annonce.petAge }} ans</h3>
