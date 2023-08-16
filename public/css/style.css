@@ -176,11 +176,32 @@ p {
     width: 90px;
 }
 
+#filterIcon {
+    display: none;
+}
+
+#filterIcon:hover {
+    cursor: pointer;
+}
+
+#filterForm {
+    display: block;
+    /* position: absolute; */
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0, 0, 0, 0.95); */
+}
+
 .search-form {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: baseline;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-motif label {
+    margin-right: 20px;
 }
 
 #grid {
@@ -572,5 +593,13 @@ footer {
         background: rgba(0, 0, 0, 0.6);
         color: #ffffff;
         font-size: 30px;
+    }
+
+    #filterIcon {
+        display: block;
+    }
+
+    #filterForm {
+        display: none;
     }
 }

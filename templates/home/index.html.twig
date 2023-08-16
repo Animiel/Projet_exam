@@ -37,7 +37,9 @@
 </div>
 
 <div class="parallax">
-    <h2>Les avis de recherche...</h2>
+    <h2>Les avis de recherche...
+        <i id="filterIcon" class="fa-solid fa-filter" style="color: #FFAB5E;"></i>
+    </h2>
 </div>
     
 <div class="para-text">
@@ -47,14 +49,16 @@
         </button>
     {% endif %}
 
-    {{ form_start(searchForm, { 'attr': {'class': 'search-form'} }) }}
-        {{ form_widget(searchForm.q) }}
-        {{ form_widget(searchForm.genre) }}
-        {{ form_widget(searchForm.local) }}
-        {{ form_widget(searchForm.motif) }}
-
-        <button type="submit">Valider</button>
-    {{ form_end(searchForm) }}
+    <div id="filterForm" class="filters">
+        {{ form_start(searchForm, { 'attr': {'class': 'search-form'} }) }}
+            {{ form_widget(searchForm.q) }}
+            {{ form_widget(searchForm.genre) }}
+            {{ form_widget(searchForm.local) }}
+            {{ form_widget(searchForm.motif, { 'attr': {'class': 'search-motif'} }) }}<br>
+    
+            <button type="submit">Valider</button>
+        {{ form_end(searchForm) }}
+    </div>
 
     {# on crée une grille d'avis de recherches #}
     <div id="grid">
@@ -159,7 +163,7 @@
                 var mapCreate = document.modalView.insertBefore(mapCreate, document.getElementsByClassName('info-btn')[0]);
             })
             let test = `{{ annonces.data[0].localisation }}`
-            console.log(test)
+            //console.log(test)
             var map = L.map(`map-${i}`, {
                 center: [41.535118, 10.789347],
                 zoom: 2
