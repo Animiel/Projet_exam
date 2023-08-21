@@ -65,6 +65,9 @@ class Annonce
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $compLocal = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $descImg = null;
+
     public function __construct()
     {
         $this->usersFavorite = new ArrayCollection();
@@ -242,6 +245,18 @@ class Annonce
     public function setCompLocal(?string $compLocal): self
     {
         $this->compLocal = $compLocal;
+
+        return $this;
+    }
+
+    public function getDescImg(): ?string
+    {
+        return $this->descImg;
+    }
+
+    public function setDescImg(string $descImg): self
+    {
+        $this->descImg = $descImg;
 
         return $this;
     }

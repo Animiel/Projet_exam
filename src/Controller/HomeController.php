@@ -52,7 +52,7 @@ class HomeController extends AbstractController
         }
 
         //on cherche les annonces par page
-        $annonces = $doctrine->getRepository(Annonce::class)->annoncesPaginated($page);
+        $annonces = $doctrine->getRepository(Annonce::class)->annoncesPaginated($page, 2);
         $finder = new Finder();
         $images = [];
         $finder->files()->in('img/annonces')->name(['*.jpg', '*.png', '*.jpeg']);

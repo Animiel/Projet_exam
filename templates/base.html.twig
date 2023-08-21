@@ -15,7 +15,7 @@
        
     </head>
     <body>
-        <section>
+        <div>
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="flash-{{ label }}">
@@ -23,7 +23,7 @@
                     </div>
                 {% endfor %}
             {% endfor %}
-        </section>
+        </div>
         
         <nav id="header" class="navbar nav-top">
             <a href="{{ path('app_home') }}">Acceuil</a>
