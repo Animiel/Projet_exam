@@ -30,16 +30,22 @@ class HomeController extends AbstractController
 
         $searchData = new SearchData();
 
+        //on définit le formulaire de filtrage
         $form = $this->createForm(SearchType::class, $searchData);
         $form->handleRequest($request);
 
+        //si le formulaire est envoyé et valide
         if ($form->isSubmitted() && $form->isValid()) {
+            //si tous les champs de filtrage sont vide ou nul
             if (($searchData->q == '' || $searchData->q == null) && ($searchData->local == '' || $searchData->local == null) && ($searchData->motif == '' || $searchData->motif == null) && ($searchData->genre == 'None')) {
+                //on renvoit à la page d'accueil
                 return $this->redirectToRoute('app_home');
             } else {
+                //sinon on affiche la liste des annonces trouvées
                 $annoncesSearch = $aRepo->findBySearch($searchData, $page);
             }
 
+            //on ajoute compte le nombre d'annonces trouvées et on le notifie à l'utilisateur
             $this->addFlash(
                 'notice',
                 '' . count($annoncesSearch) . ' résultats trouvés.'
@@ -51,11 +57,14 @@ class HomeController extends AbstractController
             ]);
         }
 
-        //on cherche les annonces par page
+        //on cherche les annonces par page (avec une limite de 2 annonces par page)
         $annonces = $doctrine->getRepository(Annonce::class)->annoncesPaginated($page, 2);
+        //on instancie un nouvel objet Finder
         $finder = new Finder();
         $images = [];
+        //on recherche tous les fichiers dans le dossier public/img/annonces dont l'extension correspond à jpg, jpeg, ou png
         $finder->files()->in('img/annonces')->name(['*.jpg', '*.png', '*.jpeg']);
+        //pour chaque fichier trouvé on récupère le nom des fichiers et on les stocke dans une array
         foreach ($finder as $file) {
             $fileNameWithExtension = $file->getRelativePathname();
             $images[] = $fileNameWithExtension;
@@ -70,6 +79,7 @@ class HomeController extends AbstractController
     #[Route('/members', name: 'list_members')]
     public function members(ManagerRegistry $doctrine)
     {
+        //on récupère la liste des membres inscrits en les affichant par ordre alphabétique de pseudos
         $users = $doctrine->getRepository(User::class)->findBy([], ['pseudo' => 'ASC']);
 
         return $this->render('home/members.html.twig', [
@@ -80,33 +90,47 @@ class HomeController extends AbstractController
     #[Route('/annonce', name: 'create_annonce')]
     public function createAnnonce(ManagerRegistry $doctrine, Annonce $annonce = null, Request $request)
     {
+        //si l'annonce n'existe pas encore on en crée une nouvelle instance
         if (!$annonce) {
             $annonce = new Annonce();
         }
 
+        //on crée le formulaire à partir de AnnonceType
         $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
+        //si le formulaire est envoyé et valide
         if ($form->isSubmitted() && $form->isValid()) {
+            //on récupère l'utilisateur actuel ayant envoyé le formulaire
             $user = $this->getUser();
+            //les données des champs sont récupérées dans la variable annonce
             $annonce = $form->getData();
+            //on récupère indépendemment les images du formulaire
             $uploadedFiles = $form->get('images')->getData();
 
+            //pour chaque image
             foreach ($uploadedFiles as $image) {
+                //on leur donne un nom unique en conservant leur extension
                 $fileName = uniqid() . '.' . $image->guessExtension();
+                //on remet l'image avec son nouveau nom dans l'array
                 array_push($uploadedFiles, $fileName);
+                //et on déplace l'image dans le dossier public/img/annonces
                 $image->move('img/annonces', $fileName);
                 unset($image);
             }
 
+            //on définit la valeur de la date de publication avec la date lors de l'envoi du formulaire
             $annonce->setPublicationDate(new \Datetime());
+            //on complète les infos avec les valeurs gérées précédemment (images et utilisateur)
             $annonce->setImages($uploadedFiles);
             $annonce->setAnnonceUser($user);
 
+            //on envoit tout à la base de données
             $entityManager = $doctrine->getManager();
             $entityManager->persist($annonce);
             $entityManager->flush();
 
+            //message de confirmation
             $this->addFlash(
                 'success',
                 'Nouvelle annonce créée avec succès.'
@@ -125,9 +149,12 @@ class HomeController extends AbstractController
     // #[ParamConverter("User", options:["mapping" => ["uid" => "id"]])]
     public function notification(User $annonceur, MailerInterface $mailer)
     {
+        //on récupère l'utilisateur effectuant l'action
         $user = $this->getUser();
+        //on récupère les informations de l'utilisateur ayant posté une annonce
         $userEmail = $user->getEmail();
         $annonceurEmail = $annonceur->getEmail();
+        //on crée une instance de mail
         $email = (new Email())
             ->from('noreply@petseek.com')
             ->to($annonceurEmail)
@@ -139,8 +166,8 @@ class HomeController extends AbstractController
             ->text($userEmail . ' a une info sur votre animal. Pour votre sécurité : Méfiez vous des pièges et prenez les mesures nécessaires avant de rencontrer ou contacter cette personne !');
         // ->html('<p>See Twig integration for better HTML integration!</p>');
 
+        //on envoie le mail à l'annonceur
         $mailer->send($email);
-        // dd($mailer);
 
         return $this->redirectToRoute('app_home');
     }
@@ -148,21 +175,26 @@ class HomeController extends AbstractController
     #[Route('/addAnnonceFav/{id}', name: 'add_afav')]
     public function addaFav(ManagerRegistry $doctrine, Annonce $annonce)
     {
+        //on récupère l'utilisateur qui fait l'action
         $user = $this->getUser();
 
+        //si l'annonce n'existe pas dans la liste des annonces favorites de l'utilisateur
         if (!$user->getAnnonceFavorites()->exists(function ($test) use ($annonce) {
             return;
         })) {
+            //on ajoute l'annonce dans les favoris
             $entityManager = $doctrine->getManager();
             $user->addAnnonceFavorite($annonce);
             $entityManager->persist($user);
             $entityManager->flush();
 
+            //et on affiche un message de succès
             $this->addFlash(
                 'success',
                 'Annonce ajoutée aux favoris.'
             );
         } else {
+            //sinon on affiche un message d'échec pour prévenir que l'annonce est déjà en favoris
             $this->addFlash(
                 'warning',
                 'Cette annonce est déjà dans vos favoris.'
@@ -177,10 +209,12 @@ class HomeController extends AbstractController
     {
         $user = $this->getUser();
 
+        //on retire l'annonce des favoris
         $entityManager = $doctrine->getManager();
         $user->removeAnnonceFavorite($annonce);
         $entityManager->flush();
 
+        //message de succès
         $this->addFlash(
             'success',
             'Annonce supprimée de vos favoris.'

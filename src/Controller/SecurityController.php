@@ -39,6 +39,7 @@ class SecurityController extends AbstractController
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
+        //message de succès lors de la déconnexion
         $this->addFlash(
             'success',
             'Vous vous êtes déconnecté.'
@@ -50,11 +51,13 @@ class SecurityController extends AbstractController
     #[Route('/bannir/{id}', name: 'ban_user')]
     public function bannir(User $user, ManagerRegistry $doctrine)
     {
+        //on banni l'utilisateur
         $user->setBanni(1);
         $entityManager = $doctrine->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
 
+        //message de confirmation
         $this->addFlash(
             'success',
             'Utilisateur banni avec succès.'
@@ -68,10 +71,12 @@ class SecurityController extends AbstractController
     #[ParamConverter("sujet", options: ["mapping" => ["idSuj" => "id"]])]
     public function supprMsg(ManagerRegistry $doctrine, Message $msg, Sujet $sujet)
     {
+        //on supprime un message
         $entityManager = $doctrine->getManager();
         $entityManager->remove($msg);
         $entityManager->flush();
 
+        //message de confirmation
         $this->addFlash(
             'success',
             'Message supprimé avec succès.'
@@ -83,10 +88,12 @@ class SecurityController extends AbstractController
     #[Route('/supprAnnonce/{id}', name: 'suppr_annonce')]
     public function supprAnnonce(ManagerRegistry $doctrine, Annonce $annonce)
     {
+        //on supprime une annonce
         $entityManager = $doctrine->getManager();
         $entityManager->remove($annonce);
         $entityManager->flush();
 
+        //message de confirmation
         $this->addFlash(
             'success',
             'Annonce supprimée avec succès.'
@@ -100,10 +107,12 @@ class SecurityController extends AbstractController
     #[ParamConverter("sujet", options: ["mapping" => ["idSuj" => "id"]])]
     public function supprSujet(ManagerRegistry $doctrine, Sujet $sujet, Categorie $ctg)
     {
+        //on supprime un sujet
         $entityManager = $doctrine->getManager();
         $entityManager->remove($sujet);
         $entityManager->flush();
 
+        //message de confirmation
         $this->addFlash(
             'success',
             'Sujet supprimé avec succès.'
@@ -115,10 +124,12 @@ class SecurityController extends AbstractController
     #[Route('/supprCtg/{id}', name: 'suppr_ctg')]
     public function supprCtg(ManagerRegistry $doctrine, Categorie $categorie)
     {
+        //on supprime une catégorie
         $entityManager = $doctrine->getManager();
         $entityManager->remove($categorie);
         $entityManager->flush();
 
+        //message de confirmation
         $this->addFlash(
             'success',
             'Catégorie supprimée avec succès.'
@@ -130,11 +141,13 @@ class SecurityController extends AbstractController
     #[Route('/unban/{id}', name: 'unban_user')]
     public function unban(ManagerRegistry $doctrine, User $user)
     {
+        //on débanni un utilisateur
         $user->setBanni(0);
         $entityManager = $doctrine->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
 
+        //message de confirmation
         $this->addFlash(
             'success',
             'Utilisateur débanni avec succès.'

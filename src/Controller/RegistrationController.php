@@ -30,12 +30,14 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, Authenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        //on crée un nouvel utilisateur
         $user = new User();
+        //grâce au modèle de formulaire d'inscription
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            //on hache le mot de passe
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -43,13 +45,15 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            //on met à jour la date d'inscription
             $now = new \DateTime();
             $user->setDateInscription($now);
 
+            //on met à jour la base de données
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+            //on génère un mail avec une url de vérification
             $this->emailVerifier->sendEmailConfirmation(
                 'app_verify_email',
                 $user,
@@ -61,6 +65,7 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
+            //on notifie l'utilisateur de son inscription
             $this->addFlash(
                 'success',
                 'Merci pour votre inscription. Vous recevrez sous peu un e-mail de confirmation.'

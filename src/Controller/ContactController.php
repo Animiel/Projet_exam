@@ -21,7 +21,7 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
-        //si le formulaire est valide et envoyé...
+        //si le formulaire est envoyé et valide
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $form->getData();
 
@@ -37,6 +37,7 @@ class ContactController extends AbstractController
                 ->text($form->get('message')->getData() . '<br>' . $form->get('nom')->getData() . ' ' . $form->get('prenom')->getData());
             // ->html('<p>See Twig integration for better HTML integration!</p>');
 
+            //on envoie le mail
             $mailer->send($email);
 
             //on stocke le message dans la base de données pour y accéder si besoin
@@ -44,11 +45,13 @@ class ContactController extends AbstractController
             $entityManager->persist($contact);
             $entityManager->flush();
 
+            //message de succès en cas d'envoi
             $this->addFlash(
                 'success',
                 'Message envoyé, quelqu\'un vous recontactera dans les plus brefs délais.'
             );
 
+            //on revient sur la page de contact
             return $this->redirectToRoute('app_contact');
         }
         return $this->render('contact/index.html.twig', [
