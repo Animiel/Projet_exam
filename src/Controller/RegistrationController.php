@@ -48,6 +48,7 @@ class RegistrationController extends AbstractController
             //on met à jour la date d'inscription
             $now = new \DateTime();
             $user->setDateInscription($now);
+            $user->setRoles(['ROLE_USER']);
 
             //on met à jour la base de données
             $entityManager->persist($user);

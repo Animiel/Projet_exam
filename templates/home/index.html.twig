@@ -68,7 +68,7 @@
                 <figure id="first-view-{{ loop.index }}" class="carte"> 
                     {% for image in annonce.images %}
                         {% if image is not iterable %}
-                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic" alt={{ annonce.descImg }}>
+                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic" alt="{{ annonce.descImg }}">
                         {% endif %}
                     {% endfor %}
                     <figcaption class="motif-annonce">
@@ -133,14 +133,14 @@
                     </div>
                 </div>
                 {# </div> #}
+                {# on définit des variables pour la pagination #}
+                {% set path = 'app_home' %}
+                {% set pages = annonces.pages %}
+                {% set currentPage = annonces.page %}
+                {% include "partiel/pagination.html.twig" %}
         {% endfor %}
         {% endif %}
     </div>
-    {# on définit des variables pour la pagination #}
-    {% set path = 'app_home' %}
-    {% set pages = annonces.pages %}
-    {% set currentPage = annonces.page %}
-    {% include "partiel/pagination.html.twig" %}
 
     {# <div id="gallery-grid">
         {% for image in images %}
@@ -167,8 +167,6 @@
             modalBtns[i].addEventListener('click', element => {
                 var mapCreate = document.modalView.insertBefore(mapCreate, document.getElementsByClassName('info-btn')[0]);
             })
-            let test = `{{ annonces.data[0].localisation }}`
-            //console.log(test)
             var map = L.map(`map-${i}`, {
                 center: [41.535118, 10.789347],
                 zoom: 2

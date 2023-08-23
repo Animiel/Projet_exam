@@ -286,15 +286,15 @@ p {
     opacity: 0;
 }
 
-.carte:hover {
+/* .carte:hover {
     overflow: visible;
-}
+} */
 
-.carte:hover img {
+/* .carte:hover img {
     position: absolute;
     /* z-index: 100; */
     transform: scale(1.75);
-}
+} */
 
 .motif-annonce {
     position: absolute;

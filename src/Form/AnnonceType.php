@@ -113,6 +113,13 @@ class AnnonceType extends AbstractType
                 'class' => Motif::class,
                 'choice_label' => 'name',
             ])
+            ->add('descImg', TextType::class, [
+                'label' => 'Courte description générale de vos images* : ',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'chat noir et blanc couché dans l\'herbe, labrador brun tenant un baton dans la bouche, ...',
+                ],
+            ])
             // ->add('annonceUser')
         ;
     }
