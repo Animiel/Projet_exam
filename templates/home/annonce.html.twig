@@ -56,17 +56,14 @@ crossorigin=""></script>
     }).addTo(map);
 
     function onMapClick(e) {
-        //map.removeLayer(marker);
-        marker = L.marker([e.latlng.lat, e.latlng.lng], {
-            draggable: 'true',
-        }).addTo(map);
-        map.addLayer(marker);
+        if(marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
         let latitude = e.latlng.lat
         let longitude = e.latlng.lng
         locLat.value = latitude;
         locLng.value = longitude;
-        console.log(locLat)
-        console.log(locLng)
     }
     
     map.on('click', onMapClick);
