@@ -73,12 +73,12 @@
                     {% endfor %}
                     <figcaption class="motif-annonce">
                         {{ annonce.motifAnnonce }}<br>
-                        <b>Ville :</b>
+                        {# <b>Ville :</b>
                         {% if annonce.annonceUser.banni == 1 %}
                             {{ 'Voie lactée' }}
                         {% else %}
                             {{ annonce.localisation }}
-                        {% endif %}
+                        {% endif %} #}
                     </figcaption>
                     {% if annonce.images | length > 2 %}    
                         <i id="left-{{ loop.index }}" class="fa-solid fa-caret-left" style="color: #FFAB5E;"></i>
@@ -107,7 +107,9 @@
                             <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
                             <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
                             <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
-                            {# <div id="map-{{ loop.index }}" class="annoMap"></div> #}
+                            <template>
+                                <div id="map-{{ loop.index }}" class="annoMap"></div>
+                            </template>
             
                             {# on peut notifier un annonceur lorsqu'on est connecté #}
                             {% if app.user %}
@@ -160,12 +162,13 @@
     <script>
         let modalView = document.getElementsByClassName('dogInfos');
         let modalBtns = document.getElementsByClassName('seeDogInfos');
-        for(let i = 1 ; i <= modalView.length ; i++) {
-            mapCreate = document.createElement('div')
-            mapCreate.id = `map-${i}`
-            mapCreate.class = `annoMap`
+        for(let i = 0 ; i <= modalView.length ; i++) {
             modalBtns[i].addEventListener('click', element => {
-                var mapCreate = document.modalView.insertBefore(mapCreate, document.getElementsByClassName('info-btn')[0]);
+                const parentElement = document.getElementById(`second-view-${i + 1}`);
+                const elementTemplate = document.querySelector('template');
+                const elementClone = elementTemplate.content.cloneNode(true);
+                const locMap = elementClone.querySelector('div');
+                parentElement.appendChild(locMap);
             })
             var map = L.map(`map-${i}`, {
                 center: [41.535118, 10.789347],

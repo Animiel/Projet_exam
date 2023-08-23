@@ -25,14 +25,6 @@ class Annonce
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'annonceFavorites')]
     private Collection $usersFavorite;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\Regex(
-        pattern: '/^[a-zA-Z]*$/',
-        match: true,
-        message: 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.',
-    )]
-    private ?string $localisation = null;
-
     #[ORM\ManyToOne(inversedBy: 'annoncesMotif')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Motif $motifAnnonce = null;
@@ -62,11 +54,14 @@ class Annonce
     #[ORM\Column(length: 3)]
     private ?string $petAge = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $compLocal = null;
-
     #[ORM\Column(length: 255)]
     private ?string $descImg = null;
+
+    #[ORM\Column]
+    private ?float $longitude = null;
+
+    #[ORM\Column]
+    private ?float $latitude = null;
 
     public function __construct()
     {
@@ -113,18 +108,6 @@ class Annonce
         if ($this->usersFavorite->removeElement($usersFavorite)) {
             $usersFavorite->removeAnnonceFavorite($this);
         }
-
-        return $this;
-    }
-
-    public function getLocalisation(): ?string
-    {
-        return $this->localisation;
-    }
-
-    public function setLocalisation(string $localisation): self
-    {
-        $this->localisation = $localisation;
 
         return $this;
     }
@@ -237,18 +220,6 @@ class Annonce
         return $this;
     }
 
-    public function getCompLocal(): ?string
-    {
-        return $this->compLocal;
-    }
-
-    public function setCompLocal(?string $compLocal): self
-    {
-        $this->compLocal = $compLocal;
-
-        return $this;
-    }
-
     public function getDescImg(): ?string
     {
         return $this->descImg;
@@ -257,6 +228,30 @@ class Annonce
     public function setDescImg(string $descImg): self
     {
         $this->descImg = $descImg;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(float $latitude): self
+    {
+        $this->latitude = $latitude;
 
         return $this;
     }

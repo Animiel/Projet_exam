@@ -107,6 +107,9 @@ class HomeController extends AbstractController
             $annonce = $form->getData();
             //on récupère indépendemment les images du formulaire
             $uploadedFiles = $form->get('images')->getData();
+            //on récupère la latitude et longitude que l'utilisateur nous as fournit
+            $latitude = $form->get('latitude')->getData();
+            $longitude = $form->get('longitude')->getData();
 
             //pour chaque image
             foreach ($uploadedFiles as $image) {
@@ -124,6 +127,8 @@ class HomeController extends AbstractController
             //on complète les infos avec les valeurs gérées précédemment (images et utilisateur)
             $annonce->setImages($uploadedFiles);
             $annonce->setAnnonceUser($user);
+            $annonce->setLatitude($latitude);
+            $annonce->setLongitude($longitude);
 
             //on envoit tout à la base de données
             $entityManager = $doctrine->getManager();

@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AnnonceType extends AbstractType
@@ -46,26 +47,26 @@ class AnnonceType extends AbstractType
                     new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
                 ],
             ])
-            ->add('localisation', TextType::class, [
-                'label' => 'Ville* : ',
-                'required' => true,
-                'attr' => [
-                    'placeholder' => 'Paris, Londres, ...',
-                ],
-                'constraints' => [
-                    new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
-                ]
-            ])
-            ->add('compLocal', TextType::class, [
-                'label' => 'Compléments de localisation : ',
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'Place de la Bastille, Neuhof, Rue des champs...',
-                ],
-                'constraints' => [
-                    new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
-                ]
-            ])
+            // ->add('localisation', TextType::class, [
+            //     'label' => 'Ville* : ',
+            //     'required' => true,
+            //     'attr' => [
+            //         'placeholder' => 'Paris, Londres, ...',
+            //     ],
+            //     'constraints' => [
+            //         new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
+            //     ]
+            // ])
+            // ->add('compLocal', TextType::class, [
+            //     'label' => 'Compléments de localisation : ',
+            //     'required' => false,
+            //     'attr' => [
+            //         'placeholder' => 'Place de la Bastille, Neuhof, Rue des champs...',
+            //     ],
+            //     'constraints' => [
+            //         new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
+            //     ]
+            // ])
             ->add('pet_befriends', TextareaType::class, [
                 'label' => 'Affinités de votre animal : ',
                 'required' => false,
@@ -119,6 +120,12 @@ class AnnonceType extends AbstractType
                 'attr' => [
                     'placeholder' => 'chat noir et blanc couché dans l\'herbe, labrador brun tenant un baton dans la bouche, ...',
                 ],
+            ])
+            ->add('latitude', HiddenType::class, [
+                'required' => true,
+            ])
+            ->add('longitude', HiddenType::class, [
+                'required' => true,
             ])
             // ->add('annonceUser')
         ;
