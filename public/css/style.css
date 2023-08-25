@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: sans-serif;
     /* background-color: #D0D0D0; */
 }
 
@@ -529,6 +530,11 @@ footer {
     bottom: 0;
     width: 100%;
     height: auto;
+}
+
+footer a:hover {
+    color: #FFAB5E;
+    text-decoration: underline;
 }
 
 footer a {
