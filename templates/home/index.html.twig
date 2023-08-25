@@ -38,16 +38,16 @@
 
 <div class="parallax">
     <h2>Les avis de recherche...
-        <i id="filterIcon" class="fa-solid fa-filter" style="color: #FFAB5E;"></i>
+        <i id="filterIcon" class="fa-solid fa-filter" style="color: #FFAB5E;"></i><br>
+        {% if app.user %}
+            <button class="new-btn">
+                <a href="{{ path('create_annonce') }}">Nouvelle annonce</a>
+            </button>
+        {% endif %}
     </h2>
 </div>
     
 <div class="para-text">
-    {% if app.user %}
-        <button class="new-btn">
-            <a href="{{ path('create_annonce') }}">Nouvelle annonce</a>
-        </button>
-    {% endif %}
 
     <div id="filterForm" class="filters">
         {{ form_start(searchForm, { 'attr': {'class': 'search-form'} }) }}
@@ -115,7 +115,7 @@
                             <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
                             <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
                             <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
-                            <div id="map-{{ loop.index }}" class="annoMap"></div>
+                            <div id="map-{{ loop.index }}" class="annoMap"></div><br>
             
                             {# on peut notifier un annonceur lorsqu'on est connecté #}
                             {% if app.user %}
