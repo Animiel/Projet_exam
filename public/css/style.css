@@ -317,7 +317,9 @@ p {
 }
 
 .annoMap {
-    height: 45vw;
+    left: 10%;
+    width: 80%;
+    height: 60vh;
 }
 
 .moreInfos {

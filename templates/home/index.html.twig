@@ -60,6 +60,9 @@
         {{ form_end(searchForm) }}
     </div>
 
+    {# on définit 2 arrays qui seront utilisées dans le script #}
+    {% set annonceLatitudes = [] %}
+    {% set annonceLongitudes = [] %}
     {# on crée une grille d'avis de recherches #}
     <div id="grid">
         {% if annonces.data is defined %}
@@ -107,9 +110,7 @@
                             <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
                             <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
                             <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
-                            <template>
-                                <div id="map-{{ loop.index }}" class="annoMap"></div>
-                            </template>
+                            <div id="map-{{ loop.index }}" class="annoMap"></div>
             
                             {# on peut notifier un annonceur lorsqu'on est connecté #}
                             {% if app.user %}
@@ -134,14 +135,17 @@
                         </div>
                     </div>
                 </div>
-                {# </div> #}
-                {# on définit des variables pour la pagination #}
-                {% set path = 'app_home' %}
-                {% set pages = annonces.pages %}
-                {% set currentPage = annonces.page %}
-                {% include "partiel/pagination.html.twig" %}
-        {% endfor %}
-        {% endif %}
+            {# </div> #}
+            {# on définit des variables pour la pagination #}
+            {% set path = 'app_home' %}
+            {% set pages = annonces.pages %}
+            {% set currentPage = annonces.page %}
+            {% include "partiel/pagination.html.twig" %}
+            {# on alimente les arrays définies avant la boucle #}
+            {% set annonceLatitudes = annonceLatitudes|merge([annonce.latitude]) %}
+            {% set annonceLongitudes = annonceLongitudes|merge([annonce.longitude]) %}
+            {% endfor %}
+            {% endif %}
     </div>
 
     {# <div id="gallery-grid">
@@ -161,30 +165,28 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script>
         let modalView = document.getElementsByClassName('dogInfos');
-        let modalBtns = document.getElementsByClassName('seeDogInfos');
-        for(let i = 0 ; i <= modalView.length ; i++) {
-            modalBtns[i].addEventListener('click', element => {
-                const parentElement = document.getElementById(`second-view-${i + 1}`);
-                const elementTemplate = document.querySelector('template');
-                const elementClone = elementTemplate.content.cloneNode(true);
-                const locMap = elementClone.querySelector('div');
-                parentElement.appendChild(locMap);
-            })
-            var map = L.map(`map-${i}`, {
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            for(let i = 1 ; i <= modalView.length ; i++) {
+                var map = L.map(`map-${i}`, {
                 center: [41.535118, 10.789347],
                 zoom: 2
-            });
-            map.invalidateSize(true)
-            var popup = L.popup();
-        
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                minZoom: 2,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(map);
+                })
+    
+                var popup = L.popup();
+                
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    minZoom: 2,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
 
-            L.Control.geocoder().addTo(map)
-        }
+                const latitudes = JSON.parse('{{ annonceLatitudes | json_encode | raw }}');
+                const longitudes = JSON.parse('{{ annonceLongitudes | json_encode | raw }}');
+
+                var marker = L.marker([latitudes[i - 1], longitudes[i - 1]]).addTo(map)
+            }
+        });
     </script> 
 </div>
 {% endblock %}
