@@ -1,29 +1,29 @@
 {% if pages > 1 %}
     <nav class="pages">
-        <ul class="pagination">
+        <div class="pagination">
             {% if currentPage > 1 %}
-                <li class="page-item">
+                <p class="page-item">
                     <a href="{{ path(path, {page: currentPage - 1}) }}" class="page-link">&lt;</a>
-                </li>
+                </p>
             {% else %}
-                <li clas="page-item disabled">
+                <p class="page-item disabled">
                     <a>&lt;</a>
-                </li>
+                </p>
             {% endif %}
             {% for page in 1..pages %}
-                <li class="page-item {{ page == currentPage ? 'active' : '' }}">
+                <p class="page-item {{ page == currentPage ? 'active' : '' }}">
                     <a href="{{ path(path, {page: page}) }}">{{ page }}</a>
-                </li>
+                </p>
             {% endfor %}
             {% if currentPage < pages %}
-                <li class="page-item">
+                <p class="page-item">
                     <a href="{{ path(path, {page: currentPage + 1}) }}" class="page-link">&gt;</a>
-                </li>
+                </p>
             {% else %}
-                <li clas="page-item disabled">
+                <p class="page-item disabled">
                     <a>&gt;</a>
-                </li>
+                </p>
             {% endif %}
-        </ul>
+            </div>
     </nav>
 {% endif %}

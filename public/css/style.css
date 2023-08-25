@@ -210,7 +210,7 @@ p {
     justify-content: space-evenly;
     margin-top: 20px;
     width: 100%;
-    height: 100vh;
+    height: 60vh;
 }
 
 /* .wanted {
@@ -260,12 +260,12 @@ p {
 }
 
 .carte {
-    height: 25%;
+    margin: 0;
+    height: 50%;
     width: 35%;
     border-radius: 30px;
     overflow: hidden;
     position: relative;
-    margin-bottom: 50px;
 }
 
 .wanted-pic {
@@ -362,6 +362,50 @@ p {
 
 .fa-heart:hover {
     transform: scale(2);
+}
+
+.pages {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+}
+
+.page-item {
+    width: 30px;
+    text-align: center;
+}
+
+.page-item:hover {
+    background-color: #FFAB5E;
+}
+
+.page-item:hover a {
+    color: #000000;
+}
+
+.page-item a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.page-item.active {
+    background-color: #FFAB5E;
+}
+
+.page-item.active a {
+    color: #000000;
+}
+
+.page-item.disabled {
+    display: none;
 }
 
 #gallery-grid {
@@ -496,21 +540,21 @@ footer {
 @media(max-width: 2100px) {
     .carte {
         width: 25%;
-        height: 25%;
+        height: 50%;
     }
 }
 
 @media(max-width: 1500px) {
     .carte {
         width: 30%;
-        height: 25%;
+        height: 50%;
     }
 }
 
 @media(max-width: 1250px) {
     .carte {
         width: 35%;
-        height: 25%;
+        height: 50%;
     }
 }
 
@@ -564,7 +608,7 @@ footer {
     }
 
     .carte {
-        height: 30%;
+        height: 50%;
         width: 80%;
     }
 

@@ -150,8 +150,8 @@
             {% set annonceLongitudes = annonceLongitudes|merge([annonce.longitude]) %}
             {% endfor %}
             {% endif %}
-            {% include "partiel/pagination.html.twig" %}
-    </div>
+        </div>
+        {% include "partiel/pagination.html.twig" %}
 
     {# <div id="gallery-grid">
         {% for image in images %}
