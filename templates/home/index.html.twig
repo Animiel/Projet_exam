@@ -63,6 +63,11 @@
     {# on définit 2 arrays qui seront utilisées dans le script #}
     {% set annonceLatitudes = [] %}
     {% set annonceLongitudes = [] %}
+    {# on définit les variables pour la pagination #}
+    {% set pages = null %}
+    {% set currentPage = null %}
+    {% set path = null %}
+
     {# on crée une grille d'avis de recherches #}
     <div id="grid">
         {% if annonces.data is defined %}
@@ -136,16 +141,16 @@
                     </div>
                 </div>
             {# </div> #}
-            {# on définit des variables pour la pagination #}
+            {# on définit les valeurs pour la pagination #}
             {% set path = 'app_home' %}
             {% set pages = annonces.pages %}
             {% set currentPage = annonces.page %}
-            {% include "partiel/pagination.html.twig" %}
             {# on alimente les arrays définies avant la boucle #}
             {% set annonceLatitudes = annonceLatitudes|merge([annonce.latitude]) %}
             {% set annonceLongitudes = annonceLongitudes|merge([annonce.longitude]) %}
             {% endfor %}
             {% endif %}
+            {% include "partiel/pagination.html.twig" %}
     </div>
 
     {# <div id="gallery-grid">
@@ -186,6 +191,7 @@
 
                 var marker = L.marker([latitudes[i - 1], longitudes[i - 1]]).addTo(map)
             }
+            map.invalidateSize(true);
         });
     </script> 
 </div>
