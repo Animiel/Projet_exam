@@ -160,39 +160,40 @@
     </div> #}
 </div>
 
+<div class="parallax"></div>
 
 
 
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script>
-        let modalView = document.getElementsByClassName('dogInfos');
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            for(let i = 1 ; i <= modalView.length ; i++) {
-                var map = L.map(`map-${i}`, {
-                center: [41.535118, 10.789347],
-                zoom: 2
-                })
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script>
+    let modalView = document.getElementsByClassName('dogInfos');
     
-                var popup = L.popup();
-                
-                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    minZoom: 2,
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                }).addTo(map);
+    document.addEventListener('DOMContentLoaded', function() {
+        for(let i = 1 ; i <= modalView.length ; i++) {
+            var map = L.map(`map-${i}`, {
+            center: [41.535118, 10.789347],
+            zoom: 2
+            })
 
-                const latitudes = JSON.parse('{{ annonceLatitudes | json_encode | raw }}');
-                const longitudes = JSON.parse('{{ annonceLongitudes | json_encode | raw }}');
+            var popup = L.popup();
+            
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                minZoom: 2,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
 
-                var marker = L.marker([latitudes[i - 1], longitudes[i - 1]]).addTo(map)
-            }
-            map.invalidateSize(true);
-        });
-    </script> 
-</div>
+            const latitudes = JSON.parse('{{ annonceLatitudes | json_encode | raw }}');
+            const longitudes = JSON.parse('{{ annonceLongitudes | json_encode | raw }}');
+
+            var marker = L.marker([latitudes[i - 1], longitudes[i - 1]]).addTo(map)
+        }
+        map.invalidateSize(true);
+    });
+</script>
 {% endblock %}

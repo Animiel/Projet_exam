@@ -28,11 +28,6 @@ body {
     padding-right: 20px;
 }
 
-.bottom {
-    display: flex;
-    justify-content: center;
-}
-
 main {
     display: flex;
 }
@@ -527,8 +522,27 @@ button a {
 }
 
 footer {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    line-height: 40px;
     bottom: 0;
-    line-height: 20px;
+    width: 100%;
+    height: auto;
+}
+
+footer a {
+    color: #D0D0D0;
+    text-decoration: none;
+}
+
+.footer {
+    width: 50%;
+    border-right: 2px solid #FFAB5E;
+}
+
+.socials {
+    width: 50%;
 }
 
 #contact {

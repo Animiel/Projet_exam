@@ -71,14 +71,27 @@
             </section>
         </main>
 
-        <footer>
-            <nav class="navbar bottom">
-                <a href="">Plan du site</a>
-                <a href="{{ path('app_contact') }}">Contact</a>
-                <a href="">Réseaux sociaux</a>
-                <a href="">Mentions légales</a>
-            </nav>
-        </footer>
+        <div class="para-text">
+            <footer>
+                <nav class="footer links">
+                    <a href="">Plan du site</a><br>
+                    <a href="{{ path('app_contact') }}">Contact</a><br>
+                    <a href="">Mentions légales</a>
+                </nav>
+                <div class="socials">
+                    <a href="">
+                        <i class="fa-brands fa-facebook"></i>Facebook
+                    </a><br>
+                    <a href="">
+                        <i class="fa-brands fa-instagram"></i>Instagram
+                    </a><br>
+                    <a href="">
+                        <i class="fa-brands fa-tiktok"></i>TikTok
+                    </a>
+                </div>
+            </footer>
+        </div>
+
          {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
