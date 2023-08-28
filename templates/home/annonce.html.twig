@@ -10,34 +10,44 @@
     crossorigin=""/>
 </head>
 
-<h1>Nouvelle annonce</h1>
+<div class="parallax"></div>
 
-<div class="new-form">
-    <p><b>Les champs marqués d'une * sont obligatoires.</b></p><br>
-
-    {{ form_start(formAnnonce) }}
-        {{ form_row(formAnnonce.motifAnnonce) }}<br>
-        <label>Veuillez cliquer sur votre localisation approximative* :
-        </label>
-        <div id="map"></div>
-        {{ form_row(formAnnonce.latitude) }}
-        {{ form_row(formAnnonce.longitude) }}<br>
-        {{ form_row(formAnnonce.pet_name) }}<br>
-        {{ form_row(formAnnonce.pet_genre) }}<br>
-        {{ form_row(formAnnonce.pet_age) }}<br>
-        {{ form_row(formAnnonce.pet_health) }}<br>
-        {{ form_row(formAnnonce.pet_caractere) }}<br>
-        {{ form_row(formAnnonce.pet_befriends) }}<br>
-        {{ form_row(formAnnonce.images) }}<br>
-        {{ form_row(formAnnonce.descImg) }}<br>
-
-        <div id="image-cropbox" class="image-cropcontainer"></div>
-        <button class="butn btn-outline-info" id="crop-btn" style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
-
-
-        <button type="submit" id="confirm-btn" class="btn">Valider</button>
-    {{ form_end(formAnnonce) }}
+<div class="para-text">
+    <h1>Nouvelle annonce</h1>
 </div>
+
+<div class="parallax"></div>
+
+<div class="para-text">
+    <div class="new-form">
+        <p><b>Les champs marqués d'une * sont obligatoires.</b></p><br>
+    
+        {{ form_start(formAnnonce) }}
+            {{ form_row(formAnnonce.motifAnnonce) }}<br>
+            <label>Veuillez cliquer sur votre localisation approximative* :
+            </label>
+            <div id="map"></div>
+            {{ form_row(formAnnonce.latitude) }}
+            {{ form_row(formAnnonce.longitude) }}<br>
+            {{ form_row(formAnnonce.pet_name) }}<br>
+            {{ form_row(formAnnonce.pet_genre) }}<br>
+            {{ form_row(formAnnonce.pet_age) }}<br>
+            {{ form_row(formAnnonce.pet_health) }}<br>
+            {{ form_row(formAnnonce.pet_caractere) }}<br>
+            {{ form_row(formAnnonce.pet_befriends) }}<br>
+            {{ form_row(formAnnonce.images) }}<br>
+            {{ form_row(formAnnonce.descImg) }}<br>
+    
+            <div id="image-cropbox" class="image-cropcontainer"></div>
+            <button class="butn btn-outline-info" id="crop-btn" style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
+    
+    
+            <button type="submit" id="confirm-btn" class="btn">Valider</button>
+        {{ form_end(formAnnonce) }}
+    </div>
+</div>
+
+<div class="parallax"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
 integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="

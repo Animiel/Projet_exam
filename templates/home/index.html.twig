@@ -41,7 +41,7 @@
         {{ form_start(searchForm, { 'attr': {'class': 'search-form'} }) }}
             {{ form_widget(searchForm.q) }}
             {{ form_widget(searchForm.genre) }}
-            {{ form_widget(searchForm.local) }}
+            {# {{ form_widget(searchForm.local) }} #}
             {{ form_widget(searchForm.motif, { 'attr': {'class': 'search-motif'} }) }}<br>
     
             <button type="submit">Valider</button>
@@ -103,7 +103,11 @@
                             <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
                             <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
                             <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
-                            <div id="map-{{ loop.index }}" class="annoMap"></div><br>
+                            {% if annonce.annonceUser.banni == 1 %}
+                                <p>Localisation non disponible.</p>
+                            {% else %}
+                                <div id="map-{{ loop.index }}" class="annoMap"></div><br>
+                            {% endif %}
             
                             {# on peut notifier un annonceur lorsqu'on est connecté #}
                             {% if app.user %}

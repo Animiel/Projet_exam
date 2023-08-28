@@ -29,16 +29,16 @@ class SearchType extends AbstractType
                 new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
             ],
         ])
-        ->add('local', TextType::class, [
-            'attr' => [
-                'placeholder' => 'Rechercher par localisation...'
-            ],
-            'required' => false,
-            'constraints' => [
-                new Regex('/^[a-zA-Z]*$/', 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.'),
-                new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
-            ],
-        ])
+        // ->add('local', TextType::class, [
+        //     'attr' => [
+        //         'placeholder' => 'Rechercher par localisation...'
+        //     ],
+        //     'required' => false,
+        //     'constraints' => [
+        //         new Regex('/^[a-zA-Z]*$/', 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.'),
+        //         new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
+        //     ],
+        // ])
         ->add('motif', EntityType::class, [
             'class' => Motif::class,
             'expanded' => true,

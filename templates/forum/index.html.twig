@@ -4,46 +4,56 @@
 
 {% block body %}
 
-    <h1>Voici le forum !</h1>
+    <div class="parallax">
+        <h1>Voici le forum !</h1>
+    </div>
 
-    <p>
-        Ici vous pourrez discuter de vos animaux préférés, donner des conseils, poser vos questions et partager vos anecdotes ou astuces avec tout le monde.
-    </p>
-    <p>
-        Pour se faire, rien de plus facile, il suffit de cliquer sur une catégorie (icônes ci-dessous), regarder si votre sujet (ou un sujet similaire) est déjà existant et y poster un message !<br>
-        Si ce n'est pas le cas, il suffit simplement de créer un nouveau sujet !
-    </p>
-    <p>
-        Pour toute question concernant le fonctionnement du forum et les autorisations, vous pouvez à tout moment contacter un administrateur (pseudo avec badge papatte), ou consulter le règlement 
-        <a href="" class="text-link">juste ici</a>.
-    </p>
-    <p>
-        Bonne discussion à toutes et à tous !
-    </p>
+    <div class="para-text">
+        <p>
+            Ici vous pourrez discuter de vos animaux préférés, donner des conseils, poser vos questions et partager vos anecdotes ou astuces avec tout le monde.
+        </p>
+        <p>
+            Pour se faire, rien de plus facile, il suffit de cliquer sur une catégorie (icônes ci-dessous), regarder si votre sujet (ou un sujet similaire) est déjà existant et y poster un message !<br>
+            Si ce n'est pas le cas, il suffit simplement de créer un nouveau sujet !
+        </p>
+        <p>
+            Pour toute question concernant le fonctionnement du forum et les autorisations, vous pouvez à tout moment contacter un administrateur (pseudo avec badge papatte), ou consulter le règlement 
+            <a href="" class="text-link">juste ici</a>.
+        </p>
+        <p>
+            Bonne discussion à toutes et à tous !
+        </p>
+    </div>
 
-    <h2>Catégories</h2>
-
-    {% if is_granted('ROLE_ADMIN') %}
-        <button class="new-btn">
-            <a href="{{ path('crea_ctg') }}">Nouvelle catégorie</a>
-        </button>
-    {% endif %}
-
-    <div id="categories">
-        {% for categorie in categories %}
-        <div class="categorie">
-            <a href="{{ path('sujets_categorie', {'id': categorie.id }) }}">
-                <img src="{{ asset('img/categories/' ~ categorie.image) }}" class="categorie-pic"><br>
-                {{ categorie.name }}
-            </a><br>
-
+    <div class="parallax">
+        <h2>Catégories
             {% if is_granted('ROLE_ADMIN') %}
-                <button class="delete-btn">
-                    <a href="{{ path('suppr_ctg', {'id': categorie.id }) }}">Supprimer la catégorie</a>
+                <button class="new-btn">
+                    <a href="{{ path('crea_ctg') }}">Nouvelle catégorie</a>
                 </button>
             {% endif %}
-        </div>
-        {% endfor %}
+        </h2>
     </div>
+
+    <div class="para-text">
+        <div id="categories">
+            {% for categorie in categories %}
+            <div class="categorie">
+                <a href="{{ path('sujets_categorie', {'id': categorie.id }) }}">
+                    <img src="{{ asset('img/categories/' ~ categorie.image) }}" class="categorie-pic"><br>
+                    {{ categorie.name }}
+                </a><br>
+    
+                {% if is_granted('ROLE_ADMIN') %}
+                    <button class="delete-btn">
+                        <a href="{{ path('suppr_ctg', {'id': categorie.id }) }}">Supprimer la catégorie</a>
+                    </button>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="parallax"></div>
 
 {% endblock %}

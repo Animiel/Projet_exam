@@ -11,22 +11,22 @@ class SearchData
 
     /** @var string 
      * @var null */
-    #[Assert\Length(min: 2)]
-    #[Assert\Regex(
-        pattern: '/^[a-zA-Z]*$/',
-        match: true,
-        message: 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.',
-    )]
+    // #[Assert\Length(min: 2)]
+    // #[Assert\Regex(
+    //     pattern: '/^[a-zA-Z]*$/',
+    //     match: true,
+    //     message: 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.',
+    // )]
     public $q = "";
 
     /** @var string 
      * @var null */
-    #[Assert\Length(min: 2)]
-    #[Assert\Regex(
-        pattern: '/^[a-zA-Z]*$/',
-        match: true,
-        message: 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.',
-    )]
+    // #[Assert\Length(min: 2)]
+    // #[Assert\Regex(
+    //     pattern: '/^[a-zA-Z]*$/',
+    //     match: true,
+    //     message: 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.',
+    // )]
     public $local = "";
 
     /** @var array */
