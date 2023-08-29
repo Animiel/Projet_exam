@@ -6,6 +6,7 @@ body {
 }
 
 em, strong {
+    font-weight: normal;
     font-style: normal;
 }
 
@@ -22,6 +23,7 @@ em, strong {
 }
 
 .navbar {
+    display: block;
     background-color: #000000;
 }
 
@@ -165,6 +167,10 @@ h1 {
 
 h2 {
     padding: 15px 0px;
+    text-align: center;
+}
+
+h4 {
     text-align: center;
 }
 
@@ -616,6 +622,7 @@ footer a {
     }
 
     .nav-links {
+        display: flex;
         font-size: 2rem;
         display: none;
         flex-flow: column wrap;
@@ -634,6 +641,10 @@ footer a {
         display: block;
         width: 40px;
         right: 0;
+    }
+
+    .show-nav-links {
+        display: flex;
     }
 
     main #bloc {

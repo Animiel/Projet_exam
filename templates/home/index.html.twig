@@ -20,7 +20,7 @@
         Bonjour ! Vous voilà enfin, les autres <em>propriétaires</em> attendaient déjà votre venue ! Que vous soyez ici pour discuter ou pour un besoin précis, nous sommes sûrs que tout le monde sera heureux de faire de son mieux pour vous aider.
     </p><br>
     <p>
-        Peu importe votre <em>compagnon</em> : petit ou grand, <em>canin</em> ou <em>félin</em>, <em>rongeurs</em> ou <em>équestre</em>, tous les <em>amis</em> des <strong>animaux</strong> sont les bienvenus !
+        Peu importe votre <em>compagnon</em> : petit ou grand, <em>canin</em> ou <em>félin</em>, <em>rongeurs</em> ou <em>équidés</em>, tous les <em>amis</em> des <strong>animaux</strong> sont les bienvenus !
     </p>
 </div>
 
@@ -37,7 +37,12 @@
     
 <div class="para-text">
 
+    <p>
+        Dans cette section vous pouvez retrouver des <strong>annonces</strong> d'utilisateur ayant des besoins pour leur <strong>animal</strong> : qu'il s'agisse d'un besoin de <strong>pet-sitting</strong> (de <strong>garde</strong>), d'un <strong>don</strong>, d'un animal en <strong>fuite</strong> ou encore d'une recherche de <strong>partenaires</strong>.
+    </p><br>
+
     <div id="filterForm" class="filters">
+        <h4>Filtrage des annonces</h4>
         {{ form_start(searchForm, { 'attr': {'class': 'search-form'} }) }}
             {{ form_widget(searchForm.q) }}
             {{ form_widget(searchForm.genre) }}

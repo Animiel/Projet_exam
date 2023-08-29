@@ -1,12 +1,7 @@
 const bars = document.getElementsByClassName('fa-bars')[0];
 const navbar = document.getElementsByClassName('nav-links')[0];
 bars.addEventListener('click', element => {
-    if(navbar.style.display == 'flex') {
-        navbar.style.display = 'none';
-    }
-    else {
-        navbar.style.display = 'flex';
-    }
+    navbar.classList.toggle('show-nav-links');
 })
 
 
