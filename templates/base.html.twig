@@ -26,45 +26,51 @@
         </div>
         
         <nav id="header" class="navbar nav-top">
-            <a href="{{ path('app_home') }}">Acceuil</a>
-            <a href="{{ path('app_forum') }}">Forum</a>
-            <a href="{{ path('app_plus_loin') }}">Pour aller plus loin</a>
+            <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
+            <div class="nav-links">
+                <a href="{{ path('app_home') }}">Acceuil</a>
+                <a href="{{ path('app_forum') }}">Forum</a>
+                <a href="{{ path('app_plus_loin') }}">Pour aller plus loin</a>
+                {% if app.user %}
+                <div class="drop-menu">
+                    <a class="dropdown">Profil</a>
+                    <ul class="profil-links">
+                        <li>
+                            <a href="">Mon profil</a>
+                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li>
+                                <a href="{{ path('list_members') }}">Liste des membres</a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="{{ path('my_annonces') }}">Mes annonces</a>
+                        </li>
+                        <li>
+                            <a href="">Mes favoris</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('annonces_fav') }}">Annonces</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('sujets_fav') }}">Sujets</a>
+                        </li>
+                        <li>
+                            <a href="">Paramètres</a>
+                        </li>
+                        <li class="deconnexion">
+                            <a href="{{ path('app_logout') }}">Déconnexion</a>
+                        </li>
+                    </ul>
+                </div>
+                {% else %}
+                    <a href="{{ path('app_register') }}">Inscription</a>
+                    <a href="{{ path('app_login') }}">Connexion</a>
+                {% endif %}
+            </div>
         </nav>
 
         <main>
-            <section id="sidebar">
-                <div>
-                    {% if app.user %}
-                        <p>
-                            <a href="">Profil</a><br>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('list_members') }}">Liste des membres</a><br>
-                            {% endif %}
-                            <a href="{{ path('my_annonces') }}">Mes annonces</a><br>
-                            <a href="">Mes favoris</a>
-                            <a href="{{ path('annonces_fav') }}">Annonces</a>
-                            <a href="{{ path('sujets_fav') }}">Sujets</a><br>
-                            <a href="">Paramètres</a>
-                        </p>
-                        <p>
-                            <a href="{{ path('app_logout') }}">Déconnexion</a>
-                        </p>
-                    {% else %}
-                        <p>
-                            <a href="{{ path('app_register') }}">Inscription</a>
-                        </p>
-                        <p>
-                            <a href="{{ path('app_login') }}">Connexion</a>
-                        </p>
-                    {% endif %}
-                </div>
-                {# <div class="slider">
-                    <p class="t_slider active">Méfiez vous de ce que vous partagez et surtout <b>avec qui</b> !</p>
-                    <p class="t_slider">Si vous êtes amené à rencontrer un autre utilisateur, pour quelque raison que ce soit, nous vous recommandons de <b>ne pas y aller seul(e)</b>, d’en <b>informer des proches</b> et d’<b>anticiper</b> un maximum !</p>
-                    <p class="t_slider">Ne partagez jamais vos <b>informations personnelles</b>. Soyez prudents.</p>
-                </div> #}
-            </section>
-    
             <section id="bloc">
                 {% block body %}
                 {% endblock %}

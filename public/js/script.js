@@ -1,22 +1,18 @@
-// let t_slider = document.getElementsByClassName('t_slider');
-// let etape = 0;
-// let nbr_slides = t_slider.length;
+const bars = document.getElementsByClassName('fa-bars')[0];
+const navbar = document.getElementsByClassName('nav-links')[0];
+bars.addEventListener('click', element => {
+    if(navbar.style.display == 'flex') {
+        navbar.style.display = 'none';
+    }
+    else {
+        navbar.style.display = 'flex';
+    }
+})
 
-// function removeActive() {
-//     for(let i = 0 ; i < nbr_slides ; i++) {
-//         t_slider[i].classList.remove('active');
-//     }
-// }
 
-// setInterval(function() {
-//     // document.getElementById('radio' + counter).checked = true;
-//     etape++;
-//     if(etape >= nbr_slides) {
-//         etape = 0;
-//     }
-//     removeActive();
-//     t_slider[etape].classList.add('active');
-// }, 5000);
+
+
+
 const filterIcon = document.getElementById('filterIcon')
 const filterForm = document.getElementById('filterForm')
 

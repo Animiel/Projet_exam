@@ -5,28 +5,99 @@ body {
     /* background-color: #D0D0D0; */
 }
 
+em, strong {
+    font-style: normal;
+}
+
 #header {
-    display: flex;
     line-height: 60px;
 }
 
+.fa-bars {
+    display: none;
+}
+
+.fa-bars:hover {
+    cursor: pointer;
+}
+
 .navbar {
+    background-color: #000000;
+}
+
+.nav-links {
     display: flex;
     justify-content: flex-end;
-    margin: 0;
-    padding: 0;
     background-color: black;
-    width: 100vw;
+    /* width: 100vw; */
+    text-align: center;
+    align-items: center;
 }
 
 .nav-top {
     position: sticky;
 }
 
-.navbar a {
+.nav-links a, .nav-links div {
+    display: block;
+}
+
+.nav-links a {
     text-decoration: none;
     color: #ffffff;
-    padding-right: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.nav-links a:hover, .nav-links div:hover {
+    background-color: #FFAB5E;
+    color: #000000;
+}
+
+.drop-menu {
+    display: flex;
+    position: relative;
+    justify-content: baseline;
+}
+
+.profil-links {
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #000000;
+    list-style: none;
+    line-height: 40px;
+}
+
+.profil-links li {
+    text-align: center;
+}
+
+.profil-links li:after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+    border-bottom: 1px solid #ffffff;
+}
+
+.drop-menu:hover .profil-links {
+    display: block;
+}
+
+.profil-links li:hover {
+    background-color: #FFAB5E;
+}
+
+.profil-links li:hover a {
+    color: #000000;
+}
+
+.deconnexion {
+    background-color: #850000;
+    color: #ffffff;
 }
 
 main {
@@ -35,13 +106,12 @@ main {
 
 main #bloc {
     /* display: flex; */
-    width: 85%;
+    width: 100%;
 }
 
 .parallax {
     /* The image used */
   background-image: url('https://images7.alphacoders.com/126/1269810.jpg');
-  position: relative;
 
   /* Set a specific height */
   min-height: 500px; 
@@ -57,10 +127,6 @@ main #bloc {
     margin: 0;
     background-color: #1f1d1d;
     color: #ffffff;
-    top: 50%;
-    text-align: center;
-    position: absolute;
-    left: 0;
     width: 100%;
 }
 
@@ -69,44 +135,6 @@ main #bloc {
     background-color: #1f1d1d;
     color: #ffffff;
     font-size: 1.5rem;
-}
-
-#sidebar {
-    background-color: #FFAB5E;
-    width: 15%;
-    height: 100vh;
-    display: flex;
-    flex-flow: column wrap;
-}
-
-#sidebar a {
-    color: black;
-    text-decoration: none;
-}
-
-#sidebar .slider {
-    align-self: center;
-}
-
-.slider {
-    height: 25vh;
-    width: 85%;
-    position: relative;
-}
-
-.slider p {
-    margin: 0;
-    background-color: #D0D0D0;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    opacity: 0;
-    transition: 1s;
-}
-
-.slider p.active {
-    opacity: 1;
 }
 
 .new-form {
@@ -586,21 +614,28 @@ footer a {
     a {
         font-size: 1.8rem;
     }
+
+    .nav-links {
+        font-size: 2rem;
+        display: none;
+        flex-flow: column wrap;
+        align-content: flex-end;
+    }
+
     .navbar {
-        font-size: 2rem;
+        display: flex;
+        flex-flow: column wrap;
+        align-items: flex-end;
+        font-size: 2.5rem;
+        position: relative;
     }
-    #sidebar {
-        flex-flow: row wrap;
-        width: 100vw;
-        height: 15%;
-        justify-content: space-between;
-        font-size: 2rem;
+
+    .fa-bars {
+        display: block;
+        width: 40px;
+        right: 0;
     }
-    .slider {
-        margin: 10px 10px 10px 0px;
-        width: 30%;
-        height: 20vh;
-    }
+
     main #bloc {
         width: 100%;
     }
@@ -624,6 +659,7 @@ footer a {
         display: flex;
         flex-flow: row wrap;
         align-items: baseline;
+        justify-content: space-evenly;
         width: 100%;
         height: 100vh;
     }
