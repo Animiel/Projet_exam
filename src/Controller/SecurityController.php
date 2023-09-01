@@ -28,11 +28,6 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        $this->addFlash(
-            'success',
-            'Vous êtes bien connecté.'
-        );
-
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
@@ -151,6 +146,24 @@ class SecurityController extends AbstractController
         $this->addFlash(
             'success',
             'Utilisateur débanni avec succès.'
+        );
+
+        return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/supprCompte/{id}', name: 'suppr_compte')]
+    public function supprCompte(ManagerRegistry $doctrine, User $user)
+    {
+        $user->setBanni(1);
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        $this->logout();
+
+        $this->addFlash(
+            'success',
+            'Votre compte a été supprimé avec succès.'
         );
 
         return $this->redirectToRoute('app_home');

@@ -59,6 +59,9 @@
                             <a href="">Paramètres</a>
                         </li>
                         <li class="deconnexion">
+                            <a href="{{ path('suppr_compte', {'id': app.user.id }) }}">Supprimer mon compte</a>
+                        </li>
+                        <li class="deconnexion">
                             <a href="{{ path('app_logout') }}">Déconnexion</a>
                         </li>
                     </ul>
