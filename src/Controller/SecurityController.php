@@ -7,7 +7,9 @@ use App\Entity\Sujet;
 use App\Entity\Annonce;
 use App\Entity\Message;
 use App\Entity\Categorie;
+use Symfony\Config\SecurityConfig;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -158,14 +160,13 @@ class SecurityController extends AbstractController
         $entityManager = $doctrine->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
-
-        $this->logout();
-
+        
         $this->addFlash(
             'success',
             'Votre compte a été supprimé avec succès.'
         );
 
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute("app_logout");
+
     }
 }
