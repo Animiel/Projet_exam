@@ -7,17 +7,23 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Inscription</h1>
+    <div class="parallax">
+        <h1>Inscription</h1>
+    </div>
 
-    <p>Les champs marqués d'une * sont obligatoires.</p>
+    <div class="para-text">
+        <p>Les champs marqués d'une * sont obligatoires.</p>
+    
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.plainPassword) }}
+            {{ form_row(registrationForm.pseudo) }}
+            {{ form_row(registrationForm.naissance) }}
+            {{ form_row(registrationForm.agreeTerms) }}
+    
+            <button type="submit" class="btn">S'inscrire</button>
+        {{ form_end(registrationForm) }}
+    </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.naissance) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">S'inscrire</button>
-    {{ form_end(registrationForm) }}
+    <div class="parallax"></div>
 {% endblock %}
