@@ -72,11 +72,12 @@ class RegistrationController extends AbstractController
                 'Merci pour votre inscription. Vous recevrez sous peu un e-mail de confirmation.'
             );
 
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            //utilisé pour une connexion automatique après validation du formulaire d'inscription
+            // return $userAuthenticator->authenticateUser(
+            //     $user,
+            //     $authenticator,
+            //     $request
+            // );
         }
 
         return $this->render('registration/register.html.twig', [
