@@ -15,11 +15,12 @@
        
     </head>
     <body>
-        <div>
+        <div class="flash-content">
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
-                    <div class="flash-{{ label }}">
-                        {{ message }}
+                    <div id="flash" class="flash-{{ label }}">
+                        <span id="flash-close">&times</span>
+                        <p>{{ message }}</p>
                     </div>
                 {% endfor %}
             {% endfor %}

@@ -5,6 +5,56 @@ body {
     /* background-color: #D0D0D0; */
 }
 
+.flash-content {
+    position: relative;
+}
+
+#flash-close {
+    padding-right: 10px;
+    float: right;
+}
+
+#flash-close:hover {
+    cursor: pointer;
+    transform: scale(1.5);
+}
+
+.flash-success {
+    position: absolute;
+    width: 40%;
+    top: 150px;
+    left: 30%;
+    text-align: center;
+    padding: 10px 0px;
+    border: 2px solid #000000;
+    border-radius: 50px;
+    background-color: #a3e4a3;
+}
+
+.flash-notice {
+    position: absolute;
+    width: 40%;
+    top: 150px;
+    left: 30%;
+    text-align: center;
+    padding: 10px 0px;
+    border: 2px solid #000000;
+    border-radius: 50px;
+    background-color: #acd9ee;
+}
+
+.flash-warning {
+    position: absolute;
+    width: 40%;
+    top: 150px;
+    left: 30%;
+    text-align: center;
+    padding: 10px 0px;
+    border: 2px solid #000000;
+    border-radius: 50px;
+    background-color: #eb6363;
+}
+
 em, strong {
     font-weight: normal;
     font-style: normal;

@@ -1,5 +1,17 @@
+const flash = document.getElementById('flash')
+const flashClose = document.getElementById('flash-close')
+
+flashClose.addEventListener('click', element => {
+    flash.style.display = 'none';
+})
+
+
+
+
+
 const bars = document.getElementsByClassName('fa-bars')[0];
 const navbar = document.getElementsByClassName('nav-links')[0];
+
 bars.addEventListener('click', element => {
     navbar.classList.toggle('show-nav-links');
 })
