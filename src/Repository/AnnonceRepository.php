@@ -93,7 +93,7 @@ class AnnonceRepository extends ServiceEntityRepository
         return $result;
     }
 
-    //page = page actuelle, si limit non définie alors 6 résultats renvoyés par page.
+    //page = page actuelle, si limit non définie alors 20 résultats renvoyés par page.
     public function annoncesPaginated(int $page, int $limit = 20): array
     {
         //pour que limit soit toujours positive on prend la valeur absolue.
