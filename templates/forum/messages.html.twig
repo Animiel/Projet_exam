@@ -4,8 +4,11 @@
 
 {% block body %}
 
+<div class="parallax">
     <h1>{{ sujet }}</h1>
+</div>
 
+<div class="para-text">
     <div class="msg-form">
         {% if (app.user) and (sujet.closed == 0) %}
             {{ form_start(formMsg) }}
@@ -16,6 +19,11 @@
             {{ form_end(formMsg) }}
         {% endif %}
     </div>
+</div>
+
+<div class="parallax"></div>
+
+<div class="para-text">
 
     <div>
         {% for message in sujet.messages %}
@@ -77,5 +85,6 @@
 
         {% endfor %}
     </div>
+</div>
 
 {% endblock %}

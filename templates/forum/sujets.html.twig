@@ -4,16 +4,17 @@
 
 {% block body %}
 
-    <h1>{{ categorie }}</h1>
-
-    <p>
+<div class="parallax">
+    <h1>{{ categorie }}
         {% if app.user %}
             <button class="new-btn">
                 <a href="{{ path('crea_suj', {'idCtg': categorie.id }) }}">Nouveau sujet</a>
             </button>
         {% endif %}
-    </p>
+    </h1>
+</div>
 
+<div class="para-text">
     <div>
         {% for sujet in categorie.sujets %}
             <a href="{{ path('messages_sujet', {'idSuj': sujet.id }) }}">{{ sujet }}</a>
@@ -48,5 +49,6 @@
             {% endif %}
         {% endfor %}
     </div>
+</div>
 
 {% endblock %}

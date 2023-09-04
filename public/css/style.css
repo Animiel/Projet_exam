@@ -252,7 +252,7 @@ p {
 
 #categories a {
     text-decoration: none;
-    color: black;
+    color: #ffffff;
 }
 
 .categorie {
@@ -263,6 +263,8 @@ p {
 .categorie-pic {
     height: 85px;
     width: 90px;
+    filter: invert(96%) sepia(1%) saturate(745%) hue-rotate(149deg) brightness(115%) contrast(100%);
+    /* filter: invert(82%) sepia(18%) saturate(2161%) hue-rotate(317deg) brightness(106%) contrast(101%); */
 }
 
 #filterIcon {
