@@ -252,7 +252,7 @@ class ForumController extends AbstractController
     #[Route('/sujetsFav', name: 'sujets_fav')]
     public function sujetsFav(ManagerRegistry $doctrine)
     {
-        return $this->render('home/sujetsFav.html.twig', []);
+        return $this->render('home/favoris.html.twig', []);
     }
 
     #[Route('/closeSuj/{idSuj}/{idCtg}', name: 'close_suj')]

@@ -25,7 +25,6 @@ class SearchType extends AbstractType
             ],
             'required' => false,
             'constraints' => [
-                new Regex('/^[a-zA-Z]*$/', 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.'),
                 new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
             ],
         ])
@@ -47,8 +46,8 @@ class SearchType extends AbstractType
         ])
         ->add('genre', ChoiceType::class, [
             'choices' => [
-                'Male' => 'Male',
-                'Female' => 'Female',
+                'Mâle' => 'Mâle',
+                'Femelle' => 'Femelle',
             ],
             'expanded' => true,
             'multiple' => false,

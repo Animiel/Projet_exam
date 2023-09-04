@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PetSeek | Profil | Mes annonces{% endblock %}
+{% block title %}PetSeek | Profil | Mes annonces favorites{% endblock %}
 
 {% block body %}
 
@@ -12,17 +12,16 @@
 </head>
 
 <div class="parallax">
-    <h1>Mes annonces</h1>
+    <h1>Mes annonces favorites</h1>
 </div>
-
-<div class="para-text">
-
-    <div id="grid">
-        {% set annonceLatitudes = [] %}
-        {% set annonceLongitudes = [] %}
         
-        {% if app.user.annonces is not empty %}
-            {% for annonce in app.user.annonces %}
+<div class="para-text">
+    {% if app.user.annonceFavorites is not empty %}
+        <div id="grid">
+            {% set annonceLatitudes = [] %}
+            {% set annonceLongitudes = [] %}
+            
+            {% for annonce in app.user.annonceFavorites %}
                 <figure id="first-view-{{ loop.index }}" class="carte"> 
                     {% for image in annonce.images %}
                         {% if image is not iterable %}
@@ -97,14 +96,39 @@
                 {% set annonceLatitudes = annonceLatitudes|merge([annonce.latitude]) %}
                 {% set annonceLongitudes = annonceLongitudes|merge([annonce.longitude]) %}
             {% endfor %}
+        </div>
+    {% else %}
+        <p>
+            <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i>
+            Pas d'annonces favorites.
+        </p>
+    {% endif %}
+</div>
+
+<div class="parallax">
+    <h1>Mes sujets favoris</h1>
+</div>
+
+<div class="para-text">
+    <ul>
+        {% if app.user.sujetFavorites is not empty %}
+            {% for sujet in app.user.sujetFavorites %}
+                <li>
+                    <a href="{{ path('messages_sujet', {'idSuj': sujet.id }) }}">{{ sujet }}</a>
+                    {% if sujet in app.user.sujetFavorites %}
+                        <a href="{{ path('remove_sujfav', {'id': sujet.id }) }}">
+                            <i class="fa-solid fa-heart" style="color: #d747cb;"></i>
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}    
         {% else %}
             <p>
                 <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i>
-                Vous n'avez pas créé d'annonces.
-            </p>
+                Pas de sujets favoris.
+            </p>        
         {% endif %}
-    
-    </div>
+    </ul>
 </div>
 
 <div class="parallax"></div>

@@ -23,8 +23,8 @@ class AnnonceType extends AbstractType
         $builder
             ->add('pet_genre', ChoiceType::class, [
                 'choices' => [
-                    'Male' => 'Male',
-                    'Female' => 'Female',
+                    'Male' => 'Mâle',
+                    'Female' => 'Femelle',
                 ],
                 'expanded' => true,
                 'multiple' => false,
@@ -43,7 +43,6 @@ class AnnonceType extends AbstractType
                     'placeholder' => 'Rex, Lola, ...',
                 ],
                 'constraints' => [
-                    new Regex('/^[a-zA-Z]*$/', 'Ce champ n\'accepte pas les chiffres et caractères spéciaux.'),
                     new Length(['min' => 2, 'minMessage' => 'Minimum 2 caractères requis.']),
                 ],
             ])
@@ -73,9 +72,6 @@ class AnnonceType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Ne tolère pas les...',
                 ],
-                'constraints' => [
-                    new Regex('/^\w+/', 'Veuillez entrer des mots valides.'),
-                ],
             ])
             ->add('pet_health', TextareaType::class, [
                 'label' => 'Informations concernant la santé : ',
@@ -83,18 +79,12 @@ class AnnonceType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Allergie au croquette au boeuf...',
                 ],
-                'constraints' => [
-                    new Regex('/^\w+/', 'Veuillez entrer des mots valides.'),
-                ],
             ])
             ->add('pet_caractere', TextareaType::class, [
                 'label' => 'Informations sur le caractère ou diverses : ',
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'Calme et très joueur...',
-                ],
-                'constraints' => [
-                    new Regex('/^\w+/', 'Veuillez entrer des mots valides.'),
                 ],
             ])
             ->add('pet_age', TextType::class, [
@@ -104,7 +94,6 @@ class AnnonceType extends AbstractType
                     'placeholder' => '10',
                 ],
                 'constraints' => [
-                    new Regex('/^[0-9]+$/', 'Pas de lettres ou caractères spéciaux acceptés.'),
                     new Length(['max' => 3, 'maxMessage' => 'Maximum 3 caractères requis.']),
                 ],
             ])

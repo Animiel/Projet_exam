@@ -231,7 +231,7 @@ class HomeController extends AbstractController
     #[Route('/annoncesFav', name: 'annonces_fav')]
     public function aFav(ManagerRegistry $doctrine)
     {
-        return $this->render('home/aFav.html.twig', []);
+        return $this->render('home/favoris.html.twig', []);
     }
 
     #[Route('/myAnnonces', name: 'my_annonces')]

@@ -4,24 +4,33 @@
 
 {% block body %}
 
-<h1>Liste des utilisateurs</h1>
+<div class="parallax">
+    <h1>Liste des utilisateurs</h1>
+</div>
 
-<p>Pour voir le profil des membres et interagir avec eux, cliquez sur leur pseudo.</p>
+<div class="para-text">
+    <p>Pour voir le profil des membres et interagir avec eux, cliquez sur leur pseudo.</p>
+    
+    <ul class="members">
+        {% for user in users %}
+            <li>
+                <a href="">{{ user }}</a><br>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if user.banni == 0 %}
+                        <button class="ban-btn">
+                            <a href="{{ path('ban_user', {'id': user.id }) }}">Bannir l'utilisateur</a>
+                        </button><br>
+                    {% else %} 
+                        <button class="unban-btn">
+                            <a href="{{ path('unban_user', {'id': user.id }) }}">Débannir</a>
+                        </button>
+                    {% endif %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 
-<ul class="members">
-    {% for user in users %}
-        <li>
-            <a href="">{{ user }}</a><br>
-            {% if is_granted('ROLE_ADMIN') %}
-                <button class="ban-btn">
-                    <a href="{{ path('ban_user', {'id': user.id }) }}">Bannir l'utilisateur</a>
-                </button><br>
-                <button class="unban-btn">
-                    <a href="{{ path('unban_user', {'id': user.id }) }}">Unban</a>
-                </button>
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
+<div class="parallax"></div>
 
 {% endblock %}

@@ -189,6 +189,15 @@ main #bloc {
     font-size: 1.5rem;
 }
 
+.para-text ul li a {
+    color: #ffffff;
+}
+
+.para-text a:hover {
+    color: #FFAB5E;
+    text-decoration: underline;
+}
+
 .new-form {
     display: flex;
     align-items: center;
@@ -765,5 +774,15 @@ footer a {
 
     #filterForm {
         display: none;
+    }
+
+    .members {
+        columns: 3;
+    }
+}
+
+@media(max-width: 550px) {
+    .members {
+        columns: 2;
     }
 }

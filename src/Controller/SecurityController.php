@@ -150,7 +150,7 @@ class SecurityController extends AbstractController
             'Utilisateur débanni avec succès.'
         );
 
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('list_members');
     }
 
     #[Route('/supprCompte/{id}', name: 'suppr_compte')]
