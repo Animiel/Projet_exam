@@ -62,93 +62,98 @@
     {% set path = null %}
 
     {# on crée une grille d'avis de recherches #}
-    <div id="grid">
-        {% if annonces.data is defined %}
-        {% for annonce in annonces.data %}
-            {# <div class="wanted"> #}
-                <figure id="first-view-{{ loop.index }}" class="carte"> 
-                    {% for image in annonce.images %}
-                        {% if image is not iterable %}
-                            <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic" alt="{{ annonce.descImg }}">
-                        {% endif %}
-                    {% endfor %}
-                    <figcaption class="motif-annonce">
-                        {{ annonce.motifAnnonce }}<br>
-                        {# <b>Ville :</b>
-                        {% if annonce.annonceUser.banni == 1 %}
-                            {{ 'Voie lactée' }}
-                        {% else %}
-                            {{ annonce.localisation }}
-                        {% endif %} #}
-                    </figcaption>
-                    {% if annonce.images | length > 2 %}    
-                        <i id="left-{{ loop.index }}" class="fa-solid fa-caret-left" style="color: #FFAB5E;"></i>
-                        <i id="right-{{ loop.index }}" class="fa-solid fa-caret-right" style="color: #FFAB5E;"></i>
-                    {% endif %}
-                    <button id="info-{{ loop.index }}" title="{{ loop.index }}" onclick="showInfo(this)" class="moreInfos seeDogInfos">Plus d'infos...</button>
-                    {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
-                    {% if app.user %}
-                        {% if annonce in app.user.annonceFavorites %}
-                        <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
-                            <i class="fa-solid fa-heart heart-annonce"></i>
-                        </a>
-                        {% else %}
-                        <a href="{{ path('add_afav', {'id': annonce.id }) }}">
-                            <i id="regular-on" class="fa-regular fa-heart heart-annonce"></i>
-                        </a>
-                        {% endif %}
-                    {% endif %}
-                </figure>
-
-                <div id="info-modal-{{ loop.index }}" class="modal">
-                    <span id="close-cross-{{ loop.index }}" class="close-cross" onclick="closeModal()">&times;</span>
-                    <div class="modal-content">
-                        <div id="second-view-{{ loop.index }}" class="dogInfos">
-                                <h3 class="dogID">{{ annonce.petName }} - {{ annonce.petGenre }} - {{ annonce.petAge }} ans</h3>
-                            <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
-                            <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
-                            <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
+    {% if annonces.data is not empty and annonces.data is defined %}
+        <div id="grid">
+            {% for annonce in annonces.data %}
+                {# <div class="wanted"> #}
+                    <figure id="first-view-{{ loop.index }}" class="carte"> 
+                        {% for image in annonce.images %}
+                            {% if image is not iterable %}
+                                <img src="{{ asset('/img/annonces/' ~ image ~ '') }}" class="wanted-pic" alt="{{ annonce.descImg }}">
+                            {% endif %}
+                        {% endfor %}
+                        <figcaption class="motif-annonce">
+                            {{ annonce.motifAnnonce }}<br>
+                            {# <b>Ville :</b>
                             {% if annonce.annonceUser.banni == 1 %}
-                                <p>Localisation non disponible.</p>
+                                {{ 'Voie lactée' }}
                             {% else %}
-                                <div id="map-{{ loop.index }}" class="annoMap"></div><br>
+                                {{ annonce.localisation }}
+                            {% endif %} #}
+                        </figcaption>
+                        {% if annonce.images | length > 2 %}    
+                            <i id="left-{{ loop.index }}" class="fa-solid fa-caret-left" style="color: #FFAB5E;"></i>
+                            <i id="right-{{ loop.index }}" class="fa-solid fa-caret-right" style="color: #FFAB5E;"></i>
+                        {% endif %}
+                        <button id="info-{{ loop.index }}" title="{{ loop.index }}" onclick="showInfo(this)" class="moreInfos seeDogInfos">Plus d'infos...</button>
+                        {# si un utilisateur est connecté, il a la possibilité d'ajouter les annonces en favoris #}
+                        {% if app.user %}
+                            {% if annonce in app.user.annonceFavorites %}
+                            <a href="{{ path('remove_afav', {'id': annonce.id }) }}">
+                                <i class="fa-solid fa-heart heart-annonce"></i>
+                            </a>
+                            {% else %}
+                            <a href="{{ path('add_afav', {'id': annonce.id }) }}">
+                                <i id="regular-on" class="fa-regular fa-heart heart-annonce"></i>
+                            </a>
                             {% endif %}
-            
-                            {# on peut notifier un annonceur lorsqu'on est connecté #}
-                            {% if app.user %}
-                                <button class="info-btn">
-                                    <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
-                                </button><br>
-                            {% endif %}
-            
-                            {# lien uniquement pour le créateur de l'annonce ou pour les admins #}
-                            {% if app.user and (is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id) %}
-                                <button class="delete-btn">
-                                    <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a>
-                                </button>
-                            {% endif %}
-            
-                            {# fonction réservée aux admins #}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <button class="ban-btn">
-                                    <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
-                                </button>
-                            {% endif %}
+                        {% endif %}
+                    </figure>
+
+                    <div id="info-modal-{{ loop.index }}" class="modal">
+                        <span id="close-cross-{{ loop.index }}" class="close-cross" onclick="closeModal()">&times;</span>
+                        <div class="modal-content">
+                            <div id="second-view-{{ loop.index }}" class="dogInfos">
+                                    <h3 class="dogID">{{ annonce.petName }} - {{ annonce.petGenre }} - {{ annonce.petAge }} ans</h3>
+                                <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
+                                <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
+                                <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
+                                {% if annonce.annonceUser.banni == 1 %}
+                                    <p>Localisation non disponible.</p>
+                                {% else %}
+                                    <div id="map-{{ loop.index }}" class="annoMap"></div><br>
+                                {% endif %}
+                
+                                {# on peut notifier un annonceur lorsqu'on est connecté #}
+                                {% if app.user %}
+                                    <button class="info-btn">
+                                        <a href="{{ path('notif_annonce', {'id': annonce.annonceUser.id }) }}">J'ai une info !</a>
+                                    </button><br>
+                                {% endif %}
+                
+                                {# lien uniquement pour le créateur de l'annonce ou pour les admins #}
+                                {% if app.user and (is_granted('ROLE_ADMIN') or app.user.id == annonce.annonceUser.id) %}
+                                    <button class="delete-btn">
+                                        <a href="{{ path('suppr_annonce', {'id': annonce.id }) }}">Supprimer l'annonce</a>
+                                    </button>
+                                {% endif %}
+                
+                                {# fonction réservée aux admins #}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <button class="ban-btn">
+                                        <a href="{{ path('ban_user', {'id': annonce.annonceUser.id }) }}">Bannir l'utilisateur</a>
+                                    </button>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {# </div> #}
-            {# on définit les valeurs pour la pagination #}
-            {% set path = 'app_home' %}
-            {% set pages = annonces.pages %}
-            {% set currentPage = annonces.page %}
-            {# on alimente les arrays définies avant la boucle #}
-            {% set annonceLatitudes = annonceLatitudes|merge([annonce.latitude]) %}
-            {% set annonceLongitudes = annonceLongitudes|merge([annonce.longitude]) %}
+                {# </div> #}
+                {# on définit les valeurs pour la pagination #}
+                {% set path = 'app_home' %}
+                {% set pages = annonces.pages %}
+                {% set currentPage = annonces.page %}
+                {# on alimente les arrays définies avant la boucle #}
+                {% set annonceLatitudes = annonceLatitudes|merge([annonce.latitude]) %}
+                {% set annonceLongitudes = annonceLongitudes|merge([annonce.longitude]) %}
             {% endfor %}
-            {% endif %}
         </div>
         {% include "partiel/pagination.html.twig" %}
+    {% else %}
+        <p class="rien">
+            <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i>
+            Aucune annonce pour l'instant.
+        </p>
+    {% endif %}
 
     {# <div id="gallery-grid">
         {% for image in images %}

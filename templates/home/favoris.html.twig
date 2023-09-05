@@ -16,11 +16,10 @@
 </div>
         
 <div class="para-text">
+    {% set annonceLatitudes = [] %}
+    {% set annonceLongitudes = [] %}
     {% if app.user.annonceFavorites is not empty %}
         <div id="grid">
-            {% set annonceLatitudes = [] %}
-            {% set annonceLongitudes = [] %}
-            
             {% for annonce in app.user.annonceFavorites %}
                 <figure id="first-view-{{ loop.index }}" class="carte"> 
                     {% for image in annonce.images %}
@@ -98,7 +97,7 @@
             {% endfor %}
         </div>
     {% else %}
-        <p>
+        <p class="rien">
             <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i>
             Pas d'annonces favorites.
         </p>
@@ -123,7 +122,7 @@
                 </li>
             {% endfor %}    
         {% else %}
-            <p>
+            <p class="rien">
                 <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i>
                 Pas de sujets favoris.
             </p>        

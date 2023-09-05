@@ -8,20 +8,21 @@
     <h1>{{ sujet }}</h1>
 </div>
 
-<div class="para-text">
-    <div class="msg-form">
-        {% if (app.user) and (sujet.closed == 0) %}
+{% if (app.user) and (sujet.closed == 0) %}
+    <div class="para-text">
+        <div class="msg-form">
             {{ form_start(formMsg) }}
                 {{ form_row(formMsg.contenu) }}<br>
                 {{ form_row(formMsg.images) }}<br>
     
                 <button type="submit" class="btn">Poster</button>
             {{ form_end(formMsg) }}
-        {% endif %}
+        </div>
     </div>
-</div>
+    
+    <div class="parallax"></div>
+{% endif %}
 
-<div class="parallax"></div>
 
 <div class="para-text">
 

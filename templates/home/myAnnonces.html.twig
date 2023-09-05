@@ -16,12 +16,11 @@
 </div>
 
 <div class="para-text">
+    {% set annonceLatitudes = [] %}
+    {% set annonceLongitudes = [] %}
 
-    <div id="grid">
-        {% set annonceLatitudes = [] %}
-        {% set annonceLongitudes = [] %}
-        
-        {% if app.user.annonces is not empty %}
+    {% if app.user.annonces is not empty %}
+        <div id="grid">
             {% for annonce in app.user.annonces %}
                 <figure id="first-view-{{ loop.index }}" class="carte"> 
                     {% for image in annonce.images %}
@@ -97,14 +96,13 @@
                 {% set annonceLatitudes = annonceLatitudes|merge([annonce.latitude]) %}
                 {% set annonceLongitudes = annonceLongitudes|merge([annonce.longitude]) %}
             {% endfor %}
-        {% else %}
-            <p>
-                <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i>
-                Vous n'avez pas créé d'annonces.
-            </p>
-        {% endif %}
-    
-    </div>
+        </div>
+    {% else %}
+        <p class="rien">
+            <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i>
+            Vous n'avez pas créé d'annonces.
+        </p>
+    {% endif %}
 </div>
 
 <div class="parallax"></div>

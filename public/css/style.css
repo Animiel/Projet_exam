@@ -64,6 +64,10 @@ em, strong {
     line-height: 60px;
 }
 
+.rien {
+    text-align: center;
+}
+
 .fa-bars {
     display: none;
 }
@@ -559,9 +563,10 @@ button a {
     border-radius: 10px;
 }
 
-/* .msg-form {
-    position: fixed;
-} */
+.msg-form {
+    width: 100%;
+    height: 100px;
+}
 
 .modal-btn {
     border: none;
