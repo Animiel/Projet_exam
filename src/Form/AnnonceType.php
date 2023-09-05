@@ -23,8 +23,8 @@ class AnnonceType extends AbstractType
         $builder
             ->add('pet_genre', ChoiceType::class, [
                 'choices' => [
-                    'Male' => 'Mâle',
-                    'Female' => 'Femelle',
+                    'Mâle' => 'Mâle',
+                    'Femelle' => 'Femelle',
                 ],
                 'expanded' => true,
                 'multiple' => false,

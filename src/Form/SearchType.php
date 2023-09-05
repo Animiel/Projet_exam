@@ -52,6 +52,7 @@ class SearchType extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'required' => false,
+            'placeholder' => 'Aucun',
         ])
         ;
     }

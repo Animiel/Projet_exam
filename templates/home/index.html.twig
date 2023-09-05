@@ -62,7 +62,7 @@
     {% set path = null %}
 
     {# on crée une grille d'avis de recherches #}
-    {% if annonces.data is not empty and annonces.data is defined %}
+    {% if annonces.data is defined %}
         <div id="grid">
             {% for annonce in annonces.data %}
                 {# <div class="wanted"> #}
@@ -146,8 +146,8 @@
                 {% set annonceLatitudes = annonceLatitudes|merge([annonce.latitude]) %}
                 {% set annonceLongitudes = annonceLongitudes|merge([annonce.longitude]) %}
             {% endfor %}
+            {% include "partiel/pagination.html.twig" %}
         </div>
-        {% include "partiel/pagination.html.twig" %}
     {% else %}
         <p class="rien">
             <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i>

@@ -37,18 +37,20 @@ class HomeController extends AbstractController
         //si le formulaire est envoyé et valide
         if ($form->isSubmitted() && $form->isValid()) {
             //si tous les champs de filtrage sont vide ou nul
-            if (($searchData->q == '' || $searchData->q == null) && ($searchData->local == '' || $searchData->local == null) && ($searchData->motif == '' || $searchData->motif == null) && ($searchData->genre == 'None')) {
+            if (($searchData->q == '' || $searchData->q == null) && ($searchData->local == '' || $searchData->local == null) && ($searchData->motif == '' || $searchData->motif == null) && ($searchData->genre == 'None' || $searchData->genre == '' || $searchData->genre == null)) {
                 //on renvoit à la page d'accueil
                 return $this->redirectToRoute('app_home');
             } else {
                 //sinon on affiche la liste des annonces trouvées
-                $annoncesSearch = $aRepo->findBySearch($searchData, $page);
+                $annoncesSearch = $aRepo->findBySearch($searchData, $page, 2);
             }
+
+            // $foundAnnonces = count($annoncesSearch);
 
             //on ajoute compte le nombre d'annonces trouvées et on le notifie à l'utilisateur
             $this->addFlash(
                 'notice',
-                '' . count($annoncesSearch) . ' résultats trouvés.'
+                'Recherche effectuée.'
             );
 
             return $this->render('home/index.html.twig', [
