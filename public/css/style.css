@@ -206,6 +206,12 @@ main #bloc {
     display: flex;
     align-items: center;
     flex-flow: column wrap;
+    padding: 0% 2%;
+}
+
+.new-form input[type=text], .new-form textarea, .new-form select {
+    float: right;
+    width: 30%;
 }
 
 .app-name {
@@ -279,12 +285,42 @@ p {
     cursor: pointer;
 }
 
-#filterForm {
+.annonces {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.formulaire {
     display: block;
-    /* position: absolute; */
-    width: 100%;
+    width: 60%;
     height: 100%;
-    /* background-color: rgba(0, 0, 0, 0.95); */
+    background-color: rgb(224, 224, 224);
+    border-radius: 20px;
+    color: #000000;
+}
+
+#filterForm input[type=text] {
+    width: 80%;
+    height: 30px;
+}
+
+#filterForm h4 {
+    color: #000000;
+    background-color: #FFAB5E;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    line-height: 40px;
+    margin-top: 0;
+}
+
+.form-validate {
+    margin-bottom: 10px;
+    width: 150px;
+    height: 30px;
+    background-color: #a3e4a3;
+    border-radius: 10px;
+    font-size: 1.3rem;
 }
 
 .search-form {
@@ -292,10 +328,27 @@ p {
     flex-flow: column wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    padding: 0% 2%;
 }
 
 .search-motif label {
+    margin-right: 20px;
+}
+
+.search-genre label {
+    margin-right: 20px;
+}
+
+.formAnnonce {
+    display: flex;
+    justify-content: center;
+}
+
+.genre-choice div {
+    display: inline-block;
+}
+
+#annonce_pet_genre label {
     margin-right: 20px;
 }
 
@@ -658,6 +711,29 @@ footer a {
     flex-flow: column wrap;
 }
 
+.login-form {
+    display: flex;
+    justify-content: center;
+}
+
+.login {
+    display: inline-block;
+    line-height: 40px;
+}
+
+.login label {
+    margin-right: 20px;
+}
+
+.btn-lg {
+    width: 150px;
+    height: 30px;
+    background-color: #FFAB5E;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
 @media(max-width: 2100px) {
     .carte {
         width: 25%;
@@ -701,6 +777,11 @@ footer a {
         align-items: flex-end;
         font-size: 2.5rem;
         position: relative;
+    }
+
+    .search-motif {
+        display: flex;
+        flex-flow: column-reverse wrap;
     }
 
     .fa-bars {

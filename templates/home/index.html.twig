@@ -35,21 +35,21 @@
     </h2>
 </div>
     
-<div class="para-text">
+<div class="para-text annonces">
 
     <p>
         Dans cette section vous pouvez retrouver des <strong>annonces</strong> d'utilisateur ayant des besoins pour leur <strong>animal</strong> : qu'il s'agisse d'un besoin de <strong>pet-sitting</strong> (de <strong>garde</strong>), d'un <strong>don</strong>, d'un animal en <strong>fuite</strong> ou encore d'une recherche de <strong>partenaires</strong>.
     </p><br>
 
-    <div id="filterForm" class="filters">
+    <div id="filterForm" class="filters formulaire">
         <h4>Filtrage des annonces</h4>
         {{ form_start(searchForm, { 'attr': {'class': 'search-form'} }) }}
-            {{ form_widget(searchForm.q) }}
-            {{ form_widget(searchForm.genre) }}
+            {{ form_widget(searchForm.q, { 'attr': {'class': 'search-name'} }) }}<br>
+            {{ form_widget(searchForm.genre, { 'attr': {'class': 'search-genre'} }) }}<br>
             {# {{ form_widget(searchForm.local) }} #}
             {{ form_widget(searchForm.motif, { 'attr': {'class': 'search-motif'} }) }}<br>
     
-            <button type="submit">Valider</button>
+            <button type="submit" class="form-validate">Valider</button>
         {{ form_end(searchForm) }}
     </div>
 

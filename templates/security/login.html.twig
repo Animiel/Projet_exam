@@ -8,8 +8,8 @@
     <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
 </div>
 
-<div class="para-text">
-    <form method="post">
+<div class="para-text login-form">
+    <form method="post" class="login">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
