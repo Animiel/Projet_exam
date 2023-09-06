@@ -11,6 +11,7 @@ use App\Model\SearchData;
 use Symfony\Component\Finder\Finder;
 use App\Repository\AnnonceRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,10 +43,8 @@ class HomeController extends AbstractController
                 return $this->redirectToRoute('app_home');
             } else {
                 //sinon on affiche la liste des annonces trouvées
-                $annoncesSearch = $aRepo->findBySearch($searchData, $page, 2);
+                $annoncesSearch = $aRepo->findBySearch($searchData, $page);
             }
-
-            // $foundAnnonces = count($annoncesSearch);
 
             //on ajoute compte le nombre d'annonces trouvées et on le notifie à l'utilisateur
             $this->addFlash(
@@ -60,20 +59,20 @@ class HomeController extends AbstractController
         }
 
         //on cherche les annonces par page (avec une limite de 2 annonces par page)
-        $annonces = $doctrine->getRepository(Annonce::class)->annoncesPaginated($page, 2);
+        $annonces = $doctrine->getRepository(Annonce::class)->annoncesPaginated($page);
         //on instancie un nouvel objet Finder
-        $finder = new Finder();
-        $images = [];
-        //on recherche tous les fichiers dans le dossier public/img/annonces dont l'extension correspond à jpg, jpeg, ou png
-        $finder->files()->in('img/annonces')->name(['*.jpg', '*.png', '*.jpeg']);
-        //pour chaque fichier trouvé on récupère le nom des fichiers et on les stocke dans une array
-        foreach ($finder as $file) {
-            $fileNameWithExtension = $file->getRelativePathname();
-            $images[] = $fileNameWithExtension;
-        }
+        // $finder = new Finder();
+        // $images = [];
+        // //on recherche tous les fichiers dans le dossier public/img/annonces dont l'extension correspond à jpg, jpeg, ou png
+        // $finder->files()->in('img/annonces')->name(['*.jpg', '*.png', '*.jpeg']);
+        // //pour chaque fichier trouvé on récupère le nom des fichiers et on les stocke dans une array
+        // foreach ($finder as $file) {
+        //     $fileNameWithExtension = $file->getRelativePathname();
+        //     $images[] = $fileNameWithExtension;
+        // }
         return $this->render('home/index.html.twig', [
             'annonces' => $annonces,
-            'images' => $images,
+            // 'images' => $images,
             'searchForm' => $form->createView(),
         ]);
     }

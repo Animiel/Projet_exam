@@ -56,15 +56,11 @@
     {# on définit 2 arrays qui seront utilisées dans le script #}
     {% set annonceLatitudes = [] %}
     {% set annonceLongitudes = [] %}
-    {# on définit les variables pour la pagination #}
-    {% set pages = null %}
-    {% set currentPage = null %}
-    {% set path = null %}
 
     {# on crée une grille d'avis de recherches #}
-    {% if annonces.data is defined %}
+    {% if annonces is defined %}
         <div id="grid">
-            {% for annonce in annonces.data %}
+            {% for annonce in annonces %}
                 {# <div class="wanted"> #}
                     <figure id="first-view-{{ loop.index }}" class="carte"> 
                         {% for image in annonce.images %}
@@ -138,15 +134,11 @@
                         </div>
                     </div>
                 {# </div> #}
-                {# on définit les valeurs pour la pagination #}
-                {% set path = 'app_home' %}
-                {% set pages = annonces.pages %}
-                {% set currentPage = annonces.page %}
                 {# on alimente les arrays définies avant la boucle #}
                 {% set annonceLatitudes = annonceLatitudes|merge([annonce.latitude]) %}
                 {% set annonceLongitudes = annonceLongitudes|merge([annonce.longitude]) %}
             {% endfor %}
-            {% include "partiel/pagination.html.twig" %}
+            {{ knp_pagination_render(annonces) }}
         </div>
     {% else %}
         <p class="rien">
