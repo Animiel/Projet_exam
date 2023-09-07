@@ -11,18 +11,20 @@
         <h1>Inscription</h1>
     </div>
 
-    <div class="para-text">
-        <p>Les champs marqués d'une * sont obligatoires.</p>
-    
-        {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.plainPassword) }}
-            {{ form_row(registrationForm.pseudo) }}
-            {{ form_row(registrationForm.naissance) }}
-            {{ form_row(registrationForm.agreeTerms) }}
-    
-            <button type="submit" class="btn">S'inscrire</button>
-        {{ form_end(registrationForm) }}
+    <div class="para-text formAnnonce">
+        <div class="formulaire registerForm">
+            <p>Les champs marqués d'une * sont obligatoires.</p>
+        
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+                {{ form_row(registrationForm.pseudo) }}
+                {{ form_row(registrationForm.naissance) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+        
+                <button type="submit" class="btn">S'inscrire</button>
+            {{ form_end(registrationForm) }}
+        </div>
     </div>
 
     <div class="parallax"></div>

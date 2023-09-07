@@ -5,6 +5,14 @@ body {
     /* background-color: #D0D0D0; */
 }
 
+input, textarea, select {
+    outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+    border: 1px solid #FFAB5E;
+}
+
 .flash-content {
     position: relative;
 }
@@ -209,9 +217,24 @@ main #bloc {
     padding: 0% 2%;
 }
 
+.new-form form {
+    display: flex;
+    flex-flow: column wrap;
+}
+
 .new-form input[type=text], .new-form textarea, .new-form select {
     float: right;
     width: 30%;
+}
+
+.new-form button {
+    width: 150px;
+    height: 30px;
+    background-color: #FFAB5E;
+    border-radius: 10px;
+    align-self: center;
+    margin: 20px 0px;
+    align-self: center;
 }
 
 .app-name {
@@ -293,11 +316,38 @@ p {
 
 .formulaire {
     display: block;
-    width: 60%;
+    width: 75%;
     height: 100%;
     background-color: rgb(224, 224, 224);
     border-radius: 20px;
     color: #000000;
+    line-height: 40px;
+}
+
+.registerForm {
+    padding: 0% 2%;
+}
+
+.registerForm form input {
+    width: 50%;
+    height: 30px;
+    float: right;
+}
+
+.registerForm form {
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+}
+
+.registerForm form button {
+    width: 150px;
+    height: 30px;
+    background-color: #FFAB5E;
+    border-radius: 10px;
+    margin: 20px 0px;
+    align-self: center;
+    font-size: 1.3rem;
 }
 
 #filterForm input[type=text] {
@@ -312,6 +362,10 @@ p {
     border-top-right-radius: 20px;
     line-height: 40px;
     margin-top: 0;
+}
+
+#filterForm form {
+    padding: 0% 2%;
 }
 
 .form-validate {
@@ -725,6 +779,10 @@ footer a {
     margin-right: 20px;
 }
 
+.login input {
+    line-height: 30px;
+}
+
 .btn-lg {
     width: 150px;
     height: 30px;
@@ -802,7 +860,6 @@ footer a {
     }
     input[type=text] {
         width: 25%;
-        padding: 10px 10px;
     }
     input[type=checkbox] {
         width: 20px;
@@ -811,6 +868,50 @@ footer a {
     input[type=radio] {
         width: 20px;
         height: 20px;
+    }
+
+    .new-form form {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    .new-form form div {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    .new-form form input {
+        width: 100%;
+    }
+
+    #annonce_pet_genre {
+        display: inline-block;
+    }
+
+    #annonce_pet_genre input {
+        width: auto;
+    }
+
+    .new-form input[type=text], .new-form textarea, .new-form select {
+        width: 100%;
+        line-height: 40px;
+    }
+
+    .registerForm form {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    .registerForm form input {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .registerForm form button {
+        align-self: center;
+        margin: 20px 0px;
+        font-size: 1.3rem;
     }
 
     #grid {
