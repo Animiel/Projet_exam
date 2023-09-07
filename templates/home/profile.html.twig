@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PetSeek | Mon profil{% endblock %}
+
+{% block body %}
+
+<div class="parallax">
+    <h1>Mon profil</h1>
+</div>
+
+<div class="para-text">
+    <div class="user-infos">
+        {% if app.user.profilpic is defined %}
+            <p>
+                Photo de profil : {{ app.user.profilpic }}
+            </p><br>
+        {% else %}
+            <p>
+                Photo de profil : <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i> Aucune photo de profil.
+            </p><br>
+        {% endif %}
+        <p>
+            Pseudo : {{ app.user.pseudo }}
+        </p><br>
+        <p>
+            Email : {{ app.user.email }}
+        </p><br>
+        {% if app.user.biogrpahie is defined %}
+            <p>
+                Biographie : {{ app.user.biographie }}
+            </p><br>
+        {% else %}
+            <p>
+                Photo de profil : <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i> Aucune biographie.
+            </p><br>
+        {% endif %}
+
+        <button class="modif-user">
+            <a href="">Modifier les informations</a>
+        </button>
+    </div>
+</div>
+
+<div class="parallax"></div>
+{% endblock %}

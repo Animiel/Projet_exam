@@ -240,4 +240,10 @@ class HomeController extends AbstractController
     {
         return $this->render('home/myAnnonces.html.twig', []);
     }
+
+    #[Route('/profile/{id}', name: 'user_profil')]
+    public function profile()
+    {
+        return $this->render('home/profile.html.twig', []);
+    }
 }

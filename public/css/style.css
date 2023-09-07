@@ -210,6 +210,24 @@ main #bloc {
     text-decoration: underline;
 }
 
+.modif-user {
+    width: 160px;
+    height: auto;
+    border-radius: 10px;
+    background-color: #FFAB5E;
+    margin: 20px 0px;
+    padding: 5px;
+}
+
+.modif-user a {
+    font-size: 1.3rem;
+}
+
+.modif-user a:hover {
+    text-decoration: none;
+    color: #000000;
+}
+
 .new-form {
     display: flex;
     align-items: center;
