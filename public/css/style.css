@@ -683,6 +683,7 @@ button a {
     background-color: #FFAB5E;
     padding: 5px;
     border-radius: 10px;
+    font-size: 1.3rem;
 }
 
 .info-btn {
@@ -691,6 +692,7 @@ button a {
     padding: 5px;
     transform: translateY(-5px);
     border-radius: 10px;
+    font-size: 1.3rem;
 }
 
 .delete-btn, .ban-btn {
@@ -700,6 +702,7 @@ button a {
     transform: translateX(5%);
     margin-right: 5px;
     border-radius: 10px;
+    font-size: 1.3rem;
 }
 
 .delete-btn a, .ban-btn a, .unban-btn a {
@@ -711,6 +714,7 @@ button a {
     background-color: #006700;
     padding: 5px;
     border-radius: 10px;
+    font-size: 1.3rem;
 }
 
 .msg-form {
