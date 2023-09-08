@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
@@ -172,7 +173,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/modifyProfile', name: 'modify_user')]
-    public function modifyUser(Request $request, ManagerRegistry $doctrine)
+    public function modifyUser(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher)
     {
         $user = $this->getUser();
         $form = $this->createForm(EditProfilType::class, $user);
@@ -180,6 +181,16 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if($form->get('password')->getData() != null) {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('password')->getData()
+                    )
+                );
+            }
+
             $em = $doctrine->getManager();
             $em->persist($user);
             $em->flush();

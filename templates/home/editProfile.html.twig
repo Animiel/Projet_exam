@@ -8,14 +8,25 @@
     <h1>Modifier le profil</h1>
 </div>
 
-<div class="para-text">
-    <div class="modif-profile">
-        {{ form_start(userForm) }}
+<div class="para-text formAnnonce">
     
+    
+    <div class="modif-profile formulaire">
+        <p>
+            Ici vous pouvez modifier vos informations personnelles. Le mot de passe est obligatoire pour des raisons de sécurité (vous pouvez remettre le même que vous possédez déjà, mais <b>il est recommandé de le changer régulièrement</b>).
+        </p><br>
+
+        {{ form_start(userForm) }}
+            {{ form_row(userForm.pseudo) }}<br>
+            {{ form_row(userForm.email) }}<br>
+            {{ form_row(userForm.naissance) }}<br>
+            {{ form_row(userForm.password) }}<br>
     
             <button type="submit" id="confirm-btn" class="btn">Valider</button>
         {{ form_end(userForm) }}
     </div>
 </div>
+
+<div class="parallax"></div>
 
 {% endblock body %}
