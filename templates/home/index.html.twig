@@ -101,11 +101,32 @@
                         <div class="modal-content">
                             <div id="second-view-{{ loop.index }}" class="dogInfos">
                                     <h3 class="dogID">{{ annonce.petName }} - {{ annonce.petGenre }} - {{ annonce.petAge }} ans</h3>
-                                <p><b>Affinités avec d'autres animaux/humains :</b><br> {{ annonce.petBefriends }}</p>
-                                <p><b>Caractère de l'animal :</b><br> {{ annonce.petCaractere }}</p>
-                                <p><b>Informations sur la santé :</b><br> {{ annonce.petHealth }}</p>
+                                    <p><b>Affinités avec d'autres animaux/humains :</b><br>
+                                        {% if annonce.petBefriends is not null %}
+                                            {{ annonce.petBefriends }}
+                                        {% else %}
+                                            <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i> L'utilisateur n'a pas transmit d'informations à ce sujet.
+                                        {% endif %}
+                                    </p><br>
+                                    <p><b>Caractère de l'animal :</b><br> 
+                                        {% if annonce.petCaractere is not null %}
+                                            {{ annonce.petCaractere }}
+                                        {% else %}
+                                            <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i> L'utilisateur n'a pas transmit d'informations à ce sujet.
+                                        {% endif %}
+                                    </p><br>
+                                    <p><b>Informations sur la santé :</b><br> 
+                                        {% if annonce.petHealth is not null %}
+                                            {{ annonce.petHealth }}
+                                        {% else %}
+                                            <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i> L'utilisateur n'a pas transmit d'informations à ce sujet.
+                                        {% endif %}
+                                    </p><br>
                                 {% if annonce.annonceUser.banni == 1 %}
-                                    <p>Localisation non disponible.</p>
+                                    <p>
+                                        <i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i>
+                                        Localisation non disponible.
+                                    </p>
                                 {% else %}
                                     <div id="map-{{ loop.index }}" class="annoMap"></div><br>
                                 {% endif %}
