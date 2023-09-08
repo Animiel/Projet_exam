@@ -7,6 +7,7 @@ use App\Entity\Sujet;
 use App\Entity\Annonce;
 use App\Entity\Message;
 use App\Entity\Categorie;
+use App\Form\EditProfilType;
 use Symfony\Config\SecurityConfig;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -168,5 +169,27 @@ class SecurityController extends AbstractController
 
         return $this->redirectToRoute("app_logout");
 
+    }
+
+    #[Route('/modifyProfile', name: 'modify_user')]
+    public function modifyUser(Request $request, ManagerRegistry $doctrine)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditProfilType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $doctrine->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('notice', 'Profil mit à jour.');
+            return $this->redirectToRoute('user_profile');
+        }
+
+        return $this->render('home/editProfile.html.twig', [
+            'userForm' => $form->createView(),
+        ]);
     }
 }

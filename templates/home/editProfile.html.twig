@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PetSeek | Modifier le profil{% endblock %}
+
+{% block body %}
+
+<div class="parallax">
+    <h1>Modifier le profil</h1>
+</div>
+
+<div class="para-text">
+    <div class="modif-profile">
+        {{ form_start(userForm) }}
+    
+    
+            <button type="submit" id="confirm-btn" class="btn">Valider</button>
+        {{ form_end(userForm) }}
+    </div>
+</div>
+
+{% endblock body %}

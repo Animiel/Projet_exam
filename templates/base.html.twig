@@ -37,7 +37,7 @@
                     <a class="dropdown">Profil</a>
                     <ul class="profil-links">
                         <li>
-                            <a href="{{ path('user_profil', {'id': app.user.id }) }}">Mon profil</a>
+                            <a href="{{ path('user_profile') }}">Mon profil</a>
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li>
