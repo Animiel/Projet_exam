@@ -8,6 +8,7 @@ use App\Entity\Annonce;
 use App\Entity\Message;
 use App\Entity\Categorie;
 use App\Form\EditProfilType;
+use App\Repository\UserRepository;
 use Symfony\Config\SecurityConfig;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -158,9 +159,8 @@ class SecurityController extends AbstractController
     #[Route('/supprCompte/{id}', name: 'suppr_compte')]
     public function supprCompte(ManagerRegistry $doctrine, User $user)
     {
-        $user->setBanni(1);
         $entityManager = $doctrine->getManager();
-        $entityManager->persist($user);
+        $entityManager->remove($user);
         $entityManager->flush();
         
         $this->addFlash(
@@ -202,5 +202,11 @@ class SecurityController extends AbstractController
         return $this->render('home/editProfile.html.twig', [
             'userForm' => $form->createView(),
         ]);
+    }
+
+    #[Route('/confidentialite', name: 'confidentialite')]
+    public function confid()
+    {
+        return $this->render('security/confidentialite.html.twig');
     }
 }

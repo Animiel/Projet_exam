@@ -19,7 +19,7 @@ class Annonce
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?User $annonceUser = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'annonceFavorites')]
