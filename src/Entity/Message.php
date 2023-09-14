@@ -32,7 +32,7 @@ class Message
     private ?User $msgUser = null;
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Sujet $sujet = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]

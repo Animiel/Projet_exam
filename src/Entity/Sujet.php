@@ -37,7 +37,7 @@ class Sujet
     private ?Categorie $categorie = null;
 
     #[ORM\ManyToOne(inversedBy: 'sujets')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?User $sujUser = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'sujetFavorites')]
